@@ -184,6 +184,8 @@ public class RobotContainer {
 
         swerveStatePublisher.set(drivetrain.getModuleStates());
         robotPospublisher.set(pos);
+
+        System.out.println("test");
     }
 
     public void updateAlways() {

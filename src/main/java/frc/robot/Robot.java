@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
+
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -17,6 +21,14 @@ public class Robot extends TimedRobot {
 
     public Robot() {
         inst = this;
+        // 强制开启控制台回显
+        // SignalLogger.setControlEnabled(true); 
+        // 或者如果你确实想用 DataLog 且看实时输出：
+        DataLogManager.start();
+        DataLogManager.logNetworkTables(true); // 确保 NT 数据也通过日志发送
+        DataLogManager.log("中文123 abc");
+        System.out.println("--- 机器人代码已启动 ---");
+
         m_robotContainer = new RobotContainer();
     }
 
