@@ -34,6 +34,7 @@ import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.utils.MessageSender;
 import frc.robot.utils.SmartDashboardEx;
 
 public class RobotContainer {
@@ -185,7 +186,7 @@ public class RobotContainer {
         swerveStatePublisher.set(drivetrain.getModuleStates());
         robotPospublisher.set(pos);
 
-        System.out.println("test");
+        MessageSender.log5("test 汉字");
     }
 
     public void updateAlways() {

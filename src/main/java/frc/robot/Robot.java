@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
 import com.ctre.phoenix6.SignalLogger;
 
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -11,6 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utils.MessageSender;
 
 public class Robot extends TimedRobot {
     public static Robot inst = null;
@@ -19,15 +27,18 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
+
     public Robot() {
+        MessageSender.init();
+        
         inst = this;
         // 强制开启控制台回显
         // SignalLogger.setControlEnabled(true); 
         // 或者如果你确实想用 DataLog 且看实时输出：
-        DataLogManager.start();
-        DataLogManager.logNetworkTables(true); // 确保 NT 数据也通过日志发送
-        DataLogManager.log("中文123 abc");
-        System.out.println("--- 机器人代码已启动 ---");
+
+        MessageSender.log1("中文123 abc");
+        MessageSender.log2("--- 机器人代码已启动 ---");
+        MessageSender.log2("--- 很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本 ---");
 
         m_robotContainer = new RobotContainer();
     }

@@ -31,7 +31,7 @@ class FieldCanvas(FigureCanvas):
     def draw_static_field(self):
         self.ax.clear()
         # 绘制背景和边界
-        self.ax.add_patch(patches.Rectangle((0, 0), self.field_l, self.field_w, color='gray', alpha=0.1))
+        self.ax.add_patch(patches.Rectangle((0, 0), self.field_l, self.field_w, color='green', alpha=0.1))
         self.ax.plot([0, self.field_l, self.field_l, 0, 0], [0, 0, self.field_w, self.field_w, 0], color='black', lw=2)
         
         # 调用你之前的对称逻辑绘制两侧设施 (这里简化演示)
