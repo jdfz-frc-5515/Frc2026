@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.MUtils.SegmentOnTheField;
+import frc.robot.utils.Models.AprilTagCoordinate;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;
@@ -374,6 +375,26 @@ public class Constants {
 
             AP_MAP = Collections.unmodifiableMap(map);
         }
+
+        public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
+            
+            new AprilTagCoordinate(17,  4.57,  0.63,  0.89,  1,  0,  0),
+            new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   -1),
+            new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0),
+            new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0),
+            new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0),
+            new AprilTagCoordinate(22,  4.57,  7.41,  0.89,  1,  0,  0),
+            new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0),
+            new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0),
+            new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0),
+            new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0),
+            new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0),
+            new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0),
+            new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0),
+            new AprilTagCoordinate(30,  0.0127,  1.08,  0.55,  1,  0,  0),
+            new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0),
+            new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0)
+        };
 
         // 私有构造防止实例化
         private FieldInfo() {}
