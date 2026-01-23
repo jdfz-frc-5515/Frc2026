@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.utility;
-
-import androidx.annotation.NonNull;
+package frc.robot.Library.team19725;
 
 public class Point3D {
     /**
@@ -64,7 +62,7 @@ public class Point3D {
      * @param min 最小点坐标
      * @param max 最大点坐标
      */
-    public void clamp(@NonNull Point3D min, @NonNull Point3D max) {
+    public void clamp(Point3D min, Point3D max) {
         this.x = Math.max(min.x, Math.min(max.x, this.x));
         this.y = Math.max(min.y, Math.min(max.y, this.y));
         this.z = Math.max(min.z, Math.min(max.z, this.z));
@@ -75,7 +73,7 @@ public class Point3D {
      * @param maxDistance 最大距离
      * @param p 参考点
      */
-    public void clamp(double maxDistance, @NonNull Point3D p) {
+    public void clamp(double maxDistance, Point3D p) {
         double dist = distance(this, p);
         if (dist > maxDistance) {
             Point3D direction = translate(this, centralSymmetry(p));// 计算从p指向当前点的方向向量
@@ -189,7 +187,23 @@ public class Point3D {
     public static double magnitude(Point3D p) {
         return Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
     }
-
+    /**
+     * 计算两向量的夹角（弧度）
+     * @param p1
+     * @param p2
+     * @return
+     */
+    public static double angleBetween(Point3D p1, Point3D p2) {
+        double dotProduct = dot(p1, p2);
+        double magnitudes = magnitude(p1) * magnitude(p2);
+        if (magnitudes < zeroTolerance) {
+            return 0.0; // 如果任一向量的模长为零，夹角定义为0
+        }
+        double cosTheta = dotProduct / magnitudes;
+        // 限制cosTheta在[-1, 1]范围内，防止数值误差导致的异常
+        cosTheta = Math.max(-1.0, Math.min(1.0, cosTheta));
+        return Math.acos(cosTheta);
+    }
     /**
      * 向量归一化(单位向量)
      * @param p 向量
