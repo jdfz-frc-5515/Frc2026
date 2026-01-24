@@ -399,4 +399,7 @@ public class Constants {
         // 私有构造防止实例化
         private FieldInfo() {}
     }
+
+
+    static Alliance alliance = Alliance.Blue;
 }
