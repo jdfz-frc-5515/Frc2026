@@ -46,7 +46,7 @@ public class FindAprilTag {
                 -TagToRobotVector.getY(),
                 -TagToRobotVector.getZ()
             );
-            //todo 到底有几个摄像头？？？方向？？？
+            //TODO 到底有几个摄像头？？？方向？？？
             double AngleToRobot = Point3D.angleBetween(
                 tag.nVector,
                 TagToRobotVector
@@ -54,8 +54,8 @@ public class FindAprilTag {
             if (AngleToRobot > AngleTorlenceRad) {
                 continue;
             }
-            //todo 计算机器人需要旋转的角度
-            //todo 计算死区
+            //TODO 计算机器人需要旋转的角度
+            //TODO 计算死区
 
             // 满足条件的标签加入候选列表
             candidates[candidateCount] = new CandidateTagInfo(tag, distance, AngleToRobot, 0);
@@ -72,7 +72,7 @@ public class FindAprilTag {
                          + kAngle * (AngleTorlenceRad - candidate.angleToRobot) / AngleTorlenceRad;
             if (score > bestScore) {
                 bestScore = score;
-                //todo 添加计算最佳标签对应的目标朝向
+                //TODO 添加计算最佳标签对应的目标朝向
             }
         }
         return targetHeading;
