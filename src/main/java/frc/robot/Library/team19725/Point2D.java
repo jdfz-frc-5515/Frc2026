@@ -344,5 +344,10 @@ public class Point2D {
                 )
         );
     }
+    public static double angleBetween(Point2D targetHeadingVector, Point2D point2d) {
+        double dot = dot(targetHeadingVector, point2d);
+        double det = targetHeadingVector.getX() * point2d.getY() - targetHeadingVector.getY() * point2d.getX(); // 计算行列式
+        return Math.atan2(det, dot); // 返回角度，范围在 -π 到 π 之间
+    }
 }
 

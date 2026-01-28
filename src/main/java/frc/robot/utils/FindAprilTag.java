@@ -8,29 +8,45 @@ import frc.robot.utils.Models.AprilTagCoordinate;
 import frc.robot.utils.Models.CandidateTagInfo;
 
 public class FindAprilTag {
-    public static double DisTorlence=1.0; // meters
+    public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
+    public static double DisTorlence=5.0; // meters
 
-    public static double AngleTorlence=15.0; // degrees
+    public static double AngleTorlence=60.0; // degrees
     public static double AngleTorlenceRad=AngleTorlence*Math.PI/180.0; // radians
-
+  
     public static double kDis = 0.5; // 权重系数，距离越近权重越大
     public static double kAngle = 0.4; // 权重系数，角度
     public static double kTurn = 0.1; // 权重系数，转角越小权重越大
-    public static double getTargetHeading(Point3D robotPos, Point3D robotHeading){
-        double targetHeading = 0;
-        CandidateTagInfo[] candidates = new CandidateTagInfo[100];
+
+    private static double normalizeAngle(double ang) {
+        while (ang <= -Math.PI) ang += 2.0 * Math.PI;
+        while (ang > Math.PI) ang -= 2.0 * Math.PI;
+        return ang;
+    }
+
+    private static double absAngleDiff(double a, double b) {
+        return Math.abs(normalizeAngle(a - b));
+    }
+
+    //如没有符合条件的tag，返回NaN
+    public static double getTargetHeading(Point3D robotPos, double robotHeading) {
         int candidateCount = 0;
+        CandidateTagInfo[] candidatesInfo = new CandidateTagInfo[Constants.AprilTagCoordinates.length];
+        if (Constants.AprilTagCoordinates == null) {
+            return Double.NaN;
+        }
+
         for (AprilTagCoordinate tag : Constants.AprilTagCoordinates) {
+            
+            //对于该Tag，最终的机器朝向
+            double targetHeading = 0;
             // 过滤掉看不到的标签
             if (!Constants.usableAprilTagIDs.contains(tag.id)) {
                 continue;
             }
 
             // 计算机器人到标签的距离,大于阈值则跳过
-            double distance = Point3D.distance(
-                new Point3D(robotPos.getX(), robotPos.getY(), robotPos.getZ()),
-                tag.position
-            );
+            double distance = Point3D.distance(robotPos, tag.position);
             if (distance > DisTorlence) {
                 continue;
             }
@@ -41,41 +57,80 @@ public class FindAprilTag {
                 robotPos.getY() - tag.position.getY(),
                 robotPos.getZ() - tag.position.getZ()
             );
+
+            double AngleToRobot = Point3D.angleBetween(tag.nVector, TagToRobotVector);
+            if (AngleToRobot > AngleTorlenceRad) {
+                continue;
+            }
+
             Point3D RobotToTagVector = new Point3D(
                 -TagToRobotVector.getX(),
                 -TagToRobotVector.getY(),
                 -TagToRobotVector.getZ()
             );
-            //TODO 到底有几个摄像头？？？方向？？？
-            double AngleToRobot = Point3D.angleBetween(
-                tag.nVector,
-                TagToRobotVector
-            );
-            if (AngleToRobot > AngleTorlenceRad) {
-                continue;
+
+            // 将 3D 向量投影/转换到平面 2D（依赖你库的实现）
+            Point2D targetHeadingVector = Point3D.toPoint2D(RobotToTagVector, new Point3D(0, 0, 1), new Point3D(0, 0, 0));
+            double thisTargetHeading = Point2D.angleBetween(targetHeadingVector, new Point2D(1, 0));
+            thisTargetHeading = normalizeAngle(thisTargetHeading);
+
+            // 选择最近的 limelight 并计算需要的调整角度（归一化）
+            int bestIdx = 0;
+            double bestAdjust = Double.POSITIVE_INFINITY;
+            for (int i = 0; i < LimeLightAngles.length; i++) {
+                double thisLimeLightHeading = normalizeAngle(robotHeading + LimeLightAngles[i]);
+                double adjust = absAngleDiff(thisLimeLightHeading, thisTargetHeading);
+                if (adjust < bestAdjust) {
+                    bestAdjust = adjust;
+                    bestIdx = i;
+                }
             }
-            //TODO 计算机器人需要旋转的角度
+
+            // 目标朝向（使当前最近的 limelight 指向目标）
+            targetHeading = normalizeAngle(thisTargetHeading - LimeLightAngles[bestIdx]);
+            // //车头limelight最近
+            // if(cnt == 0){
+            //     targetHeading = thisTargetHeading;
+            // }
+            // //车右侧limelight最近
+            // else if(cnt == 1){
+            // 顺时针旋转
+            //     targetHeading = thisTargetHeading - LimeLightAngles[1];
+            // }
+            // //车左侧limelight最近
+            // else{
+            // 逆时针旋转
+            // 减 -Pi/2 即加Pi / 2
+            //     targetHeading = thisTargetHeading - LimeLightAngles[2];
+            // }
+			double finalAdjustAngle = absAngleDiff(normalizeAngle(robotHeading), targetHeading);
             //TODO 计算死区
 
             // 满足条件的标签加入候选列表
-            candidates[candidateCount] = new CandidateTagInfo(tag, distance, AngleToRobot, 0);
+            candidatesInfo[candidateCount] = new CandidateTagInfo(tag, distance, AngleToRobot, targetHeading, finalAdjustAngle);
             candidateCount++;
         }
-
+        // 没有合适的标签
+        if (candidateCount == 0) {
+            return Double.NaN;
+        }
 
         // 选择最佳标签
         double bestScore = Double.NEGATIVE_INFINITY;
+        double finalTargetHeading = 0;
         for (int i = 0; i < candidateCount; i++) {
-            CandidateTagInfo candidate = candidates[i];
+            CandidateTagInfo candidate = candidatesInfo[i];
             // 计算评分，距离越近、角度越小评分越高
-            double score = kDis * (DisTorlence - candidate.distance) / DisTorlence
-                         + kAngle * (AngleTorlenceRad - candidate.angleToRobot) / AngleTorlenceRad;
+            double scoreDis = Math.abs(DisTorlence - candidate.distance) / DisTorlence;
+            double scoreAngle = Math.abs(AngleTorlenceRad - candidate.angleToRobot) / AngleTorlenceRad;
+            double scoreTurn = Math.abs(AngleTorlenceRad - candidate.turnRadian) / AngleTorlenceRad; // 使用同一基准，越小转角越好
+            double score = kDis * scoreDis + kAngle * scoreAngle + kTurn * scoreTurn;
             if (score > bestScore) {
                 bestScore = score;
-                //TODO 添加计算最佳标签对应的目标朝向
+                finalTargetHeading = candidate.targetHeading;
             }
         }
-        return targetHeading;
+        return finalTargetHeading;
 
     }
 }

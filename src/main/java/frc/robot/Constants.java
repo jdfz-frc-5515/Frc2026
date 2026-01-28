@@ -303,12 +303,35 @@ public class Constants {
     }
 
     public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
-            new AprilTagCoordinate(17,  4.57,  0.63,  0.89,  1,  0,  0),
-            new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   -1),
+        // 战壕 (Trench) - 高度 35.00" (0.89m)
+            new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0), // 0°
+            new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0), // 0°
+
+            // 中枢 (Hub) - 高度 44.25" (1.12m)
+            new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0), // 90°
+            new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0), // 270°
+            new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0), // 270°
+            new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0), // 0°
+            new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0), // 0°
+            new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0), // 90°
+
+            // 哨站 (Outpost) - 高度 21.75" (0.55m)
+            new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0), // 180°
+
+            // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
+            new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0), // 180°
+            new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0),  // 180°
+            new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0),
+            new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0),
             new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0),
             new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0),
             new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0),
-            new AprilTagCoordinate(22,  4.57,  7.41,  0.89,  1,  0,  0),
+            new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0),
             new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0),
             new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0),
             new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0),
@@ -321,9 +344,9 @@ public class Constants {
             new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0)
     };
     
-    //排除掉17，19，20，22号四个看不到的Tag
+    //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag
     public static final List<Integer> usableAprilTagIDs = Arrays.asList(
-            18, 21, 23, 24, 25, 26, 27,29, 30, 31, 32
+            2,5,7,8,9,10,11,12,13,14,15,16,18, 21, 23, 24, 25, 26, 27,29, 30, 31, 32
     );
 
     public final class FieldInfo {
