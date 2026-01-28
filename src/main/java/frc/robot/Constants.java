@@ -429,5 +429,26 @@ public class Constants {
     }
 
 
+    public static class RollerConstants {
+        public static final int MotorID = 100;
+        public static final double kOpenPower = 0.8;
+    
+        // 编码器与换算常量（根据实际电机/齿比调整）
+        public static final double GEAR_RATIO = 27.0; // 机械减速比：输出轴转一圈编码器转几圈（若为 10:1，填 10）
+    
+    
+        //6  51.5
+        //8  69
+        //10  86
+        //12  103.5
+        // PID + SVA 常量
+        public static final double kP = 0.01;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kS = 0.04;   
+        public static final double kV = 0.115; 
+        public static final double kA = 0.00000; 
+    }
+
     static Alliance alliance = Alliance.Blue;
 }
