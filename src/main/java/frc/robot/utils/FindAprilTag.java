@@ -9,10 +9,10 @@ import frc.robot.utils.Models.CandidateTagInfo;
 
 public class FindAprilTag {
     public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
-    public static double DisTorlence=5.0; // meters
+    public static double DisTolerance=5.0; // meters
 
-    public static double AngleTorlence=60.0; // degrees
-    public static double AngleTorlenceRad=AngleTorlence*Math.PI/180.0; // radians
+    public static double AngleTolerance=60.0; // degrees
+    public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians
   
     public static double kDis = 0.5; // 权重系数，距离越近权重越大
     public static double kAngle = 0.4; // 权重系数，角度
@@ -47,7 +47,7 @@ public class FindAprilTag {
 
             // 计算机器人到标签的距离,大于阈值则跳过
             double distance = Point3D.distance(robotPos, tag.position);
-            if (distance > DisTorlence) {
+            if (distance > DisTolerance) {
                 continue;
             }
 
@@ -59,7 +59,7 @@ public class FindAprilTag {
             );
 
             double AngleToRobot = Point3D.angleBetween(tag.nVector, TagToRobotVector);
-            if (AngleToRobot > AngleTorlenceRad) {
+            if (AngleToRobot > AngleToleranceRad) {
                 continue;
             }
 
@@ -88,21 +88,7 @@ public class FindAprilTag {
 
             // 目标朝向（使当前最近的 limelight 指向目标）
             targetHeading = normalizeAngle(thisTargetHeading - LimeLightAngles[bestIdx]);
-            // //车头limelight最近
-            // if(cnt == 0){
-            //     targetHeading = thisTargetHeading;
-            // }
-            // //车右侧limelight最近
-            // else if(cnt == 1){
-            // 顺时针旋转
-            //     targetHeading = thisTargetHeading - LimeLightAngles[1];
-            // }
-            // //车左侧limelight最近
-            // else{
-            // 逆时针旋转
-            // 减 -Pi/2 即加Pi / 2
-            //     targetHeading = thisTargetHeading - LimeLightAngles[2];
-            // }
+            
 			double finalAdjustAngle = absAngleDiff(normalizeAngle(robotHeading), targetHeading);
             //TODO 计算死区
 
@@ -121,9 +107,9 @@ public class FindAprilTag {
         for (int i = 0; i < candidateCount; i++) {
             CandidateTagInfo candidate = candidatesInfo[i];
             // 计算评分，距离越近、角度越小评分越高
-            double scoreDis = Math.abs(DisTorlence - candidate.distance) / DisTorlence;
-            double scoreAngle = Math.abs(AngleTorlenceRad - candidate.angleToRobot) / AngleTorlenceRad;
-            double scoreTurn = Math.abs(AngleTorlenceRad - candidate.turnRadian) / AngleTorlenceRad; // 使用同一基准，越小转角越好
+            double scoreDis = Math.abs(DisTolerance - candidate.distance) / DisTolerance;
+            double scoreAngle = Math.abs(AngleToleranceRad - Math.abs(candidate.angleToRobot)) / AngleToleranceRad;
+            double scoreTurn = Math.abs(AngleToleranceRad - candidate.turnRadian) / AngleToleranceRad; // 使用同一基准，越小转角越好
             double score = kDis * scoreDis + kAngle * scoreAngle + kTurn * scoreTurn;
             if (score > bestScore) {
                 bestScore = score;
