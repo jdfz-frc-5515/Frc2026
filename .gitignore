@@ -188,3 +188,4 @@ compile_commands.json
 
 
 py_tools/.frcenv
+py_tools/__pycache__
