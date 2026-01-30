@@ -11,6 +11,23 @@ public class TurrentSystem {
     protected double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
 
     /**
+     * 计算炮台在场地坐标系下的位姿（位置 + 朝向）。
+     * 将炮台相对于机器人中心的偏移（turrentOffset）应用到机器人位姿上。
+     *
+     * @param robotPos 机器人在场地坐标系下的位姿
+     * @return 炮台在场地坐标系下的 Pose2d（位置 + 朝向）
+     */
+    public Pose2d getTurretWorldPose(Pose2d robotPos) {
+        // 炮台在机器人坐标系下的平移量需要以机器人当前朝向旋转后再加到机器人原点
+        Translation2d worldTrans = robotPos.getTranslation().plus(
+            turrentOffset.getTranslation().rotateBy(robotPos.getRotation())
+        );
+        // 炮台的朝向为机器人朝向加上炮台安装时的旋转偏移
+        Rotation2d worldRot = robotPos.getRotation().plus(turrentOffset.getRotation());
+        return new Pose2d(worldTrans, worldRot);
+    }
+
+    /**
      * 计算炮台瞄准目标所需的相对旋转角度
      * 
      * @param robotPos  当前机器人在场地上的姿态 (World Frame)
@@ -18,11 +35,10 @@ public class TurrentSystem {
      * @return 炮台相对于其初始位置的旋转角度（度），已应用限制
      */
     public double calcTurrentAngle(Pose2d robotPos, Translation2d targetPos) {
-        // 1. 计算炮台在场地上的实际世界坐标 [3, 4]
-        // 炮台在机器人坐标系下的偏移量需要根据机器人当前的旋转进行转换
-        Translation2d turretWorldPos = robotPos.getTranslation().plus(
-            turrentOffset.getTranslation().rotateBy(robotPos.getRotation())
-        );
+        // 1. 计算炮台在场地上的实际世界位姿 (位置 + 朝向)
+        // 提取为独立方法 getTurretWorldPose(robotPos)
+        Pose2d turretWorldPose = getTurretWorldPose(robotPos);
+        Translation2d turretWorldPos = turretWorldPose.getTranslation();
 
         // 2. 计算从炮台位置指向目标的向量
         Translation2d vectorToTarget = targetPos.minus(turretWorldPos);
@@ -31,9 +47,9 @@ public class TurrentSystem {
         // 使用 Math.atan2 计算弧度并转为 Rotation2d
         Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
 
-        // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
-        // 基座角度 = 机器人当前的航向角 + 炮台安装时的初始旋转偏移
-        Rotation2d turretBaseAngleWorld = robotPos.getRotation().plus(turrentOffset.getRotation());
+    // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
+    // 使用独立方法返回的位姿中的旋转部分
+    Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
