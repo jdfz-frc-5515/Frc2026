@@ -11,7 +11,7 @@ pip freeze > requirements.txt
 步骤 B：别人作为使用者（恢复环境）
 当别人从 GitHub 拉取你的代码后，他们只需要执行以下“三部曲”：
 
-创建自己的环境： python -m venv .venv
+创建自己的环境： python -m venv .frcenv
 
 激活环境： (根据系统执行相应的激活命令)
 
@@ -19,5 +19,5 @@ pip freeze > requirements.txt
 
 Bash
 
-pip install -r requirements.txt
+pip install -r ./pythone_env_requirements.txt
 执行完这一步，他们的环境就和你的一模一样了。
