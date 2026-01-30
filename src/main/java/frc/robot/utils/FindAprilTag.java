@@ -1,23 +1,27 @@
 package frc.robot.utils;
 
 import frc.robot.Constants;
-
+import frc.robot.RobotContainer;
 import frc.robot.Library.team19725.Point2D;
 import frc.robot.Library.team19725.Point3D;
+import frc.robot.subsystems.TurrentSystem;
 import frc.robot.utils.Models.AprilTagCoordinate;
 import frc.robot.utils.Models.CandidateTagInfo;
 
 public class FindAprilTag {
+    public static double TorrentTolerance=Math.PI * 2 / 3; // Radians
+
     public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
     public static double DisTolerance=5.0; // meters
 
     public static double AngleTolerance=60.0; // degrees
     public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians
-  
-    public static double kDis = 0.5; // 权重系数，距离越近权重越大
+    
+    public static double kDis = 0.59; // 权重系数，距离越近权重越大
     public static double kAngle = 0.4; // 权重系数，角度
-    public static double kTurn = 0.1; // 权重系数，转角越小权重越大
+    public static double kTurn = 0.01; // 权重系数，转角越小权重越大
 
+    public static double kTurnOnly = 10.0; // 转向优先时的权重系数
     private static double normalizeAngle(double ang) {
         while (ang <= -Math.PI) ang += 2.0 * Math.PI;
         while (ang > Math.PI) ang -= 2.0 * Math.PI;
@@ -28,8 +32,20 @@ public class FindAprilTag {
         return Math.abs(normalizeAngle(a - b));
     }
 
-    //如没有符合条件的tag，返回NaN
-    public static double getTargetHeading(Point3D robotPos, double robotHeading) {
+    
+    private static boolean isTorrentShootable(double TrgetRobotAngle ,double DesiredTorrentAngle) {
+        double diff = absAngleDiff(TrgetRobotAngle, DesiredTorrentAngle);
+        return diff <= TorrentTolerance;
+    }
+    /*
+     * 计算机器人当前位置和朝向下，最合适的AprilTag目标朝向
+     * @param robotPos 机器人的3D位置
+     * @param robotHeading 机器人的朝向（弧度）
+     * @param DesiredTorrentAngle 期望的炮台朝向（弧度）
+     * @param turnOnly 是否以机器转向最小优先
+     * 如没有符合条件的tag，返回NaN
+     */
+    public static double getTargetHeading(Point3D robotPos, double robotHeading, double DesiredTorrentAngle, boolean turnOnly) {
         int candidateCount = 0;
         CandidateTagInfo[] candidatesInfo = new CandidateTagInfo[Constants.AprilTagCoordinates.length];
         if (Constants.AprilTagCoordinates == null) {
@@ -80,6 +96,10 @@ public class FindAprilTag {
             for (int i = 0; i < LimeLightAngles.length; i++) {
                 double thisLimeLightHeading = normalizeAngle(robotHeading + LimeLightAngles[i]);
                 double adjust = absAngleDiff(thisLimeLightHeading, thisTargetHeading);
+                double tmpTargetHeading = normalizeAngle(thisTargetHeading - LimeLightAngles[i]);
+                if(!isTorrentShootable(tmpTargetHeading, DesiredTorrentAngle)){
+                    continue;
+                }
                 if (adjust < bestAdjust) {
                     bestAdjust = adjust;
                     bestIdx = i;
@@ -101,6 +121,10 @@ public class FindAprilTag {
             return Double.NaN;
         }
 
+
+        double thisKturn = turnOnly ? kTurnOnly : kTurn;
+        // 如果只考虑转向最小，则调整权重系数
+
         // 选择最佳标签
         double bestScore = Double.NEGATIVE_INFINITY;
         double finalTargetHeading = 0;
@@ -110,7 +134,7 @@ public class FindAprilTag {
             double scoreDis = Math.abs(DisTolerance - candidate.distance) / DisTolerance;
             double scoreAngle = Math.abs(AngleToleranceRad - Math.abs(candidate.angleToRobot)) / AngleToleranceRad;
             double scoreTurn = Math.abs(AngleToleranceRad - candidate.turnRadian) / AngleToleranceRad; // 使用同一基准，越小转角越好
-            double score = kDis * scoreDis + kAngle * scoreAngle + kTurn * scoreTurn;
+            double score = kDis * scoreDis + kAngle * scoreAngle + thisKturn * scoreTurn;
             if (score > bestScore) {
                 bestScore = score;
                 finalTargetHeading = candidate.targetHeading;
