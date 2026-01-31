@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
 
 
     public Robot() {
+        Constants.initializeConstants();
         MessageSender.init();
         
         inst = this;

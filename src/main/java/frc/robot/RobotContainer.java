@@ -190,8 +190,6 @@ public class RobotContainer {
 
         swerveStatePublisher.set(drivetrain.getModuleStates());
         robotPospublisher.set(pos);
-
-        MessageSender.log5("test 汉字");
     }
 
     public void updateAlways() {
