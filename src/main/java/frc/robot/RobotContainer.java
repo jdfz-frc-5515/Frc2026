@@ -31,10 +31,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.TurrentSystem;
 import frc.robot.utils.MessageSender;
 import frc.robot.utils.SmartDashboardEx;
 
@@ -54,6 +56,7 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final TurrentSystem turrentSystem = new TurrentSystem();
 
     private StructArrayPublisher<SwerveModuleState> swerveStatePublisher;
 
@@ -157,6 +160,15 @@ public class RobotContainer {
         m_driverController.leftTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 4));
         m_driverController.rightTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 5));
         // m_driverController.povUp() 
+
+        // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
+        // but use vision to compute rotation (DriveWithAim will run while held).
+        m_driverController.rightBumper().whileTrue(
+            new AimAprilTagCmd(drivetrain, 
+                            m_driverController, 
+                            turrentSystem.getTurretWorldPose(drivetrain.getPose()).getRotation().getRadians(), 
+                            false)
+        );
     }
 
     private void configureDriver2Bindings() {

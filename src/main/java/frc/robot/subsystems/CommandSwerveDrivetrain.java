@@ -398,6 +398,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         );
     }
 
+    public  void driveFieldCentric(ImprovedCommandXboxController controller, double omegaRadsPerSec){
+        driveFieldCentric(
+            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
+            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
+            omegaRadsPerSec
+        );
+    }
+
     static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the limelight
     // 如果LL看到目标，则返回到目标的距离
     // 参数minDist表示当前看到的目标距离大于这个值，则忽略此目标，负数则无效

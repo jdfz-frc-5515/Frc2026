@@ -449,6 +449,15 @@ public class Constants {
         public static final double kV = 0.115; 
         public static final double kA = 0.00000; 
     }
+    public static class AimAprilTagConstants {
+        public static final double m_maxAngular = 6.0; // radians per second
+        public static final double LimeLightHeight = 0.2; // meters
+
+ 
+        public static final double Kp = 2.0;
+        public static final double Ki = 0.0;
+        public static final double Kd = 0.12;
+    }
 
     static Alliance alliance = Alliance.Blue;
 }
