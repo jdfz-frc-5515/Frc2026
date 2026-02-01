@@ -1,9 +1,15 @@
+
+import nt4 as nt4
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
 import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QTimer
 
 import field as field
 import console as console
+
 
 class MyWindow(QtWidgets.QMainWindow):
     
@@ -43,7 +49,16 @@ class MyWindow(QtWidgets.QMainWindow):
 
         # TODO: 这里上下左右分割比例的计算是有问题的。
 
-    
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update)  # 每次超时调用 update()
+        self.timer.start(100)  # 每100毫秒触发一次（即10Hz）
+        self.timer.timeout.connect(self.my_custom_update)
+
+    def my_custom_update(self):
+        pos = nt4.default_nt4.get_robot_pose()
+        if pos is not None:
+            print(pos)
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()

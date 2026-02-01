@@ -5,8 +5,8 @@ Python 3.10.11
 
 Bash
 
-pip freeze > requirements.txt
-这会生成一个 requirements.txt 文件。你需要把这个文件提交到 GitHub。
+pip freeze > pythone_env_requirements.txt
+这会生成一个 pythone_env_requirements.txt 文件。你需要把这个文件提交到 GitHub。
 
 步骤 B：别人作为使用者（恢复环境）
 当别人从 GitHub 拉取你的代码后，他们只需要执行以下“三部曲”：
