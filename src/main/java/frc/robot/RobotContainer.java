@@ -165,7 +165,7 @@ public class RobotContainer {
         // but use vision to compute rotation (DriveWithAim will run while held).
         m_driverController.rightBumper().whileTrue(
             new AimAprilTagCmd(drivetrain, 
-                            turrentSystem.getTurretWorldPose(drivetrain.getPose()).getRotation().getRadians(), 
+                            turrentSystem, 
                             false)
         );
     }
