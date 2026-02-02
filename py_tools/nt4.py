@@ -177,12 +177,10 @@ class NT4Manager:
     ############################################# 以下是应用层
     def _start_(self):
         self.subscribe_struct(ROBOT_POS_KEY, Pose2d)
-        self.subscribe(TEST_KEY, [0])
-    def get_robot_pose(self):
+
+    def get_robot_pose(self) -> Pose2d:
         return self.get(ROBOT_POS_KEY)
     
-    def get_test_val(self):
-        return self.get(TEST_KEY)
     
 
 default_nt4 = NT4Manager()
@@ -191,12 +189,10 @@ def test():
     # 运行主逻辑
     try:
         while True:
-            pos = default_nt4.get_robot_pose()
-            if pos is not None:
-                print(f'pos: {pos}')
-            tv = default_nt4.get_test_val()
-            if tv is not None:
-                print(f'tv: {tv}')
+            # pos = default_nt4.get_robot_pose()
+            # if pos is not None:
+            #     print(f'pos: {pos}')
+
             time.sleep(1)
     except KeyboardInterrupt:
         default_nt4.close()
