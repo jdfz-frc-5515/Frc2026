@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Library.team19725.Point3D;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.TurrentSystem;
 import frc.robot.utils.FindAprilTag;
 
 /**
@@ -16,16 +17,17 @@ import frc.robot.utils.FindAprilTag;
  */
 public class AimAprilTagCmd extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
+    private final TurrentSystem m_turret;
     private double m_desiredTurretAngle = 0.0;
     private boolean turnOnly = true;
     // 连续未检测到目标的计数器；超过阈值则自动结束命令
     private int consecutiveMissing = 0;
     private boolean isFinishedFlag = false;
     public AimAprilTagCmd(CommandSwerveDrivetrain drivetrain,
-                        double desiredTurretAngle,
+                        TurrentSystem turret,
                         boolean turnOnly) {
         m_drivetrain = drivetrain;
-        m_desiredTurretAngle = desiredTurretAngle;
+        m_turret = turret;
         this.turnOnly = turnOnly;
 
         //不控制硬件，只读取&设置状态，故不addRequirements
@@ -40,6 +42,12 @@ public class AimAprilTagCmd extends Command {
         Pose2d pose = m_drivetrain.getPose();
         double robotHeading = pose.getRotation().getRadians();
         Point3D robotPos = new Point3D(pose.getX(), pose.getY(),Constants.AimAprilTagCmdConstants.LimeLightHeight);
+
+        // 计算炮台在场地坐标系下的目标位姿
+        Pose2d TurrentPose = m_turret.getTurretWorldPose(pose);
+        // 提取炮台朝向角度（弧度）
+        m_desiredTurretAngle = TurrentPose.getRotation().getRadians();
+
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
         if (!Double.isNaN(visionDesired)) {
             m_drivetrain.setDesiredAutoAimHeading(visionDesired);
