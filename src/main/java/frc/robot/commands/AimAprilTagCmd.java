@@ -20,42 +20,41 @@ import frc.robot.utils.FindAprilTag;
  */
 public class AimAprilTagCmd extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
-    private final ImprovedCommandXboxController m_controller;
-    private final PIDController m_headingPid;
-    
-    private final double m_maxAngular = Constants.AimAprilTagConstants.m_maxAngular;
-    private final double LimeLightHeight = Constants.AimAprilTagConstants.LimeLightHeight;
-    
-    private static final double Kp = Constants.AimAprilTagConstants.Kp;
-    private static final double Ki = Constants.AimAprilTagConstants.Ki;
-    private static final double Kd = Constants.AimAprilTagConstants.Kd;
-    
     private double m_desiredTurretAngle = 0.0;
     private boolean turnOnly = true;
-
+    // 连续未检测到目标的计数器；超过阈值则自动结束命令
+    private int consecutiveMissing = 0;
+    private boolean isFinishedFlag = false;
     public AimAprilTagCmd(CommandSwerveDrivetrain drivetrain,
-                        ImprovedCommandXboxController controller,
                         double desiredTurretAngle,
                         boolean turnOnly) {
         m_drivetrain = drivetrain;
-        m_controller = controller;
         m_desiredTurretAngle = desiredTurretAngle;
         this.turnOnly = turnOnly;
 
-        m_headingPid = new PIDController(Kp, Ki, Kd); //TODO tune PID values
-        m_headingPid.enableContinuousInput(-Math.PI, Math.PI);
-
-        addRequirements(m_drivetrain);
+        //不控制硬件，只读取&设置状态，故不addRequirements
+        //addRequirements(m_drivetrain);
     }
 
     @Override
     public void initialize() {
-        m_headingPid.reset();
+        m_drivetrain.resetRotationController();
+        m_drivetrain.setUsingAutoAim(true);
+        consecutiveMissing = 0;
         Pose2d pose = m_drivetrain.getPose();
         double robotHeading = pose.getRotation().getRadians();
-        Point3D robotPos = new Point3D(pose.getX(), pose.getY(),LimeLightHeight);
+        Point3D robotPos = new Point3D(pose.getX(), pose.getY(),Constants.AimAprilTagCmdConstants.LimeLightHeight);
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
-        SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
+        if (!Double.isNaN(visionDesired)) {
+            m_drivetrain.setDesiredAutoAimHeading(visionDesired);
+            SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
+            
+        } else {
+            consecutiveMissing = 1;
+            SmartDashboard.putNumber("NoTargetAprilTagHeading", Double.NaN);
+            m_drivetrain.setUsingAutoAim(false);
+        }
+        
     }
 
     @Override
@@ -64,29 +63,39 @@ public class AimAprilTagCmd extends Command {
         double robotHeading = pose.getRotation().getRadians();
 
         // Build 3D position for FindAprilTag (uses X,Y,Z)
-        Point3D robotPos = new Point3D(pose.getX(), pose.getY(),LimeLightHeight);
+        Point3D robotPos = new Point3D(pose.getX(), pose.getY(),Constants.AimAprilTagCmdConstants.LimeLightHeight);
 
         // Ask vision for desired heading (radians). May return NaN when no target.
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
-
-        double omegaCmd;
         if (!Double.isNaN(visionDesired)) {
-            omegaCmd = m_headingPid.calculate(robotHeading, visionDesired);
-            omegaCmd = MathUtil.clamp(omegaCmd, -m_maxAngular, m_maxAngular);
-            m_drivetrain.driveFieldCentric(m_controller, omegaCmd);
+            m_drivetrain.setDesiredAutoAimHeading(visionDesired);
+            SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
+            // reset missing counter when we have a good detection
+            consecutiveMissing = 0;
+            if(Math.abs(FindAprilTag.normalizeAngle(robotHeading - visionDesired)) < Constants.AimAprilTagCmdConstants.HeadingTorlerance){
+                isFinishedFlag = true;
+            }
         } else {
-            m_drivetrain.driveFieldCentric(m_controller);
+            consecutiveMissing++;
+            SmartDashboard.putNumber("NoTargetAprilTagHeading", Double.NaN);
+            // 如果连续多帧无目标，关闭自动瞄准并准备退出命令
+            if (consecutiveMissing >= Constants.AimAprilTagCmdConstants.missingThreshold) {
+                m_drivetrain.setUsingAutoAim(false);
+            }
         }
-        SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
     }
 
     @Override
     public void end(boolean interrupted) {
-        // Nothing special; default command will resume
+        m_drivetrain.resetRotationController();
+        m_drivetrain.setUsingAutoAim(false);
     }
 
     @Override
     public boolean isFinished() {
-        return false; // runs while trigger is held (bound via whileTrue)
+        // 结束条件：连续多帧未检测到 AprilTag 或 已经对准
+        return (consecutiveMissing >= Constants.AimAprilTagCmdConstants.missingThreshold || 
+                isFinishedFlag
+        );
     }
 }

@@ -20,13 +20,13 @@ public class FindAprilTag {
     public static double kTurn = 0.01; // 权重系数，转角越小权重越大
 
     public static double kTurnOnly = 10.0; // 转向优先时的权重系数
-    private static double normalizeAngle(double ang) {
+    public static double normalizeAngle(double ang) {
         while (ang <= -Math.PI) ang += 2.0 * Math.PI;
         while (ang > Math.PI) ang -= 2.0 * Math.PI;
         return ang;
     }
 
-    private static double absAngleDiff(double a, double b) {
+    public static double absAngleDiff(double a, double b) {
         return Math.abs(normalizeAngle(a - b));
     }
 
