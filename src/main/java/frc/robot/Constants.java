@@ -449,15 +449,13 @@ public class Constants {
         public static final double kV = 0.115; 
         public static final double kA = 0.00000; 
     }
-    public static class AimAprilTagConstants {
-        public static final double m_maxAngular = 6.0; // radians per second
-        public static final double LimeLightHeight = 0.2; // meters
 
- 
-        public static final double Kp = 2.0;
-        public static final double Ki = 0.0;
-        public static final double Kd = 0.12;
+    public static class AimAprilTagCmdConstants{
+        public static double LimeLightHeight = 0.2;// TODO 根据limelight安装高度确定
+        public static double HeadingTorlerance = Math.toRadians(5.0);
+        public static int missingThreshold = 5; // 连续多少个周期无目标则退出
     }
 
     static Alliance alliance = Alliance.Blue;
+    
 }

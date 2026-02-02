@@ -94,6 +94,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static double manual_MaxAngularRate = RotationsPerSecond.of(1.).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     private static final SwerveRequest.FieldCentric m_manualDrive = new SwerveRequest.FieldCentric().withDeadband(0.15).withRotationalDeadband(0.05 * manual_MaxAngularRate).withDriveRequestType(DriveRequestType.Velocity);
 
+    // 是否正在使用自动瞄准,对准AprilTag
+    private boolean usingAutoAim = false;
+    private double desiredHeading = 0.0;
+
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -391,19 +395,24 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller){
-        driveFieldCentric(
-            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
-            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
-            -controller.getRightX() * manual_MaxAngularRate
-        );
-    }
+        if(!usingAutoAim){
+            driveFieldCentric(
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
+                -controller.getRightX() * manual_MaxAngularRate
+            );
+        }
+        else{
+            // 自动瞄准模式
+            double currentHeading = getPose().getRotation().getRadians();
+            double omega = m_rotationController.calculate(currentHeading, desiredHeading);
 
-    public  void driveFieldCentric(ImprovedCommandXboxController controller, double omegaRadsPerSec){
-        driveFieldCentric(
-            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
-            -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
-            omegaRadsPerSec
-        );
+            driveFieldCentric(
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
+                omega
+            );
+        }
     }
 
     static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the limelight
@@ -836,6 +845,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return this.getPigeon2().getYaw().getValueAsDouble() % 360;
     }
 
+    public void setUsingAutoAim(boolean ifUsingAutoAim) {
+        usingAutoAim = ifUsingAutoAim;
+    }
+    public void setDesiredAutoAimHeading(double radians) {
+        desiredHeading = radians;
+    }
+    public void resetRotationController() {
+        m_rotationController.reset();
+    }
     // public boolean isNearStation(){
     //     return generateStationPose().getTranslation().getDistance(getPose().getTranslation()) <= FieldConstants.StationDetectionArea;
     // }
