@@ -24,6 +24,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -406,7 +407,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             // 自动瞄准模式
             double currentHeading = getPose().getRotation().getRadians();
             double omega = m_rotationController.calculate(currentHeading, desiredHeading);
-
+            SmartDashboard.putNumber("currentHeading(degrees)", Math.toDegrees(currentHeading));
+            SmartDashboard.putNumber("desiredHeading(degrees)", Math.toDegrees(desiredHeading));
+            //TODO 检查角度正负是否正确
             driveFieldCentric(
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,

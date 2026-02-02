@@ -47,7 +47,7 @@ public class AimAprilTagCmd extends Command {
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
         if (!Double.isNaN(visionDesired)) {
             m_drivetrain.setDesiredAutoAimHeading(visionDesired);
-            SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
+            SmartDashboard.putNumber("TargetAprilTagHeading(Initing)", visionDesired);
             
         } else {
             consecutiveMissing = 1;
@@ -69,7 +69,7 @@ public class AimAprilTagCmd extends Command {
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
         if (!Double.isNaN(visionDesired)) {
             m_drivetrain.setDesiredAutoAimHeading(visionDesired);
-            SmartDashboard.putNumber("TargetAprilTagHeading", visionDesired);
+            SmartDashboard.putNumber("TargetAprilTagHeading(executing)", visionDesired);
             // reset missing counter when we have a good detection
             consecutiveMissing = 0;
             if(Math.abs(FindAprilTag.normalizeAngle(robotHeading - visionDesired)) < Constants.AimAprilTagCmdConstants.HeadingTorlerance){
