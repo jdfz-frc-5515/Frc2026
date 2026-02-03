@@ -1,8 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.path.PathConstraints;
 // import com.thethriftybot.Conversion;
 
@@ -16,7 +13,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.MUtils.SegmentOnTheField;

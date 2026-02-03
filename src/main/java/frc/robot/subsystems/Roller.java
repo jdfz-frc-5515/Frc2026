@@ -1,5 +1,4 @@
 package frc.robot.subsystems;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;

@@ -6,9 +6,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 
 public class TurrentSystem {
-   protected Pose2d turrentOffset;       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
-    protected double minAngle = -140;      // 炮台旋转的最小角度限制（度）
-    protected double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
+    public static class TurrentConst {
+        public static Pose2d turrentOffset = new Pose2d(0, 0, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
+        public static double minAngle = -140;      // 炮台旋转的最小角度限制（度）
+        public static double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
+    }
 
     /**
      * 计算炮台在场地坐标系下的位姿（位置 + 朝向）。
@@ -20,10 +22,10 @@ public class TurrentSystem {
     public Pose2d getTurretWorldPose(Pose2d robotPos) {
         // 炮台在机器人坐标系下的平移量需要以机器人当前朝向旋转后再加到机器人原点
         Translation2d worldTrans = robotPos.getTranslation().plus(
-            turrentOffset.getTranslation().rotateBy(robotPos.getRotation())
+            TurrentConst.turrentOffset.getTranslation().rotateBy(robotPos.getRotation())
         );
         // 炮台的朝向为机器人朝向加上炮台安装时的旋转偏移
-        Rotation2d worldRot = robotPos.getRotation().plus(turrentOffset.getRotation());
+        Rotation2d worldRot = robotPos.getRotation().plus(TurrentConst.turrentOffset.getRotation());
         return new Pose2d(worldTrans, worldRot);
     }
 
@@ -63,10 +65,10 @@ public class TurrentSystem {
 
         // 7. 应用炮台物理旋转限制 (Clamping)
         // 炮台由于机械结构（线缆等）限制，不能在 minAngle 和 maxAngle 之外工作
-        if (degrees < minAngle) {
-            return minAngle;
-        } else if (degrees > maxAngle) {
-            return maxAngle;
+        if (degrees < TurrentConst.minAngle) {
+            return TurrentConst.minAngle;
+        } else if (degrees > TurrentConst.maxAngle) {
+            return TurrentConst.maxAngle;
         }
 
         return degrees;

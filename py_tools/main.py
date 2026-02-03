@@ -1,9 +1,15 @@
+
+import nt4 as nt4
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
+# 注意，nt4和PyQt5有冲突，nt4必须最先import,否则程序闪退！！！
 import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtCore import QTimer
 
 import field as field
 import console as console
+
 
 class MyWindow(QtWidgets.QMainWindow):
     
@@ -43,7 +49,38 @@ class MyWindow(QtWidgets.QMainWindow):
 
         # TODO: 这里上下左右分割比例的计算是有问题的。
 
-    
+        self.timer = QTimer(self)
+        # self.timer.timeout.connect(self.update)  # 每次超时调用 update()
+        self.timer.start(100)  # 每100毫秒触发一次（即10Hz）
+        self.timer.timeout.connect(self.my_custom_update)
+
+
+    def update_robot_info(self):
+        robotPosData = nt4.default_nt4.get_robot_pose()
+        if nt4.default_nt4.is_connected() == False or robotPosData is None:
+            self.label_robotPos.setText("Pos X:--, Y:--")
+            self.label_robotRot.setText("Rot deg:--")
+        else:
+            x, y = robotPosData.x, robotPosData.y
+            rot = robotPosData.rotation()
+            deg = rot.degrees()
+            self.label_robotPos.setText(f'Pos X:{x:0.2f}, Y:{y:0.2f}')
+            self.label_robotRot.setText(f"Rot deg:{deg:0.2f}")
+
+            self.fieldCanvas.update_robot_pose(x, y, deg)
+
+    def update_connect_status(self):
+        if nt4.default_nt4.is_connected():
+            self.label_status.setText("Connected")
+            self.label_status.setStyleSheet("Color:green")
+        else:
+            self.label_status.setText("Connecting")
+            self.label_status.setStyleSheet("Color:red")
+    def my_custom_update(self):
+        self.update_connect_status()
+        self.update_robot_info()
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
