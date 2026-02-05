@@ -1,8 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.path.PathConstraints;
 // import com.thethriftybot.Conversion;
 
@@ -16,7 +13,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.MUtils.SegmentOnTheField;
@@ -346,7 +342,7 @@ public class Constants {
     
     //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag
     public static final List<Integer> usableAprilTagIDs = Arrays.asList(
-            2,5,7,8,9,10,11,12,13,14,15,16,18, 21, 23, 24, 25, 26, 27,29, 30, 31, 32
+            2,5,7,8,9,10,11,12,13,14,15,16,18, 21, 23, 24, 25, 26, 27,28, 29, 30, 31, 32
     );
 
     public final class FieldInfo {

@@ -19,7 +19,7 @@ public class FindAprilTag {
     public static double kAngle = 0.4; // 权重系数，角度
     public static double kTurn = 0.01; // 权重系数，转角越小权重越大
 
-    public static double kTurnOnly = 10.0; // 转向优先时的权重系数
+    public static double kTurnOnly = 100000000000.0; // 转向优先时的权重系数
     public static double normalizeAngle(double ang) {
         while (ang <= -Math.PI) ang += 2.0 * Math.PI;
         while (ang > Math.PI) ang -= 2.0 * Math.PI;
@@ -85,7 +85,7 @@ public class FindAprilTag {
 
             // 将 3D 向量投影/转换到平面 2D（依赖你库的实现）
             Point2D targetHeadingVector = Point3D.toPoint2D(RobotToTagVector, new Point3D(0, 0, 1), new Point3D(0, 0, 0));
-            double thisTargetHeading = Point2D.angleBetween(targetHeadingVector, new Point2D(1, 0));
+            double thisTargetHeading = -Point2D.angleBetween(targetHeadingVector, new Point2D(1, 0));
             thisTargetHeading = normalizeAngle(thisTargetHeading);
 
             // 选择最近的 limelight 并计算需要的调整角度（归一化）
