@@ -337,7 +337,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        // double dist = updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_SKY, -1);
+        double dist = updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_SKY, -1);
         // if (MiscUtils.compareDouble(dist, 0)) {
         //     dist = -1;
         // }
