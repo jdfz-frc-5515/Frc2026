@@ -382,6 +382,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller){
+        SmartDashboard.putBoolean("usingAuto", usingAutoAim);
         if(!usingAutoAim){
             driveFieldCentric(
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
@@ -836,6 +837,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public void setUsingAutoAim(boolean ifUsingAutoAim) {
         usingAutoAim = ifUsingAutoAim;
+    }
+    /**
+     * Returns whether auto-aim is currently enabled.
+     */
+    public boolean isUsingAutoAim() {
+        return usingAutoAim;
     }
     public void setDesiredAutoAimHeading(double radians) {
         desiredHeading = radians;

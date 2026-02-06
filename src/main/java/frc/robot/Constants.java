@@ -123,8 +123,8 @@ public class Constants {
         public static final double moveToPoseTranslationkI = 0.; // TODO
         public static final double moveToPoseTranslationkD = 0.0; // TODO
 
-        public static final double moveToPoseRotationkP = 5.; // TODO
-        public static final double moveToPoseRotationkI = 0.; // TODO
+        public static final double moveToPoseRotationkP = 5; // TODO
+        public static final double moveToPoseRotationkI = 2.; // TODO
         public static final double moveToPoseRotationkD = 0.; // TODO
 
         public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.); // TODO
@@ -448,7 +448,7 @@ public class Constants {
 
     public static class AimAprilTagCmdConstants{
         public static double LimeLightHeight = 0.2;// TODO 根据limelight安装高度确定
-        public static double HeadingTorlerance = Math.toRadians(5.0);
+        public static double HeadingTorlerance = Math.toRadians(20.0);
         public static int missingThreshold = 5; // 连续多少个周期无目标则退出
     }
 
