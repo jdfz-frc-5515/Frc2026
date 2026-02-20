@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.FeedingConstants;
 
 public class FeedingSubsystem extends SubsystemBase {
   // Feeding constants are centralized in Constants.FeedingConstants
@@ -35,8 +36,8 @@ public class FeedingSubsystem extends SubsystemBase {
   private final TalonFXConfiguration feedConfig;
   /** Creates a new ExampleSubsystem. */
   public FeedingSubsystem() {
-  feedMotor = new TalonFX(frc.robot.Constants.FeedingConstants.FEED_MOTOR_CAN_ID, feedingSubsysCanBus);
-  pathMotor = new TalonFX(frc.robot.Constants.FeedingConstants.PATH_MOTOR_CAN_ID, feedingSubsysCanBus);
+  feedMotor = new TalonFX(FeedingConstants.FEED_MOTOR_CAN_ID, feedingSubsysCanBus);
+  pathMotor = new TalonFX(FeedingConstants.PATH_MOTOR_CAN_ID, feedingSubsysCanBus);
     feedConfig = new TalonFXConfiguration()
             .withMotorOutput(
                 new MotorOutputConfigs()
@@ -45,29 +46,29 @@ public class FeedingSubsystem extends SubsystemBase {
             )
       .withSlot0(
         new Slot0Configs()
-          .withKP(frc.robot.Constants.FeedingConstants.KP)
-          .withKI(frc.robot.Constants.FeedingConstants.KI)
-          .withKD(frc.robot.Constants.FeedingConstants.KD)
-          .withKS(frc.robot.Constants.FeedingConstants.KS)
-          .withKV(frc.robot.Constants.FeedingConstants.KV)
-          .withKA(frc.robot.Constants.FeedingConstants.KA)
+          .withKP(FeedingConstants.KP)
+          .withKI(FeedingConstants.KI)
+          .withKD(FeedingConstants.KD)
+          .withKS(FeedingConstants.KS)
+          .withKV(FeedingConstants.KV)
+          .withKA(FeedingConstants.KA)
       );
-    feedMotor.getConfigurator().apply(feedConfig);
-    feedControl = new VelocityVoltage(0);
-    pathControl = new DutyCycleOut(0);
-    feedMotor.setControl(feedControl.withVelocity(frc.robot.Constants.FeedingConstants.FEED_STATIC_VELOCITY));
-    pathMotor.setControl(pathControl.withOutput(frc.robot.Constants.FeedingConstants.PATH_STATIC_POWER));
+  feedMotor.getConfigurator().apply(feedConfig);
+  feedControl = new VelocityVoltage(0);
+  pathControl = new DutyCycleOut(0);
+  feedMotor.setControl(feedControl.withVelocity(FeedingConstants.FEED_STATIC_VELOCITY));
+  pathMotor.setControl(pathControl.withOutput(FeedingConstants.PATH_STATIC_POWER));
   }
 
   public Command startFeedingCommand() {
     return edu.wpi.first.wpilibj2.command.Commands.startEnd(
         () -> {
-          feedMotor.setControl(feedControl.withVelocity(frc.robot.Constants.FeedingConstants.FEED_SPIN_VELOCITY));
-          pathMotor.setControl(pathControl.withOutput(frc.robot.Constants.FeedingConstants.PATH_SPIN_POWER));
+          feedMotor.setControl(feedControl.withVelocity(FeedingConstants.FEED_SPIN_VELOCITY));
+          pathMotor.setControl(pathControl.withOutput(FeedingConstants.PATH_SPIN_POWER));
         },
         () -> {
-          feedMotor.setControl(feedControl.withVelocity(frc.robot.Constants.FeedingConstants.FEED_STATIC_VELOCITY));
-          pathMotor.setControl(pathControl.withOutput(frc.robot.Constants.FeedingConstants.PATH_STATIC_POWER));
+          feedMotor.setControl(feedControl.withVelocity(FeedingConstants.FEED_STATIC_VELOCITY));
+          pathMotor.setControl(pathControl.withOutput(FeedingConstants.PATH_STATIC_POWER));
         },
         this);
   }
@@ -75,8 +76,8 @@ public class FeedingSubsystem extends SubsystemBase {
   public Command stopFeedingCommand() {
     return new InstantCommand(
         () -> {
-          feedMotor.setControl(feedControl.withVelocity(frc.robot.Constants.FeedingConstants.FEED_STATIC_VELOCITY));
-          pathMotor.setControl(pathControl.withOutput(frc.robot.Constants.FeedingConstants.PATH_STATIC_POWER));
+          feedMotor.setControl(feedControl.withVelocity(FeedingConstants.FEED_STATIC_VELOCITY));
+          pathMotor.setControl(pathControl.withOutput(FeedingConstants.PATH_STATIC_POWER));
         });
   }
 

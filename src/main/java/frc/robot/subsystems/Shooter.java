@@ -20,6 +20,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 /**
  * Simple two-motor Flywheel/Shooter subsystem.
@@ -35,16 +36,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Shooter extends SubsystemBase {
     private final TalonFX primary;
     private final TalonFX follower;
-    private final int PrimaryCanID = frc.robot.Constants.ShooterConstants.PRIMARY_CAN_ID;
-    private final int FollowerCanID = frc.robot.Constants.ShooterConstants.FOLLOWER_CAN_ID;
+    private final int PrimaryCanID = ShooterConstants.PRIMARY_CAN_ID;
+    private final int FollowerCanID = ShooterConstants.FOLLOWER_CAN_ID;
     private final CANBus shooterCanBus = new CANBus("rio");
     // PID/SVA constants for shooter slot0
-    private static final double SHOOT_KP = frc.robot.Constants.ShooterConstants.KP;
-    private static final double SHOOT_KI = frc.robot.Constants.ShooterConstants.KI;
-    private static final double SHOOT_KD = frc.robot.Constants.ShooterConstants.KD;
-    private static final double SHOOT_KS = frc.robot.Constants.ShooterConstants.KS;
-    private static final double SHOOT_KV = frc.robot.Constants.ShooterConstants.KV;
-    private static final double SHOOT_KA = frc.robot.Constants.ShooterConstants.KA;
+    private static final double SHOOT_KP = ShooterConstants.KP;
+    private static final double SHOOT_KI = ShooterConstants.KI;
+    private static final double SHOOT_KD = ShooterConstants.KD;
+    private static final double SHOOT_KS = ShooterConstants.KS;
+    private static final double SHOOT_KV = ShooterConstants.KV;
+    private static final double SHOOT_KA = ShooterConstants.KA;
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withSlot(0);
     private final VoltageOut voltageRequest = new VoltageOut(0);
 
