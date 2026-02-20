@@ -29,15 +29,14 @@ public class FeedingSubsystem extends SubsystemBase {
   // Feeding constants are centralized in Constants.FeedingConstants
   private final TalonFX feedMotor;
   private final TalonFX pathMotor;
-  private final CANBus feedingCanBus = new CANBus("rio");
-  private final CANBus pathCanBus = new CANBus("rio");
+  private final CANBus feedingSubsysCanBus = new CANBus("rio");
   private final VelocityVoltage feedControl;
   private final DutyCycleOut pathControl;
   private final TalonFXConfiguration feedConfig;
   /** Creates a new ExampleSubsystem. */
   public FeedingSubsystem() {
-  feedMotor = new TalonFX(frc.robot.Constants.FeedingConstants.FEED_MOTOR_CAN_ID, feedingCanBus);
-  pathMotor = new TalonFX(frc.robot.Constants.FeedingConstants.PATH_MOTOR_CAN_ID, pathCanBus);
+  feedMotor = new TalonFX(frc.robot.Constants.FeedingConstants.FEED_MOTOR_CAN_ID, feedingSubsysCanBus);
+  pathMotor = new TalonFX(frc.robot.Constants.FeedingConstants.PATH_MOTOR_CAN_ID, feedingSubsysCanBus);
     feedConfig = new TalonFXConfiguration()
             .withMotorOutput(
                 new MotorOutputConfigs()
