@@ -27,13 +27,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.SlowExtenderCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Extender;
-import frc.robot.subsystems.ImprovedCommandXboxController;
+
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TurrentSystem;
 import frc.robot.subsystems.FeedingSubsystem;
