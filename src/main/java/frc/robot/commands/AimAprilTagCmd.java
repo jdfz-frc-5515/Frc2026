@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,22 +19,23 @@ public class AimAprilTagCmd extends Command {
     private final TurrentSystem m_turret;
     private double m_desiredTurretAngle = 0.0;
     private boolean turnOnly = true;
+    private boolean isFinishedFlag = false;
     // 连续未检测到目标的计数器；超过阈值则自动结束命令
     private int consecutiveMissing = 0;
-    private boolean isFinishedFlag = false;
     public AimAprilTagCmd(CommandSwerveDrivetrain drivetrain,
                         TurrentSystem turret,
                         boolean turnOnly) {
         m_drivetrain = drivetrain;
         m_turret = turret;
         this.turnOnly = turnOnly;
-
+        isFinishedFlag = false;
         //不控制硬件，只读取&设置状态，故不addRequirements
         //addRequirements(m_drivetrain);
     }
 
     @Override
     public void initialize() {
+        isFinishedFlag = false;
         m_drivetrain.resetRotationController();
         m_drivetrain.setUsingAutoAim(true);
         consecutiveMissing = 0;
@@ -49,14 +49,16 @@ public class AimAprilTagCmd extends Command {
         m_desiredTurretAngle = TurrentPose.getRotation().getRadians();
 
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
+        visionDesired = 0;
         if (!Double.isNaN(visionDesired)) {
+            // enable auto-aim only when we have a valid target
+            m_drivetrain.resetRotationController();
+            m_drivetrain.setUsingAutoAim(true);
             m_drivetrain.setDesiredAutoAimHeading(visionDesired);
             SmartDashboard.putNumber("TargetAprilTagHeading(Initing)", visionDesired);
-            
         } else {
             consecutiveMissing = 1;
             SmartDashboard.putNumber("NoTargetAprilTagHeading", Double.NaN);
-            m_drivetrain.setUsingAutoAim(false);
         }
         
     }
@@ -71,21 +73,22 @@ public class AimAprilTagCmd extends Command {
 
         // Ask vision for desired heading (radians). May return NaN when no target.
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
+        visionDesired = 0;
         if (!Double.isNaN(visionDesired)) {
+            // enable auto-aim (in case it was off) and update target
+            m_drivetrain.setUsingAutoAim(true);
             m_drivetrain.setDesiredAutoAimHeading(visionDesired);
-            SmartDashboard.putNumber("TargetAprilTagHeading(executing)", visionDesired);
             // reset missing counter when we have a good detection
             consecutiveMissing = 0;
-            if(Math.abs(FindAprilTag.normalizeAngle(robotHeading - visionDesired)) < Constants.AimAprilTagCmdConstants.HeadingTorlerance){
+            SmartDashboard.putNumber("TargetAprilTagHeading(executing)", visionDesired);
+            SmartDashboard.putNumber("disAngle", Math.abs(FindAprilTag.normalizeAngle(robotHeading - visionDesired)));
+            SmartDashboard.putNumber("tolerance", Constants.AimAprilTagCmdConstants.HeadingTorlerance);
+            if (Math.abs(FindAprilTag.normalizeAngle(robotHeading - visionDesired)) < Constants.AimAprilTagCmdConstants.HeadingTorlerance) {
                 isFinishedFlag = true;
             }
-        } else {
+        }else {
             consecutiveMissing++;
             SmartDashboard.putNumber("NoTargetAprilTagHeading", Double.NaN);
-            // 如果连续多帧无目标，关闭自动瞄准并准备退出命令
-            if (consecutiveMissing >= Constants.AimAprilTagCmdConstants.missingThreshold) {
-                m_drivetrain.setUsingAutoAim(false);
-            }
         }
     }
 
