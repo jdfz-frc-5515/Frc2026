@@ -396,7 +396,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             double omega = m_rotationController.calculate(currentHeading, desiredHeading);
             SmartDashboard.putNumber("currentHeading(degrees)", Math.toDegrees(currentHeading));
             SmartDashboard.putNumber("desiredHeading(degrees)", Math.toDegrees(desiredHeading));
-            //TODO 检查角度正负是否正确
             driveFieldCentric(
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,

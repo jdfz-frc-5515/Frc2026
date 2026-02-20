@@ -74,34 +74,6 @@ public class Constants {
 
     }
 
-    public static final class GIntakeConstants {
-        public static final int GIntakeTurnID = 16;
-        public static final int GIntakeDriveID = 15;
-        public static final int GIntakeCCID = 19;
-        public static final String canBusName = "rio";
-        public static final double retractCCRotation = 0.0;
-        public static final double expandCCRotation = 1.38;
-        public static final double intakeMotorSpeed = 0.5;
-        public static final double intakeMotorSpeedInRetractingWithCoral = 0.6;
-        public static final double intakeMotorReverseSpeed = -0.15;
-
-        public static final double Velocity = 7.5;// 20; // 30;//50;
-        public static final double Acceleration = 15; //40;// 100;// 75;
-        public static final double Jerk = 45; //120;
-
-        public static final double SensorToMechanismRatio = 1.0;
-        public static final double RotorToSensorRatio = 4.857;
-        
-        public static final class turnMotorConst {
-            public static final double kP = 30;
-            public static final double kI = 0.0;
-            public static final double kD = 0.0;
-            public static final double kS = 4.0;
-            public static final double kV = 0.0;
-            public static final double kA = 0.0;
-        }
-    }
-
     public static final class AutoConstants {
         // Path Following
         public static final double followPathTranslationkP = 5.; // TODO
@@ -199,75 +171,53 @@ public class Constants {
 
         public static final double StationDetectionArea = 0.3;
 
-    }
+        public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
+            // 战壕 (Trench) - 高度 35.00" (0.89m)
+                new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0), // 0°
+                new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0), // 0°
+        
+                // 中枢 (Hub) - 高度 44.25" (1.12m)
+                new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0), // 90°
+                new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0), // 270°
+                new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0), // 270°
+                new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0), // 0°
+                new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0), // 0°
+                new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0), // 90°
+        
+                // 哨站 (Outpost) - 高度 21.75" (0.55m)
+                new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0), // 180°
+        
+                // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
+                new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0),  // 180°
+                new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0),
+                new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0),
+                new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0),
+                new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0),
+                new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0),
+                new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0),
+                new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0),
+                new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0),
+                new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0),
+                new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0),
+                new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0),
+                new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0),
+                new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0),
+                new AprilTagCoordinate(30,  0.0127,  1.08,  0.55,  1,  0,  0),
+                new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0),
+                new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0)
+        };
 
-    public static final class TurningArm {
-        public static final int motorID = 13;
-        public static final int canCoderID = 14;
-        public static final String canBusName = "rio";
-        public static final double KP = 0; // 60; //7;
-        public static final double KI = 0; //0.1;// 1.0;
-        public static final double KD = 0.0; // 0.1; 
-        public static final double KV = 6.08; // 0.0; // 0.1
-        public static final double KS = 0.0;
-        public static final double KA = 0.0;
-        public static final double Velocity = 4; // 100.0;
-        public static final double Acceleration = 5; // 600.0;
-        public static final double Jerk = 0.0;
-        public static final double SensorToMechanismRatio = 1.0;
-        public static final double RotorToSensorRatio = 44 * 49.11111;
-        // bigger value means arm is more expanded(clockwise)
-        public static final double zeroPos = 0;
-        public static final double groundIntakePos = 0.01;// 0.000061;// 0.26; //0.385;  //0.18; // 7/12:0.27
-        public static final double upIntakePos = 0.1237; //  1.15; //1.25;
-        public static final double l1Pos = 0.1780;//0.407227;
-        public static final double l2Pos = 0.1780;
-        public static final double dodgePos =  1.139307;  // the pos that allows elevator to move
-        public static final double l3Pos = 0.1780; //1.80;
-        public static final double l4Pos = 0.1780; //1.80;
-        public static final double ball1Pos = 0.425;//4.3;
-        public static final double ball2Pos = 0.425;//4.3;
-    }
+        //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag
+        public static final List<Integer> usableAprilTagIDs = Arrays.asList(
+                2,5,7,8,9,10,11,12,13,14,15,16,18, 21, 23, 24, 25, 26, 27,28, 29, 30, 31, 32
+        );
 
-    public static final class Elevator {
-        public static final int primaryMotorID = 20;
-        public static final int followerMotorID = 21;
-        public static final int canCoderID = 22;
-        public static final String canBusName = "rio";
-        public static class Up {
-            public static final double KP = 5; // 25;  // 5; // 20.0;
-            public static final double KI = 0.005; //3.2; // 0;
-            public static final double KD = 0.1; //0.2;
-            public static final double KV = 0.5;//1;//0.AQ;
-            public static final double KS = 0.05;//0.05;
-            public static final double KA = 0;//0.07;
-        }
-        public static class Down {
-            public static final double KP = 5; // 10.0;
-            public static final double KI = 1;
-            public static final double KD = -0.35;
-            public static final double KV = 1;//1;//0.1;
-            public static final double KS = 0;//0.05;
-            public static final double KA = 0;//0.07;
-        }
-
-        public static final double Velocity = 30; // 30;//50;
-        public static final double Acceleration = 60;// 75;
-        public static final double Jerk = 180;
-        public static final double SensorToMechanismRatio = 1.0;
-        public static final double RotorToSensorRatio = 4.8;//11.33;
-        // smaller value means higher position
-        public static final double zeroPos = 0;
-        public static final double basePos = 0;
-
-        public static final double l1Pos = -3.7; // -1.75;
-        public static final double l2Pos = -3.7;
-        public static final double l3Pos = -8.28;
-        public static final double l4Pos = -14.2;
-        public static final double ball1Pos = -2.2;
-        public static final double ball2Pos = -5.5;
-        public static final double upDodgePos = -6.5;
-        public static final double downDodgePos = -3.47;
     }
 
 
@@ -297,53 +247,6 @@ public class Constants {
         public static final double constraintsSpeed = 1.;
         public static final double constraintsAccel = 1.;
     }
-
-    public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
-        // 战壕 (Trench) - 高度 35.00" (0.89m)
-            new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0), // 0°
-            new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0), // 0°
-
-            // 中枢 (Hub) - 高度 44.25" (1.12m)
-            new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0), // 90°
-            new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0), // 270°
-            new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0), // 270°
-            new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0), // 0°
-            new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0), // 0°
-            new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0), // 90°
-
-            // 哨站 (Outpost) - 高度 21.75" (0.55m)
-            new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0), // 180°
-
-            // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
-            new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0), // 180°
-            new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0),  // 180°
-            new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0),
-            new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0),
-            new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0),
-            new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0),
-            new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0),
-            new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0),
-            new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0),
-            new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0),
-            new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0),
-            new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0),
-            new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0),
-            new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0),
-            new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0),
-            new AprilTagCoordinate(30,  0.0127,  1.08,  0.55,  1,  0,  0),
-            new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0),
-            new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0)
-    };
-    
-    //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag
-    public static final List<Integer> usableAprilTagIDs = Arrays.asList(
-            2,5,7,8,9,10,11,12,13,14,15,16,18, 21, 23, 24, 25, 26, 27,28, 29, 30, 31, 32
-    );
 
     public final class FieldInfo {
         
@@ -426,7 +329,7 @@ public class Constants {
 
 
     public static class RollerConstants {
-        public static final int MotorID = 100;
+        public static final int MotorID = 6;
         public static final double kOpenPower = 0.8;
     
         // 编码器与换算常量（根据实际电机/齿比调整）
@@ -444,6 +347,46 @@ public class Constants {
         public static final double kS = 0.04;   
         public static final double kV = 0.115; 
         public static final double kA = 0.00000; 
+    }
+
+    public static final class ShooterConstants {
+        public static final int PRIMARY_CAN_ID = 10;
+        public static final int FOLLOWER_CAN_ID = 11;
+        public static final double KP = 1.0;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final double KS = 0.0;
+        public static final double KV = 0.1;
+        public static final double KA = 0.0;
+    }
+
+    public static final class FeedingConstants {
+        public static final double FEED_STATIC_VELOCITY = 0.0;
+        public static final double FEED_SPIN_VELOCITY = 2.0; // rps
+        public static final double PATH_STATIC_POWER = 0.0;
+        public static final double PATH_SPIN_POWER = 0.3;
+        public static final int FEED_MOTOR_CAN_ID = 6;
+        public static final int PATH_MOTOR_CAN_ID = 7;
+        public static final double KP = 0.1;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final double KS = 0.04;
+        public static final double KV = 0.115;
+        public static final double KA = 0.0;
+    }
+
+    public static final class ExtenderConstants {
+        public static final int EXTENDER_CAN_ID = 1;
+        public static final double GEAR_RATIO = 27.0;
+        public static final double SLOW_OUT_RPM = 10.0;
+        public static final double IN_POS = 0.0;
+        public static final double OUT_POS = 2.0;
+        public static final double KP = 0.01;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final double KS = 0.04;
+        public static final double KV = 0.115;
+        public static final double KA = 0.0;
     }
 
     public static class AimAprilTagCmdConstants{

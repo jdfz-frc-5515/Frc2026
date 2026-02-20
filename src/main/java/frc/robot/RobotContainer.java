@@ -28,11 +28,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AimAprilTagCmd;
+import frc.robot.commands.SlowExtenderCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.ImprovedCommandXboxController;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TurrentSystem;
+import frc.robot.subsystems.FeedingSubsystem;
 import frc.robot.utils.SmartDashboardEx;
 
 public class RobotContainer {
@@ -52,7 +56,9 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final TurrentSystem turrentSystem = new TurrentSystem();
-
+    public final Extender extender = new Extender();
+    public final Shooter shooter = new Shooter();
+    public final FeedingSubsystem feedingSubsystem = new FeedingSubsystem();
     private StructArrayPublisher<SwerveModuleState> swerveStatePublisher;
 
     public static final ImprovedCommandXboxController m_driverController = new ImprovedCommandXboxController(0);
@@ -163,10 +169,17 @@ public class RobotContainer {
                             turrentSystem, 
                             false)
         );
+        // m_driverController.a().onTrue(new SlowExtenderCmd(extender, Extender.Position.IN.motorPosition()));
+        // m_driverController.b().onTrue(new SlowExtenderCmd(extender, Extender.Position.OUT.motorPosition()));
+        // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
+        // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
     }
 
     private void configureDriver2Bindings() {
-        // m_driverController2
+        m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
+        m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
+        m_driverController2.a().whileTrue(feedingSubsystem.startFeedingCommand());
+        m_driverController2.b().whileTrue(feedingSubsystem.stopFeedingCommand());
     }
 
     private void configureDriver3Bindings() {

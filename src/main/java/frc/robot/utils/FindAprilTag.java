@@ -1,6 +1,6 @@
 package frc.robot.utils;
 
-import frc.robot.Constants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Library.team19725.Point2D;
 import frc.robot.Library.team19725.Point3D;
 import frc.robot.utils.Models.AprilTagCoordinate;
@@ -15,9 +15,9 @@ public class FindAprilTag {
     public static double AngleTolerance=60.0; // degrees
     public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians
     
-    public static double kDis = 0.59; // 权重系数，距离越近权重越大
-    public static double kAngle = 0.4; // 权重系数，角度
-    public static double kTurn = 0.01; // 权重系数，转角越小权重越大
+    public static double kDis = 0.5; // 权重系数，距离越近权重越大
+    public static double kAngle = 0.15; // 权重系数，角度
+    public static double kTurn = 0.35; // 权重系数，转角越小权重越大
 
     public static double kTurnOnly = 100000000000.0; // 转向优先时的权重系数
     public static double normalizeAngle(double ang) {
@@ -45,17 +45,17 @@ public class FindAprilTag {
      */
     public static double getTargetHeading(Point3D robotPos, double robotHeading, double DesiredTorrentAngle, boolean turnOnly) {
         int candidateCount = 0;
-        CandidateTagInfo[] candidatesInfo = new CandidateTagInfo[Constants.AprilTagCoordinates.length];
-        if (Constants.AprilTagCoordinates == null) {
+        CandidateTagInfo[] candidatesInfo = new CandidateTagInfo[FieldConstants.AprilTagCoordinates.length];
+        if (FieldConstants.AprilTagCoordinates == null) {
             return Double.NaN;
         }
 
-        for (AprilTagCoordinate tag : Constants.AprilTagCoordinates) {
+        for (AprilTagCoordinate tag : FieldConstants.AprilTagCoordinates) {
             
             //对于该Tag，最终的机器朝向
             double targetHeading = 0;
             // 过滤掉看不到的标签
-            if (!Constants.usableAprilTagIDs.contains(tag.id)) {
+            if (!FieldConstants.usableAprilTagIDs.contains(tag.id)) {
                 continue;
             }
 
@@ -83,7 +83,7 @@ public class FindAprilTag {
                 -TagToRobotVector.getZ()
             );
 
-            // 将 3D 向量投影/转换到平面 2D（依赖你库的实现）
+            // 将 3D 向量投影/转换到平面 2D
             Point2D targetHeadingVector = Point3D.toPoint2D(RobotToTagVector, new Point3D(0, 0, 1), new Point3D(0, 0, 0));
             double thisTargetHeading = -Point2D.angleBetween(targetHeadingVector, new Point2D(1, 0));
             thisTargetHeading = normalizeAngle(thisTargetHeading);
