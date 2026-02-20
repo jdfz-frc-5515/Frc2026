@@ -7,6 +7,7 @@ import static edu.wpi.first.units.Units.Volts;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -36,6 +37,7 @@ public class Shooter extends SubsystemBase {
     private final TalonFX follower;
     private final int PrimaryCanID = frc.robot.Constants.ShooterConstants.PRIMARY_CAN_ID;
     private final int FollowerCanID = frc.robot.Constants.ShooterConstants.FOLLOWER_CAN_ID;
+    private final CANBus shooterCanBus = new CANBus("rio");
     // PID/SVA constants for shooter slot0
     private static final double SHOOT_KP = frc.robot.Constants.ShooterConstants.KP;
     private static final double SHOOT_KI = frc.robot.Constants.ShooterConstants.KI;
@@ -52,8 +54,8 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
     // IDs are used to construct TalonFX instances below; no need to store them separately
-        this.primary = new TalonFX(PrimaryCanID);
-        this.follower = new TalonFX(FollowerCanID);
+        this.primary = new TalonFX(PrimaryCanID, shooterCanBus);
+        this.follower = new TalonFX(FollowerCanID, shooterCanBus);
 
         // Apply configuration — primary and follower can have different motor inversion
         primary.getConfigurator().apply(getConfiguration());
