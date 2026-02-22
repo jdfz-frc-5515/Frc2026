@@ -31,6 +31,7 @@ import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.SlowExtenderCmd;
+import frc.robot.commands.TurrentCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -57,10 +58,11 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final TurrentSystem turrentSystem = new TurrentSystem();
     public final Extender extender = new Extender();
     public final Shooter shooter = new Shooter();
     public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
+    public final TurrentSystem m_turrentSubsystem = new TurrentSystem();
+
     private StructArrayPublisher<SwerveModuleState> swerveStatePublisher;
 
     public static final ImprovedCommandXboxController m_driverController = new ImprovedCommandXboxController(0);
@@ -166,17 +168,20 @@ public class RobotContainer {
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
-        m_driverController.rightBumper().whileTrue(
-            new AimAprilTagCmd(drivetrain, 
-                            turrentSystem, 
-                            false)
-        );
+        // m_driverController.rightBumper().whileTrue(
+        //     new AimAprilTagCmd(drivetrain, 
+        //                     m_turrentSubsystem, 
+        //                     false)
+        // );
         // m_driverController.a().onTrue(new SlowExtenderCmd(extender, Extender.Position.IN.motorPosition()));
         // m_driverController.b().onTrue(new SlowExtenderCmd(extender, Extender.Position.OUT.motorPosition()));
         // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
         // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
 
         m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
+
+        m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
+        m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
     }
 
     private void configureDriver2Bindings() {

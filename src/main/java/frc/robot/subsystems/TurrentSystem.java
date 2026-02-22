@@ -1,15 +1,109 @@
 package frc.robot.subsystems;
 
+import java.util.logging.LogManager;
+
+import com.ctre.phoenix6.CANBus;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.utils.MessageSender;
 
 
-public class TurrentSystem {
+public class TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
         public static Pose2d turrentOffset = new Pose2d(0, 0, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
         public static double minAngle = -140;      // 炮台旋转的最小角度限制（度）
         public static double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
+    }
+
+    private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
+    private MotionMagicVoltage m_mmv = new MotionMagicVoltage(0);
+    private int m_turnState = 0;    // 1正转，-1反转，0不转
+
+    public TurrentSystem() {
+        init();
+    }
+
+    public void init() {
+        m_motor.getConfigurator().apply(getFeedMotorConfiguration());
+        m_motor.setPosition(0);
+    }
+
+    
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        update();
+    }
+
+    private double getMotorPosition() {
+        double pos = m_motor.getPosition().getValueAsDouble();
+        return pos;
+    }
+    public void update() {
+        double DT = 0.01;
+        double curPos = getMotorPosition();
+        MessageSender.log(String.format("tuurent pos: %d", curPos));
+        switch (m_turnState) {
+            case 0:
+                
+                break;
+            case 1:
+                m_motor.setControl(m_mmv.withPosition(curPos-DT));
+                break;
+            case -1:
+                m_motor.setControl(m_mmv.withPosition(curPos+DT));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void turnLeft() {
+        m_turnState = -1;
+    }
+
+    public void turnRight() {
+        m_turnState = 1;
+    }
+
+    public void stopTurn() {
+        m_turnState = 0;
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run during simulation
+    }
+
+    private TalonFXConfiguration getFeedMotorConfiguration() {
+            TalonFXConfiguration config = new TalonFXConfiguration();
+
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+        // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -200;
+        // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+
+        config.Slot0.kP = Constants.FeedMotor.KP;
+        config.Slot0.kI = Constants.FeedMotor.KI;
+        config.Slot0.kD = Constants.FeedMotor.KD;
+        config.Slot0.kS = Constants.FeedMotor.KS;
+        config.Slot0.kV = Constants.FeedMotor.KV;
+        config.Slot0.kA = Constants.FeedMotor.KA;
+
+        return config;
     }
 
     /**
