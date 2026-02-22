@@ -41,7 +41,7 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants;
-
+import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.Library.team1706.MathUtils;
 import edu.wpi.first.math.MathUtil;
 
@@ -337,7 +337,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        // double dist = updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_SKY, -1);
+        double dist = updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_SKY, -1);
         // if (MiscUtils.compareDouble(dist, 0)) {
         //     dist = -1;
         // }
@@ -382,6 +382,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void driveFieldCentric(ImprovedCommandXboxController controller){
+        SmartDashboard.putBoolean("usingAuto", usingAutoAim);
         if(!usingAutoAim){
             driveFieldCentric(
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
@@ -395,7 +396,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             double omega = m_rotationController.calculate(currentHeading, desiredHeading);
             SmartDashboard.putNumber("currentHeading(degrees)", Math.toDegrees(currentHeading));
             SmartDashboard.putNumber("desiredHeading(degrees)", Math.toDegrees(desiredHeading));
-            //TODO 检查角度正负是否正确
             driveFieldCentric(
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
                 -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
@@ -836,6 +836,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public void setUsingAutoAim(boolean ifUsingAutoAim) {
         usingAutoAim = ifUsingAutoAim;
+    }
+    /**
+     * Returns whether auto-aim is currently enabled.
+     */
+    public boolean isUsingAutoAim() {
+        return usingAutoAim;
     }
     public void setDesiredAutoAimHeading(double radians) {
         desiredHeading = radians;

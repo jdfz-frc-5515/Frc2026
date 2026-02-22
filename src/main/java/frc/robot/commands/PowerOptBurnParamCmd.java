@@ -6,6 +6,10 @@ package frc.robot.commands;
 
 // this file is used for a long-time project in 5515, which will not be used in competitio
 // thus, it will not affect any functionality of the robot and will not be triggered unless stated explicitly
+
+import java.util.Collections;
+import java.util.List;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.TunerConstants;
 
@@ -13,49 +17,62 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
-/** An example command that uses an example subsystem. */
+/**
+ * 烧录电机PID参数命令
+ * 
+ * 使用方法：
+ * - 传入增益列表 [kP, kI, kD, kS, kV, kA]
+ * - 通过 Command.schedule() 执行
+ */
 public class PowerOptBurnParamCmd extends Command {
-    double newkP = 1.0;
-    double newkI= 0.0;
-    double newkD = 0.0;
-    double newkS = 1.0;
-    double newkV= 0.0;
-    double newkA = 0.0;
+    
+    private static final int[] DEVICE_IDS = {1, 3, 5, 7};
+    
+    private final List<Double> gains; // [kP, kI, kD, kS, kV, kA]
+    
+    private final TalonFX[] motors;
 
-    // direction: 0 up 1 left 2 down 3 right
-    public PowerOptBurnParamCmd() {
+
+    /**
+     * @param gains 增益列表 [kP, kI, kD, kS, kV, kA]
+     */
+    public PowerOptBurnParamCmd(List<Double> gains) {
+        this.gains = Collections.unmodifiableList(gains);
+        
+        motors = new TalonFX[DEVICE_IDS.length];
+        for (int i = 0; i < DEVICE_IDS.length; i++) {
+            motors[i] = new TalonFX(DEVICE_IDS[i], TunerConstants.kCANBus);
+        }
     }
 
-    // Called when the command is initially scheduled.
     @Override
     public void initialize() {
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        if (gains.size() < 6) return;
+        
         Slot0Configs newGains = new Slot0Configs()
-        .withKP(newkP).withKI(newkI).withKD(newkD)
-        .withKS(newkS).withKV(newkV).withKA(newkA)
-        .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
-        TalonFX motor1 = new TalonFX(1, TunerConstants.kCANBus);
-        TalonFX motor2 = new TalonFX(3, TunerConstants.kCANBus);
-        TalonFX motor3 = new TalonFX(5, TunerConstants.kCANBus);
-        TalonFX motor4 = new TalonFX(7, TunerConstants.kCANBus);
-        motor1.getConfigurator().apply(newGains);
-        motor2.getConfigurator().apply(newGains);
-        motor3.getConfigurator().apply(newGains);
-        motor4.getConfigurator().apply(newGains);
+            .withKP(gains.get(0))
+            .withKI(gains.get(1))
+            .withKD(gains.get(2))
+            .withKS(gains.get(3))
+            .withKV(gains.get(4))
+            .withKA(gains.get(5))
+            .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
+            
+        for (TalonFX motor : motors) {
+            motor.getConfigurator().apply(newGains);
+        }
     }
 
-    // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
     }
 
-    // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true; // 立即结束，只执行一次
     }
 }

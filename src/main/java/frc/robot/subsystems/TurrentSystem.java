@@ -1,15 +1,120 @@
 package frc.robot.subsystems;
 
+import java.util.logging.LogManager;
+
+import com.ctre.phoenix6.CANBus;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.utils.MessageSender;
 
 
-public class TurrentSystem {
+public class TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
         public static Pose2d turrentOffset = new Pose2d(0, 0, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
         public static double minAngle = -140;      // 炮台旋转的最小角度限制（度）
         public static double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
+    }
+
+    private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
+    // private MotionMagicVoltage m_mmv = new MotionMagicVoltage(0);
+    private PositionVoltage m_mmv = new PositionVoltage(0);
+    private int m_turnState = 0;    // 1正转，-1反转，0不转
+
+    private DutyCycleOut dc = new DutyCycleOut(0);
+    public TurrentSystem() {
+        init();
+    }
+
+    public void init() {
+        m_motor.getConfigurator().apply(getMotorConfiguration());
+        m_motor.setPosition(0);
+    }
+
+    
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        update();
+    }
+
+    private double getMotorPosition() {
+        double pos = m_motor.getPosition().getValueAsDouble();
+        return pos;
+    }
+    public void update() {
+        double DT = 0.1;
+        double curPos = getMotorPosition();
+        // MessageSender.log(String.format("tuurent pos: %f", curPos));
+        switch (m_turnState) {
+            case 0:
+                m_motor.stopMotor();
+                break;
+            case 1:
+                // MessageSender.log("turn 1");
+                m_motor.setControl(m_mmv.withPosition(-6));
+                // m_motor
+                // m_motor.setControl(dc.withOutput(0.05));
+                break;
+            case -1:
+                // MessageSender.log("turn -1");
+                m_motor.setControl(m_mmv.withPosition(6));
+                // m_motor.setControl(dc.withOutput(-0.05));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void turnLeft() {
+        m_turnState = -1;
+    }
+
+    public void turnRight() {
+        m_turnState = 1;
+    }
+
+    public void stopTurn() {
+        m_turnState = 0;
+    }
+
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run during simulation
+    }
+
+    private TalonFXConfiguration getMotorConfiguration() {
+            TalonFXConfiguration config = new TalonFXConfiguration();
+
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+        // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -200;
+        // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+
+        config.Slot0.kP = Constants.TurrentMotor.KP;
+        config.Slot0.kI = Constants.TurrentMotor.KI;
+        config.Slot0.kD = Constants.TurrentMotor.KD;
+        config.Slot0.kS = Constants.TurrentMotor.KS;
+        config.Slot0.kV = Constants.TurrentMotor.KV;
+        config.Slot0.kA = Constants.TurrentMotor.KA;
+
+        return config;
     }
 
     /**
