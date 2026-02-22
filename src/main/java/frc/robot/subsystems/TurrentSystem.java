@@ -66,14 +66,14 @@ public class TurrentSystem extends SubsystemBase{
                 break;
             case 1:
                 // MessageSender.log("turn 1");
-                m_motor.setControl(m_mmv.withPosition(-6));
+                // m_motor.setControl(m_mmv.withPosition(-6));
                 // m_motor
-                // m_motor.setControl(dc.withOutput(0.05));
+                m_motor.setControl(dc.withOutput(0.05));
                 break;
             case -1:
                 // MessageSender.log("turn -1");
-                m_motor.setControl(m_mmv.withPosition(6));
-                // m_motor.setControl(dc.withOutput(-0.05));
+                // m_motor.setControl(m_mmv.withPosition(6));
+                m_motor.setControl(dc.withOutput(-0.05));
                 break;
             default:
                 break;
