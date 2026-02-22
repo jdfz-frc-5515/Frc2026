@@ -428,7 +428,7 @@ public class Constants {
     public static final class TurrentMotor {
         public static final int motorID = 0;
         public static final String canBusName = "rio";
-        public static final double KP = 0.5;
+        public static final double KP = 1;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;

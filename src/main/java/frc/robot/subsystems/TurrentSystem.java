@@ -4,7 +4,9 @@ import java.util.logging.LogManager;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -14,6 +16,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.MessageSender;
@@ -27,15 +31,17 @@ public class TurrentSystem extends SubsystemBase{
     }
 
     private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
-    private MotionMagicVoltage m_mmv = new MotionMagicVoltage(0);
+    // private MotionMagicVoltage m_mmv = new MotionMagicVoltage(0);
+    private PositionVoltage m_mmv = new PositionVoltage(0);
     private int m_turnState = 0;    // 1正转，-1反转，0不转
 
+    private DutyCycleOut dc = new DutyCycleOut(0);
     public TurrentSystem() {
         init();
     }
 
     public void init() {
-        m_motor.getConfigurator().apply(getFeedMotorConfiguration());
+        m_motor.getConfigurator().apply(getMotorConfiguration());
         m_motor.setPosition(0);
     }
 
@@ -51,18 +57,23 @@ public class TurrentSystem extends SubsystemBase{
         return pos;
     }
     public void update() {
-        double DT = 0.01;
+        double DT = 0.1;
         double curPos = getMotorPosition();
-        MessageSender.log(String.format("tuurent pos: %d", curPos));
+        // MessageSender.log(String.format("tuurent pos: %f", curPos));
         switch (m_turnState) {
             case 0:
-                
+                m_motor.stopMotor();
                 break;
             case 1:
-                m_motor.setControl(m_mmv.withPosition(curPos-DT));
+                // MessageSender.log("turn 1");
+                m_motor.setControl(m_mmv.withPosition(-6));
+                // m_motor
+                // m_motor.setControl(dc.withOutput(0.05));
                 break;
             case -1:
-                m_motor.setControl(m_mmv.withPosition(curPos+DT));
+                // MessageSender.log("turn -1");
+                m_motor.setControl(m_mmv.withPosition(6));
+                // m_motor.setControl(dc.withOutput(-0.05));
                 break;
             default:
                 break;
@@ -86,7 +97,7 @@ public class TurrentSystem extends SubsystemBase{
         // This method will be called once per scheduler run during simulation
     }
 
-    private TalonFXConfiguration getFeedMotorConfiguration() {
+    private TalonFXConfiguration getMotorConfiguration() {
             TalonFXConfiguration config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
@@ -96,12 +107,12 @@ public class TurrentSystem extends SubsystemBase{
         // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
 
-        config.Slot0.kP = Constants.FeedMotor.KP;
-        config.Slot0.kI = Constants.FeedMotor.KI;
-        config.Slot0.kD = Constants.FeedMotor.KD;
-        config.Slot0.kS = Constants.FeedMotor.KS;
-        config.Slot0.kV = Constants.FeedMotor.KV;
-        config.Slot0.kA = Constants.FeedMotor.KA;
+        config.Slot0.kP = Constants.TurrentMotor.KP;
+        config.Slot0.kI = Constants.TurrentMotor.KI;
+        config.Slot0.kD = Constants.TurrentMotor.KD;
+        config.Slot0.kS = Constants.TurrentMotor.KS;
+        config.Slot0.kV = Constants.TurrentMotor.KV;
+        config.Slot0.kA = Constants.TurrentMotor.KA;
 
         return config;
     }

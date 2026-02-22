@@ -183,7 +183,7 @@ public class RobotContainer {
         // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
 
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
-        m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
+        m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
         m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
     }
 
