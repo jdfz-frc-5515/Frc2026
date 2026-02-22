@@ -24,12 +24,14 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.FeedingCmd;
+import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.SlowExtenderCmd;
 import frc.robot.commands.TurrentCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
@@ -38,6 +40,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Extender;
 
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterEx;
 import frc.robot.subsystems.TurrentSystem;
 import frc.robot.subsystems.FeedingSubsystem;
 import frc.robot.utils.SmartDashboardEx;
@@ -59,7 +62,8 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Extender extender = new Extender();
-    public final Shooter shooter = new Shooter();
+    // public final Shooter shooter = new Shooter();
+    public final ShooterEx shooter = new ShooterEx();
     public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
     public final TurrentSystem m_turrentSubsystem = new TurrentSystem();
 
@@ -154,7 +158,7 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
-
+        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -178,15 +182,14 @@ public class RobotContainer {
         // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
         // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
 
-        m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
-
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
+        m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
     }
 
     private void configureDriver2Bindings() {
-        m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
-        m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
+        // m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
+        // m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
     }
 
     private void configureDriver3Bindings() {

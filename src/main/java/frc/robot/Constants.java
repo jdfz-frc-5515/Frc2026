@@ -352,11 +352,14 @@ public class Constants {
     public static final class ShooterConstants {
         public static final int PRIMARY_CAN_ID = 10;
         public static final int FOLLOWER_CAN_ID = 11;
-        public static final double KP = 1.0;
+        public static final String canBusName = "rio";
+        public static final double idleSpeed = 0.0;
+        public static final double shootingSpeed = 100.0;
+        public static final double KP = 0.3;
         public static final double KI = 0.0;
         public static final double KD = 0.0;
         public static final double KS = 0.0;
-        public static final double KV = 0.1;
+        public static final double KV = 0.0;
         public static final double KA = 0.0;
     }
 
@@ -408,18 +411,18 @@ public class Constants {
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
-        public static final double speed = 2;
+        public static final double speed = 50;
     }
     public static final class FeedMotor {
         public static final int motorID = 6;
         public static final String canBusName = "rio";
-        public static final double KP = 0.5;
+        public static final double KP = 0.4;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
-        public static final double speed = 2;
+        public static final double speed = 15;
     }
 
     public static final class TurrentMotor {
