@@ -400,4 +400,28 @@ public class Constants {
 
     static Alliance alliance = Alliance.Blue;
     
+
+    // 转盘电机
+    public static final class PathMotor {
+        public static final int motorID = 7;
+        public static final String canBusName = "rio";
+        public static final double KP = 0.5;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KS = 0;
+        public static final double KV = 0;
+        public static final double KA = 0;
+        public static final double speed = 2;
+    }
+    public static final class FeedMotor {
+        public static final int motorID = 6;
+        public static final String canBusName = "rio";
+        public static final double KP = 0.5;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KS = 0;
+        public static final double KV = 0;
+        public static final double KA = 0;
+        public static final double speed = 2;
+    }
 }

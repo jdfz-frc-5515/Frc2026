@@ -20,6 +20,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ExtenderConstants;
 
 public class Extender extends SubsystemBase {
     
@@ -57,23 +58,23 @@ public class Extender extends SubsystemBase {
             return RPM.of(rpm*mech2sensorRatio);
         }
     }
-    private final int extenderMotorCANID = frc.robot.Constants.ExtenderConstants.EXTENDER_CAN_ID; // default values for CAN ID and Bus
+    private final int extenderMotorCANID = ExtenderConstants.EXTENDER_CAN_ID; // default values for CAN ID and Bus
     private final CANBus extenderMotorCANBus= new CANBus("rio");
     private final TalonFX motor;
-    private static double GearRatio = frc.robot.Constants.ExtenderConstants.GEAR_RATIO;
+    private static double GearRatio = ExtenderConstants.GEAR_RATIO;
     private final PositionVoltage positionRequest = new PositionVoltage(0).withSlot(0);
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withSlot(0);
     private final VoltageOut voltageRequest = new VoltageOut(0);
-    private static double slowOut = frc.robot.Constants.ExtenderConstants.SLOW_OUT_RPM;
+    private static double slowOut = ExtenderConstants.SLOW_OUT_RPM;
     // PID S V A constants for extender slot0 are defined in Constants.ExtenderConstants
-    private static final double EXT_KP = frc.robot.Constants.ExtenderConstants.KP;
-    private static final double EXT_KI = frc.robot.Constants.ExtenderConstants.KI;
-    private static final double EXT_KD = frc.robot.Constants.ExtenderConstants.KD;
-    private static final double EXT_KS = frc.robot.Constants.ExtenderConstants.KS;
-    private static final double EXT_KV = frc.robot.Constants.ExtenderConstants.KV;
-    private static final double EXT_KA = frc.robot.Constants.ExtenderConstants.KA;
-    private static double INPOS = frc.robot.Constants.ExtenderConstants.IN_POS;
-    private static double OUTPOS = frc.robot.Constants.ExtenderConstants.OUT_POS;
+    private static final double EXT_KP = ExtenderConstants.KP;
+    private static final double EXT_KI = ExtenderConstants.KI;
+    private static final double EXT_KD = ExtenderConstants.KD;
+    private static final double EXT_KS = ExtenderConstants.KS;
+    private static final double EXT_KV = ExtenderConstants.KV;
+    private static final double EXT_KA = ExtenderConstants.KA;
+    private static double INPOS = ExtenderConstants.IN_POS;
+    private static double OUTPOS = ExtenderConstants.OUT_POS;
     public Extender() {
         motor = new TalonFX(extenderMotorCANID, extenderMotorCANBus);
 
