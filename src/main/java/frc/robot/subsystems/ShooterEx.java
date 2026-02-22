@@ -36,7 +36,7 @@ public class ShooterEx extends SubsystemBase {
     private TalonFXConfiguration getMotorConfiguration(boolean isPrimary, boolean lockMotor) {
         TalonFXConfiguration shooterConfiguration = new TalonFXConfiguration();
 
-        shooterConfiguration.MotorOutput.Inverted = isPrimary ? InvertedValue.CounterClockwise_Positive: InvertedValue.Clockwise_Positive;
+        shooterConfiguration.MotorOutput.Inverted = isPrimary ? InvertedValue.Clockwise_Positive: InvertedValue.CounterClockwise_Positive;
         shooterConfiguration.MotorOutput.NeutralMode = lockMotor ? NeutralModeValue.Brake : NeutralModeValue.Coast;
         shooterConfiguration.Slot0.kP = Constants.ShooterConstants.KP;
         shooterConfiguration.Slot0.kI = Constants.ShooterConstants.KI;
@@ -68,11 +68,13 @@ public class ShooterEx extends SubsystemBase {
     public void update(){
         if (isShooting) {
             velocityRequest.Velocity = Constants.ShooterConstants.shootingSpeed;
+            m_primary.setControl(velocityRequest);
         }
         else {
             velocityRequest.Velocity = Constants.ShooterConstants.idleSpeed;
+            m_primary.stopMotor();
         }
-        m_primary.setControl(velocityRequest);
+        
         SmartDashboard.putBoolean("isShooting", isShooting);
     }
 }

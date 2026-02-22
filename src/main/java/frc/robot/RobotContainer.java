@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -155,8 +156,7 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
-        m_driverController.b().onTrue(new ShooterCmd(shooter));
-
+        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -180,7 +180,7 @@ public class RobotContainer {
         // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
         // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
 
-        m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
+        m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
     }
 
     private void configureDriver2Bindings() {
