@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AimAprilTagCmd;
+import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.SlowExtenderCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
@@ -35,6 +36,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.ImprovedCommandXboxController;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterEx;
 import frc.robot.subsystems.TurrentSystem;
 import frc.robot.subsystems.FeedingSubsystem;
 import frc.robot.utils.SmartDashboardEx;
@@ -57,7 +59,8 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final TurrentSystem turrentSystem = new TurrentSystem();
     public final Extender extender = new Extender();
-    public final Shooter shooter = new Shooter();
+    // public final Shooter shooter = new Shooter();
+    public final ShooterEx shooter = new ShooterEx();
     public final FeedingSubsystem feedingSubsystem = new FeedingSubsystem();
     private StructArrayPublisher<SwerveModuleState> swerveStatePublisher;
 
@@ -150,6 +153,7 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
+        m_driverController.b().onTrue(new ShooterCmd(shooter));
 
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
@@ -176,8 +180,8 @@ public class RobotContainer {
     }
 
     private void configureDriver2Bindings() {
-        m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
-        m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
+        // m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
+        // m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
         m_driverController2.a().whileTrue(feedingSubsystem.startFeedingCommand());
         m_driverController2.b().whileTrue(feedingSubsystem.stopFeedingCommand());
     }

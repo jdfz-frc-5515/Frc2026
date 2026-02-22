@@ -352,11 +352,14 @@ public class Constants {
     public static final class ShooterConstants {
         public static final int PRIMARY_CAN_ID = 10;
         public static final int FOLLOWER_CAN_ID = 11;
-        public static final double KP = 1.0;
+        public static final String canBusName = "rio";
+        public static final double idleSpeed = 0.0;
+        public static final double shootingSpeed = 2.0;
+        public static final double KP = 0.4;
         public static final double KI = 0.0;
         public static final double KD = 0.0;
         public static final double KS = 0.0;
-        public static final double KV = 0.1;
+        public static final double KV = 0.0;
         public static final double KA = 0.0;
     }
 
