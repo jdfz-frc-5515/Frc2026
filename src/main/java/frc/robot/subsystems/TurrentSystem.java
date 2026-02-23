@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -154,12 +155,12 @@ public class TurrentSystem extends SubsystemBase{
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
         Rotation2d relativeRotation = targetAngleWorld.minus(turretBaseAngleWorld);
-        double degrees = relativeRotation.getDegrees();
+        double degrees = MathUtil.angleModulus(relativeRotation.getDegrees());
 
         // 6. 角度归一化处理
-        // 确保计算出的角度在 -180 到 180 度之间
-        while (degrees <= -180) degrees += 360;
-        while (degrees > 180) degrees -= 360;
+        // 确保计算出的角度在 -180 到 180 度之间 angleModulus已完成
+        // while (degrees <= -180) degrees += 360;
+        // while (degrees > 180) degrees -= 360;
 
         // 7. 应用炮台物理旋转限制 (Clamping)
         // 炮台由于机械结构（线缆等）限制，不能在 minAngle 和 maxAngle 之外工作
