@@ -39,7 +39,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Extender;
 
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShootRPSManager;
 import frc.robot.subsystems.ShooterEx;
 import frc.robot.subsystems.TurrentSystem;
 import frc.robot.subsystems.FeedingSubsystem;
@@ -64,6 +64,7 @@ public class RobotContainer {
     public final Extender extender = new Extender();
     // public final Shooter shooter = new Shooter();
     public final ShooterEx shooter = new ShooterEx();
+    public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
     public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
     public final TurrentSystem m_turrentSubsystem = new TurrentSystem();
 
@@ -85,6 +86,7 @@ public class RobotContainer {
     private final double HEADING_BLUE = 180;
 
     public RobotContainer() {
+        shootRPSManager.setShooter(shooter);
         configureBindings();
     }
 

@@ -13,10 +13,12 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.utils.Models.AprilTagCoordinate;
+import frc.robot.Library.team1706.LinearInterpolationTable;
 
 import java.awt.geom.Point2D;
 import java.util.Arrays;
@@ -361,6 +363,17 @@ public class Constants {
         public static final double KS = 0.22;
         public static final double KV = 0.5;
         public static final double KA = 10.0;
+        public static final double kPreventShooterOscilliationRPS = 1.0;
+
+        private static final Point2D[] kRPMPoints = new Point2D.Double[] {
+            // (distance, shooterSpeedRPS)
+            new Point2D.Double(0.0, 100.0), 
+            new Point2D.Double(100.0, 100.0),
+        };
+        public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
+        private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
+        private static final Translation2d redHub = new Translation2d(12.868148, 4.021328);
+        public static final Translation2d targetHub = (DriverStation.getAlliance().get() == Alliance.Blue) ? blueHub : redHub;
     }
 
     public static final class FeedingConstants {

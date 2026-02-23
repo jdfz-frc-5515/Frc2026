@@ -13,17 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-/**
- * Simple two-motor Flywheel/Shooter subsystem.
- *
- * - Primary motor is controlled directly.
- * - Secondary motor follows the primary and can be inverted.
- * - Provides velocity (RPM) control and percent output control, plus getters.
- *
- * Usage:
- *   var shooter = new Shooter(primaryId, followerId, "canbus", true);
- *   shooter.setVelocityRpm(5000);
- */
 public class ShooterEx extends SubsystemBase {
     public ShooterEx() {
         init();
@@ -33,6 +22,8 @@ public class ShooterEx extends SubsystemBase {
     private final TalonFX m_follower = new TalonFX(Constants.ShooterConstants.FOLLOWER_CAN_ID, shooterCanBus);
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withSlot(0);
     private boolean isShooting = false;
+    private double targetSpeed = Constants.ShooterConstants.shootingSpeed;
+
     private TalonFXConfiguration getMotorConfiguration(boolean isPrimary, boolean lockMotor) {
         TalonFXConfiguration shooterConfiguration = new TalonFXConfiguration();
 
@@ -51,6 +42,10 @@ public class ShooterEx extends SubsystemBase {
         m_follower.getConfigurator().apply(getMotorConfiguration(false, false));
         m_follower.setControl(new Follower(m_primary.getDeviceID(), MotorAlignmentValue.Opposed));
     }
+    public void setTargetSpeed(double speed) {
+        targetSpeed = Math.min(speed, Constants.ShooterConstants.shootingSpeed);
+    }
+
     public void startShooting() {
         isShooting = true;
     }
@@ -67,7 +62,7 @@ public class ShooterEx extends SubsystemBase {
 
     public void update(){
         if (isShooting) {
-            velocityRequest.Velocity = Constants.ShooterConstants.shootingSpeed;
+            velocityRequest.Velocity = targetSpeed;
             m_primary.setControl(velocityRequest);
         }
         else {
