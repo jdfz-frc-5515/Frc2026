@@ -5,9 +5,7 @@ import java.util.logging.LogManager;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -15,9 +13,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.DutyCycle;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.utils.MessageSender;
@@ -31,8 +26,7 @@ public class TurrentSystem extends SubsystemBase{
     }
 
     private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
-    // private MotionMagicVoltage m_mmv = new MotionMagicVoltage(0);
-    private PositionVoltage m_mmv = new PositionVoltage(0);
+    // private PositionVoltage mPosVolt = new PositionVoltage(0);
     private int m_turnState = 0;    // 1正转，-1反转，0不转
 
     private DutyCycleOut dc = new DutyCycleOut(0);
@@ -66,13 +60,12 @@ public class TurrentSystem extends SubsystemBase{
                 break;
             case 1:
                 // MessageSender.log("turn 1");
-                // m_motor.setControl(m_mmv.withPosition(-6));
-                // m_motor
+                // m_motor.setControl(mPosVolt.withPosition(-6));
                 m_motor.setControl(dc.withOutput(0.05));
                 break;
             case -1:
                 // MessageSender.log("turn -1");
-                // m_motor.setControl(m_mmv.withPosition(6));
+                // m_motor.setControl(mPosVolt.withPosition(6));
                 m_motor.setControl(dc.withOutput(-0.05));
                 break;
             default:
