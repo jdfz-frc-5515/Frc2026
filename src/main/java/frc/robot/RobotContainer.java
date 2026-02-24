@@ -160,7 +160,7 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
-        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
+        m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -186,7 +186,8 @@ public class RobotContainer {
 
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
-        m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
     private void configureDriver2Bindings() {
