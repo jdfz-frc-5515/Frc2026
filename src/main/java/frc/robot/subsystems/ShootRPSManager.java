@@ -30,7 +30,9 @@ public class ShootRPSManager extends SubsystemBase {
     }
 
     public void setDistance(double distance) {
+        if (distance > 0.1) {
         this.currentDistance = distance;
+        }
     }
 
     public double getCalculatedSpeed() {
