@@ -356,12 +356,12 @@ public class Constants {
         public static final int FOLLOWER_CAN_ID = 11;
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
-        public static final double shootingSpeed = 100.0;
-        public static final double KP = 70.0;
-        public static final double KI = 0.3;
-        public static final double KD = 0.08;
-        public static final double KS = 0.22;
-        public static final double KV = 0.5;
+        public static final double shootingSpeed = 70.0;
+        public static final double KP = 0.0;
+        public static final double KI = 0;
+        public static final double KD = 0;
+        public static final double KS = 0.189;
+        public static final double KV = 0.13;
         public static final double KA = 10.0;
         public static final double kPreventShooterOscilliationRPS = 1.0;
 
