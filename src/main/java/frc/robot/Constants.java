@@ -356,13 +356,13 @@ public class Constants {
         public static final int FOLLOWER_CAN_ID = 11;
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
-        public static final double shootingSpeed = 80.0;
-        public static final double KP = 80.0;
-        public static final double KI = 7.0;
-        public static final double KD = 10.0;
-        public static final double KS = 0.0;
-        public static final double KV = 0.13;
-        public static final double KA = 10.0;
+        public static final double shootingSpeed = 60.0;
+        public static final double KP = 0.17;
+        public static final double KI = 0.002;
+        public static final double KD = 0.0015;
+        public static final double KS = 0.15;
+        public static final double KV = 0.125;
+        public static final double KA = 10.0; // velocity setpoint dont use ka
         public static final double kPreventShooterOscilliationRPS = 1.0;
 
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
@@ -435,7 +435,7 @@ public class Constants {
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
-        public static final double speed = 2340/60;
+        public static final double speed = 2340/60*1.5;
     }
 
     public static final class TurrentMotor {
