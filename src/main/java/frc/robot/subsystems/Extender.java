@@ -75,32 +75,32 @@ public class Extender extends SubsystemBase {
     private static final double EXT_KA = ExtenderConstants.KA;
     private static double INPOS = ExtenderConstants.IN_POS;
     private static double OUTPOS = ExtenderConstants.OUT_POS;
+
+    private final TalonFXConfiguration config = new TalonFXConfiguration()
+        .withMotorOutput(
+            new MotorOutputConfigs()
+                .withInverted(InvertedValue.Clockwise_Positive)
+                .withNeutralMode(NeutralModeValue.Brake)
+        )
+        .withCurrentLimits(
+            new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(Amps.of(120))
+                .withStatorCurrentLimitEnable(true)
+                .withSupplyCurrentLimit(Amps.of(50))
+                .withSupplyCurrentLimitEnable(true)
+        )
+        .withSlot0(
+            new Slot0Configs()
+                .withKP(EXT_KP)
+                .withKI(EXT_KI)
+                .withKD(EXT_KD)
+                .withKS(EXT_KS)
+                .withKV(EXT_KV)
+                .withKA(EXT_KA)
+        );
+
     public Extender() {
         motor = new TalonFX(extenderMotorCANID, extenderMotorCANBus);
-
-        final TalonFXConfiguration config = new TalonFXConfiguration()
-            .withMotorOutput(
-                new MotorOutputConfigs()
-                    .withInverted(InvertedValue.Clockwise_Positive)
-                    .withNeutralMode(NeutralModeValue.Brake)
-            )
-            .withCurrentLimits(
-                new CurrentLimitsConfigs()
-                    .withStatorCurrentLimit(Amps.of(120))
-                    .withStatorCurrentLimitEnable(true)
-                    .withSupplyCurrentLimit(Amps.of(50))
-                    .withSupplyCurrentLimitEnable(true)
-            )
-            .withSlot0(
-                new Slot0Configs()
-                    .withKP(EXT_KP)
-                    .withKI(EXT_KI)
-                    .withKD(EXT_KD)
-                    .withKS(EXT_KS)
-                    .withKV(EXT_KV)
-                    .withKA(EXT_KA)
-            );
-        
         motor.getConfigurator().apply(config);
     }
 
