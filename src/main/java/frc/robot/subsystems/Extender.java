@@ -110,6 +110,13 @@ public class Extender extends SubsystemBase {
         motor.getConfigurator().apply(config);
     }
 
+    @Override
+    public void periodic(){
+        if (haveObstacle()) {
+            motor.stopMotor();
+        }
+    }
+
     public void setPosition(Position position) {
         motor.setControl(
             positionRequest.withPosition(position.motorPosition())
