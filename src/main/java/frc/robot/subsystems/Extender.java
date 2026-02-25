@@ -18,7 +18,10 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ExtenderConstants;
 
@@ -75,33 +78,43 @@ public class Extender extends SubsystemBase {
     private static final double EXT_KA = ExtenderConstants.KA;
     private static double INPOS = ExtenderConstants.IN_POS;
     private static double OUTPOS = ExtenderConstants.OUT_POS;
+    // Jam Detector
+    private final Debouncer jamDebouncer = new Debouncer(0.2, DebounceType.kRising);
+    private final double jamCurrentThreshold = 30.0;
+
+    private final TalonFXConfiguration config = new TalonFXConfiguration()
+        .withMotorOutput(
+            new MotorOutputConfigs()
+                .withInverted(InvertedValue.Clockwise_Positive)
+                .withNeutralMode(NeutralModeValue.Brake)
+        )
+        .withCurrentLimits(
+            new CurrentLimitsConfigs()
+                .withStatorCurrentLimit(Amps.of(120))
+                .withStatorCurrentLimitEnable(true)
+                .withSupplyCurrentLimit(Amps.of(50))
+                .withSupplyCurrentLimitEnable(true)
+        )
+        .withSlot0(
+            new Slot0Configs()
+                .withKP(EXT_KP)
+                .withKI(EXT_KI)
+                .withKD(EXT_KD)
+                .withKS(EXT_KS)
+                .withKV(EXT_KV)
+                .withKA(EXT_KA)
+        );
+
     public Extender() {
         motor = new TalonFX(extenderMotorCANID, extenderMotorCANBus);
-
-        final TalonFXConfiguration config = new TalonFXConfiguration()
-            .withMotorOutput(
-                new MotorOutputConfigs()
-                    .withInverted(InvertedValue.Clockwise_Positive)
-                    .withNeutralMode(NeutralModeValue.Brake)
-            )
-            .withCurrentLimits(
-                new CurrentLimitsConfigs()
-                    .withStatorCurrentLimit(Amps.of(120))
-                    .withStatorCurrentLimitEnable(true)
-                    .withSupplyCurrentLimit(Amps.of(50))
-                    .withSupplyCurrentLimitEnable(true)
-            )
-            .withSlot0(
-                new Slot0Configs()
-                    .withKP(EXT_KP)
-                    .withKI(EXT_KI)
-                    .withKD(EXT_KD)
-                    .withKS(EXT_KS)
-                    .withKV(EXT_KV)
-                    .withKA(EXT_KA)
-            );
-        
         motor.getConfigurator().apply(config);
+    }
+
+    @Override
+    public void periodic(){
+        if (haveObstacle()) {
+            motor.stopMotor();
+        }
     }
 
     public void setPosition(Position position) {
@@ -121,6 +134,12 @@ public class Extender extends SubsystemBase {
             voltageRequest
                 .withOutput(Volts.of(percentOutput * 12.0))
         );
+    }
+
+    public boolean haveObstacle() {
+        double currentAmps = motor.getStatorCurrent().getValueAsDouble();
+        boolean overThreshold = currentAmps > jamCurrentThreshold;
+        return jamDebouncer.calculate(overThreshold);
     }
 
     public double getCurrentMotorPosition(){
