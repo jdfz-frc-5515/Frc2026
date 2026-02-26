@@ -143,6 +143,12 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
+
+
+
+
+
+    
         // m_driverController.a().whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // m_driverController.b().whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         // m_driverController.x().whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -160,6 +166,7 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
+        
         m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
