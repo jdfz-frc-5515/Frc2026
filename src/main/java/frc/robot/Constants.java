@@ -31,8 +31,7 @@ import java.util.Map;
 public class Constants {
     public static String LIME_LIGHT_ARPIL_TAG_NAME_RIGHT = "limelight-right";
     public static String LIME_LIGHT_ARPIL_TAG_NAME_LEFT = "limelight-left";
-    public static String LIME_LIGHT_ARPIL_TAG_NAME_SKY = "limelight-sky";
-    public static String LIME_LIGHT_OBJECT_DETECTION = "limelight-up";
+    public static String LIME_LIGHT_ARPIL_TAG_NAME_FRONT = "limelight-front";
 
     public static class GlobalConstants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
@@ -369,8 +368,15 @@ public class Constants {
 
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS)
-            new Point2D.Double(0.0, 100.0), 
-            new Point2D.Double(100.0, 100.0),
+            // new Point2D.Double(0.0, 100.0), 
+            // new Point2D.Double(100.0, 100.0),
+            new Point2D.Double(-1, 49),
+            new Point2D.Double(2.471, 49),
+            new Point2D.Double(3.486, 58),
+            new Point2D.Double(3.159, 66),
+            new Point2D.Double(3.042, 68),
+            new Point2D.Double(4.358, 90),
+            new Point2D.Double(100, 90),
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);

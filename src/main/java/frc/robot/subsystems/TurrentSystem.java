@@ -21,7 +21,7 @@ import frc.robot.utils.MessageSender;
 
 public class TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0, 0, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
+        public static Pose2d turrentOffset = new Pose2d(0.16, 0.16, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
         public static double minAngle = -140;      // 炮台旋转的最小角度限制（度）
         public static double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
     }

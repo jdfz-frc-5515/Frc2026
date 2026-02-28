@@ -89,6 +89,8 @@ public class RobotContainer {
 
     public RobotContainer() {
         shootRPSManager.setShooter(shooter);
+        shootRPSManager.setSwerve(drivetrain);
+        shootRPSManager.setTurret(m_turrentSubsystem);
         configureBindings();
     }
 
