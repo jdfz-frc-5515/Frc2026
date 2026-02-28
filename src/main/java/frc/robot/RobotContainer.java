@@ -181,7 +181,6 @@ public class RobotContainer {
         // 机器旋转微调
         m_driverController.leftTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 4));
         m_driverController.rightTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 5));
-        // m_driverController.povUp() 
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
@@ -190,10 +189,6 @@ public class RobotContainer {
         //                     m_turrentSubsystem, 
         //                     false)
         // );
-        // m_driverController.a().onTrue(new SlowExtenderCmd(extender, Extender.Position.IN.motorPosition()));
-        // m_driverController.b().onTrue(new SlowExtenderCmd(extender, Extender.Position.OUT.motorPosition()));
-        // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
-        // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
 
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));

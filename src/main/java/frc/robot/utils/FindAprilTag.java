@@ -64,7 +64,9 @@ public class FindAprilTag {
             if (distance > DisTolerance) {
                 continue;
             }
-
+            if(distance < tag.UnReadableDistance){
+                continue;
+            }
             // 计算机器人朝向与标签法线方向的夹角,大于阈值则跳过
             Point3D TagToRobotVector = new Point3D(
                 robotPos.getX() - tag.position.getX(),

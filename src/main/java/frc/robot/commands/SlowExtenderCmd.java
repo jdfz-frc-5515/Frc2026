@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -28,13 +26,6 @@ public class SlowExtenderCmd extends Command{
 
 	@Override
 	public void initialize() {
-		if(ifIn){
-			intakeSubsystem.resetExtenderPosition(OutPosition);
-		}
-		else{
-			intakeSubsystem.resetExtenderPosition(InPosition);
-		}
-		// no-op: ensure motor is stopped until execute runs (use Extender methods if available)
 	}
 
 	@Override
