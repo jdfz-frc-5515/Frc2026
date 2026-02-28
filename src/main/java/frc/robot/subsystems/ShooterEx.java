@@ -44,7 +44,7 @@ public class ShooterEx extends SubsystemBase {
     }
     public void setTargetSpeed(double speed) {
         // targetSpeed = Math.min(speed, Constants.ShooterConstants.shootingSpeed);
-        targetSpeed=speed+10;
+        targetSpeed=speed;
     }
 
     public void startShooting() {

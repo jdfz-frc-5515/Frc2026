@@ -52,7 +52,7 @@ public class IntakeSubsystem extends SubsystemBase {
         .withMotorOutput(
             new MotorOutputConfigs()
                 .withInverted(InvertedValue.Clockwise_Positive)
-                .withNeutralMode(NeutralModeValue.Brake)
+                .withNeutralMode(NeutralModeValue.Coast)
         )
         .withCurrentLimits(
             new CurrentLimitsConfigs()

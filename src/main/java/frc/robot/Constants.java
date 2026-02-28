@@ -358,7 +358,7 @@ public class Constants {
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
         public static final double shootingSpeed = 40.0;
-        public static final double KP = 0.17;
+        public static final double KP = 0.2;
         public static final double KI = 0.002;
         public static final double KD = 0.0015;
         public static final double KS = 0.15;
@@ -371,12 +371,12 @@ public class Constants {
             // new Point2D.Double(0.0, 100.0), 
             // new Point2D.Double(100.0, 100.0),
             new Point2D.Double(-1, 49),
-            new Point2D.Double(2.471, 49),
-            new Point2D.Double(3.486, 58),
-            new Point2D.Double(3.159, 66),
-            new Point2D.Double(3.042, 68),
-            new Point2D.Double(4.358, 90),
-            new Point2D.Double(100, 90),
+            new Point2D.Double(1.4, 49),
+            new Point2D.Double(2.471, 59),
+            new Point2D.Double(3.0, 85),
+            new Point2D.Double(3.35, 100),
+            // new Point2D.Double(4.358, 90),
+            new Point2D.Double(100, 100),
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
