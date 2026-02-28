@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 // import frc.robot.Library.MUtils.SegmentOnTheField;
 import frc.robot.Library.MUtils.SegmentOnTheField;
+import frc.robot.Library.team19725.Point3D;
 import frc.robot.utils.Models.AprilTagCoordinate;
 import frc.robot.Library.team1706.LinearInterpolationTable;
 
@@ -251,7 +252,8 @@ public class Constants {
     }
 
     public final class FieldInfo {
-        
+        public static Point3D BlueGoalPoint3d = new Point3D(4.611624,4.021328,1.8);
+        public static Point3D RedGoalPoint3d = new Point3D(12.868148,4.021328,1.8);
         // 常量Map定义
         public static final Map<Long, APInfo> AP_MAP;
         public static final long[] blueApIds = {
@@ -259,7 +261,7 @@ public class Constants {
         };
         public static final long[] redApIds = {
             6, 7, 8, 9, 10, 11,
-        };
+        }; 
 
         public static double coralBranchOffset = 0.164338;
         public static double coralVerticalOffset = 0.525;
@@ -356,7 +358,7 @@ public class Constants {
         public static final int FOLLOWER_CAN_ID = 11;
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
-        public static final double shootingSpeed = 60.0;
+        public static final double shootingSpeed = 40.0;
         public static final double KP = 0.17;
         public static final double KI = 0.002;
         public static final double KD = 0.0015;
@@ -391,18 +393,27 @@ public class Constants {
         public static final double KA = 0.0;
     }
 
-    public static final class ExtenderConstants {
-        public static final int EXTENDER_CAN_ID = 1;
+    public static final class IntakeConstants {
+        public static double Extender_Voltage = 2;
+        public static double Tolerance = 0.5;
+        public static final int INTAKE_CAN_ID = 19;
+        public static final int EXTENDER_CAN_ID = 20;
         public static final double GEAR_RATIO = 27.0;
         public static final double SLOW_OUT_RPM = 10.0;
         public static final double IN_POS = 0.0;
-        public static final double OUT_POS = 2.0;
-        public static final double KP = 0.01;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final double KS = 0.04;
-        public static final double KV = 0.115;
-        public static final double KA = 0.0;
+        public static final double OUT_POS = 7.0;
+        public static final double EXTENDER_KP = 0.01;
+        public static final double EXTENDER_KI = 0.0;
+        public static final double EXTENDER_KD = 0.0;
+        public static final double EXTENDER_KS = 0.04;
+        public static final double EXTENDER_KV = 0.115;
+        public static final double EXTENDER_KA = 0.0;
+        public static final double INTAKE_KP = 0.01;
+        public static final double INTAKE_KI = 0.0;
+        public static final double INTAKE_KD = 0.0;
+        public static final double INTAKE_KS = 0.04;
+        public static final double INTAKE_KV = 0.115;
+        public static final double INTAKE_KA = 0.0;
     }
 
     public static class AimAprilTagCmdConstants{
@@ -411,7 +422,7 @@ public class Constants {
         public static int missingThreshold = 5; // 连续多少个周期无目标则退出
     }
 
-    static Alliance alliance = Alliance.Blue;
+    public static Alliance alliance = Alliance.Blue;
     
 
     // 转盘电机
