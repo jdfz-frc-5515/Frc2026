@@ -14,25 +14,32 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.utils.MessageSender;
 
 
 public class TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
         public static Pose2d turrentOffset = new Pose2d(0.16, 0.16, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
-        public static double minAngle = -140;      // 炮台旋转的最小角度限制（度）
-        public static double maxAngle = 140;       // 炮台旋转的最大角度限制（度）
+        public static double minAngle = -180;      // 炮台旋转的最小角度限制（度）
+        public static double maxAngle = 180;       // 炮台旋转的最大角度限制（度）
+        public static double kTurretDegreeForOneRotation = 14.48275862069;
     }
 
     private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
-    // private PositionVoltage mPosVolt = new PositionVoltage(0);
+    private PositionVoltage mPosVolt = new PositionVoltage(0);
     private int m_turnState = 0;    // 1正转，-1反转，0不转
-
+    private boolean isAiming = false;
+    private CommandSwerveDrivetrain m_drivetrain;
     private DutyCycleOut dc = new DutyCycleOut(0);
     public TurrentSystem() {
         init();
+    }
+    public void setSwerve(CommandSwerveDrivetrain subsys) {
+        m_drivetrain = subsys;
     }
 
     public void init() {
@@ -55,6 +62,7 @@ public class TurrentSystem extends SubsystemBase{
         double DT = 0.1;
         double curPos = getMotorPosition();
         // MessageSender.log(String.format("tuurent pos: %f", curPos));
+        if (!isAiming) {
         switch (m_turnState) {
             case 0:
                 m_motor.stopMotor();
@@ -72,6 +80,12 @@ public class TurrentSystem extends SubsystemBase{
             default:
                 break;
         }
+        }
+        else {
+            double motorPosition = -calcTurrentAngle(m_drivetrain.getPose(), ShooterConstants.targetHub);
+            m_motor.setControl(mPosVolt.withPosition(motorPosition / TurrentConst.kTurretDegreeForOneRotation));
+            SmartDashboard.putNumber("turret position", motorPosition);
+        }
     }
 
     public void turnLeft() {
@@ -84,6 +98,17 @@ public class TurrentSystem extends SubsystemBase{
 
     public void stopTurn() {
         m_turnState = 0;
+    }
+
+    public void startAim() {
+        calcTurrentAngle(m_drivetrain.getPose(), Constants.ShooterConstants.targetHub);
+    }
+
+    public void startAiming() {
+        isAiming = true;
+    }
+    public void stopAiming() {
+        isAiming = false;
     }
 
     @Override
@@ -150,13 +175,13 @@ public class TurrentSystem extends SubsystemBase{
 
     // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
     // 使用独立方法返回的位姿中的旋转部分
-    Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
+    // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
+        Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
         Rotation2d relativeRotation = targetAngleWorld.minus(turretBaseAngleWorld);
-        double degrees = MathUtil.angleModulus(relativeRotation.getDegrees());
-
+        double degrees = Math.toDegrees(MathUtil.angleModulus(relativeRotation.getRadians()));
         // 6. 角度归一化处理
         // 确保计算出的角度在 -180 到 180 度之间 angleModulus已完成
         // while (degrees <= -180) degrees += 360;

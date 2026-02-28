@@ -35,6 +35,7 @@ import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.SlowExtenderCmd;
 import frc.robot.commands.TurrentCmd;
+import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -91,6 +92,7 @@ public class RobotContainer {
         shootRPSManager.setShooter(shooter);
         shootRPSManager.setSwerve(drivetrain);
         shootRPSManager.setTurret(m_turrentSubsystem);
+        m_turrentSubsystem.setSwerve(drivetrain);
         configureBindings();
     }
 
@@ -193,6 +195,7 @@ public class RobotContainer {
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
         m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
