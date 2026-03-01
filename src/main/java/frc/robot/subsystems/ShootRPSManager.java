@@ -3,12 +3,13 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
 import frc.robot.Library.team1706.LinearInterpolationTable;
 
 public class ShootRPSManager extends SubsystemBase {
     private static ShootRPSManager instance = null;
     private ShooterEx shooter;
+    private CommandSwerveDrivetrain m_drivetrain;
+    private TurrentSystem m_turret;
     private final LinearInterpolationTable m_rpsTable = Constants.ShooterConstants.kRPMTable;
     
     private double currentDistance = 0.0;
@@ -28,6 +29,12 @@ public class ShootRPSManager extends SubsystemBase {
     public void setShooter(ShooterEx shooter) {
         this.shooter = shooter;
     }
+    public void setSwerve(CommandSwerveDrivetrain drivetrain) {
+        this.m_drivetrain = drivetrain;
+    }
+    public void setTurret(TurrentSystem turret) {
+        this.m_turret = turret;
+    }
 
     public void setDistance(double distance) {
         if (distance > 0.1) {
@@ -42,7 +49,8 @@ public class ShootRPSManager extends SubsystemBase {
     @Override
     public void periodic() {
         if (shooter == null) return;
-        setDistance(LimelightHelpers.getBotPose2d("Limelight-left").getTranslation().getDistance(Constants.ShooterConstants.targetHub));
+        // setDistance(LimelightHelpers.getBotPose2d_wpiBlue("limelight-left").getTranslation().getDistance(Constants.ShooterConstants.targetHub));
+        setDistance(m_turret.getTurretWorldPose(m_drivetrain.getPose()).getTranslation().getDistance(Constants.ShooterConstants.targetHub));
         // Calculate target speed based on distance
         double targetSpeed = getCalculatedSpeed();
 

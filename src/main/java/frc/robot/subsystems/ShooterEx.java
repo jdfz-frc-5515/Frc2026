@@ -43,7 +43,8 @@ public class ShooterEx extends SubsystemBase {
         m_follower.setControl(new Follower(m_primary.getDeviceID(), MotorAlignmentValue.Opposed));
     }
     public void setTargetSpeed(double speed) {
-        targetSpeed = Math.min(speed, Constants.ShooterConstants.shootingSpeed);
+        // targetSpeed = Math.min(speed, Constants.ShooterConstants.shootingSpeed);
+        targetSpeed=speed;
     }
 
     public void startShooting() {
@@ -62,6 +63,7 @@ public class ShooterEx extends SubsystemBase {
 
     public void update(){
         if (isShooting) {
+            SmartDashboard.putNumber("shooting speed", targetSpeed);
             velocityRequest.Velocity = targetSpeed;
             m_primary.setControl(velocityRequest);
         }

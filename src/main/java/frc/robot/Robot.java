@@ -26,9 +26,9 @@ public class Robot extends TimedRobot {
         // SignalLogger.setControlEnabled(true); 
         // 或者如果你确实想用 DataLog 且看实时输出：
 
-        MessageSender.log1("中文123 abc");
-        MessageSender.log2("--- 机器人代码已启动 ---");
-        MessageSender.log2("--- 很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本 ---");
+        // MessageSender.log1("中文123 abc");
+        // MessageSender.log2("--- 机器人代码已启动 ---");
+        // MessageSender.log2("--- 很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长的文本 ---");
 
         m_robotContainer = new RobotContainer();
     }

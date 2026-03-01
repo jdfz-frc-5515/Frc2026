@@ -25,21 +25,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
-import frc.robot.commands.SlowExtenderCmd;
+import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.TurrentCmd;
+import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Extender;
+import frc.robot.subsystems.IntakeSubsystem;
 
 import frc.robot.subsystems.ShootRPSManager;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterEx;
 import frc.robot.subsystems.TurrentSystem;
 import frc.robot.subsystems.FeedingSubsystem;
@@ -58,11 +60,11 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
+    // private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final Extender extender = new Extender();
-    // public final Shooter shooter = new Shooter();
+    public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    public final Shooter shooter_TEST = new Shooter();
     public final ShooterEx shooter = new ShooterEx();
     public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
     public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
@@ -87,6 +89,9 @@ public class RobotContainer {
 
     public RobotContainer() {
         shootRPSManager.setShooter(shooter);
+        shootRPSManager.setSwerve(drivetrain);
+        shootRPSManager.setTurret(m_turrentSubsystem);
+        m_turrentSubsystem.setSwerve(drivetrain);
         configureBindings();
     }
 
@@ -143,6 +148,12 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
+
+
+
+
+
+    
         // m_driverController.a().whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // m_driverController.b().whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         // m_driverController.x().whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -160,7 +171,8 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(() -> {
             drivetrain.resetHeadingForOdo(0);
         }));
-        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
+        
+        m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -170,29 +182,33 @@ public class RobotContainer {
         // 机器旋转微调
         m_driverController.leftTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 4));
         m_driverController.rightTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 5));
-        // m_driverController.povUp() 
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
-        // m_driverController.rightBumper().whileTrue(
-        //     new AimAprilTagCmd(drivetrain, 
-        //                     m_turrentSubsystem, 
-        //                     false)
-        // );
-        // m_driverController.a().onTrue(new SlowExtenderCmd(extender, Extender.Position.IN.motorPosition()));
-        // m_driverController.b().onTrue(new SlowExtenderCmd(extender, Extender.Position.OUT.motorPosition()));
-        // m_driverController.x().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.IN)));
-        // m_driverController.y().whileTrue(new InstantCommand(() -> extender.setPosition(Extender.Position.OUT)));
+        m_driverController.povDown().whileTrue(
+            new AimAprilTagCmd(drivetrain, 
+                            m_turrentSubsystem, 
+                            false)
+        );
 
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
         m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
+        // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
     private void configureDriver2Bindings() {
-        // m_driverController2.x().whileTrue(new InstantCommand(() -> shooter.setPercentOutput(0.9)));
-        // m_driverController2.y().whileTrue(new InstantCommand(() -> shooter.stop()));
-    }
+        m_driverController2.x().whileTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
+        m_driverController2.y().whileTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
+        m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
+        m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
+        m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
+        m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
+
+    }   
 
     private void configureDriver3Bindings() {
         // m_driverController3

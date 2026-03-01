@@ -30,8 +30,7 @@ import java.util.Map;
 public class Constants {
     public static String LIME_LIGHT_ARPIL_TAG_NAME_RIGHT = "limelight-right";
     public static String LIME_LIGHT_ARPIL_TAG_NAME_LEFT = "limelight-left";
-    public static String LIME_LIGHT_ARPIL_TAG_NAME_SKY = "limelight-sky";
-    public static String LIME_LIGHT_OBJECT_DETECTION = "limelight-up";
+    public static String LIME_LIGHT_ARPIL_TAG_NAME_FRONT = "limelight-front";
 
     public static class GlobalConstants {
         public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
@@ -152,12 +151,6 @@ public class Constants {
             return new Pose2d(pose.getTranslation().rotateAround(centre, rotation), pose.getRotation().plus(rotation));
         }
 
-        public static final double elevatorAlgaeRemovalHeights[] = {
-                0.,
-                0.,
-                0.5 // TODO
-        };
-
         public static final Translation2d BlueRghtStationStPos = new Translation2d(0.6, 1.31);
         public static final Translation2d BlueRghtStationEdPos = new Translation2d(1.6, 0.56);
 
@@ -175,44 +168,45 @@ public class Constants {
 
         public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
             // 战壕 (Trench) - 高度 35.00" (0.89m)
-                new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0), // 0°
-                new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0), // 0°
+                new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0, 1.1), // 180°
+                new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0, 1.1), // 180°
+                new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0, 1.1), // 0°
+                new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0, 1.1), // 0°
         
                 // 中枢 (Hub) - 高度 44.25" (1.12m)
-                new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0), // 90°
-                new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0), // 270°
-                new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0), // 270°
-                new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0), // 0°
-                new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0), // 0°
-                new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0), // 90°
+                new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0, 1.31), // 90°
+                new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0, 1.31), // 180°
+                new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0, 1.31), // 180°
+                new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0, 1.31), // 270°
+                new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0, 1.31), // 270°
+                new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0, 1.31), // 0°
+                new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0, 1.31), // 0°
+                new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0, 1.31), // 90°
         
                 // 哨站 (Outpost) - 高度 21.75" (0.55m)
-                new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0), // 180°
+                new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0, 1.0), // 180°
+                new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0, 1.0), // 180°
         
                 // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
-                new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0), // 180°
-                new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0),  // 180°
-                new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0),
-                new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0),
-                new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0),
-                new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0),
-                new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0),
-                new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0),
-                new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0),
-                new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0),
-                new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0),
-                new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0),
-                new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0),
-                new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0),
-                new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0),
-                new AprilTagCoordinate(30,  0.0127,  1.08,  0.55,  1,  0,  0),
-                new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0),
-                new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0)
+                new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0, 1.0), // 180°
+                new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0,1.0),  // 180°
+
+                new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0, 1.1),
+                new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0, 1.31),
+                new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0, 1.31),
+                new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0, 1.31),
+                new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0, 1.31),
+                new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0, 1.1),
+                new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0,1.1),
+                new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0, 1.31),
+                new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0,1.31),
+                new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0,1.31),
+                new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0,1.31),
+                new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0,1.1),
+                new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0,1.0),
+                new AprilTagCoordinate(30,  0.0127,  1.08,  0.55,  1,  0,  0,1.0),
+                new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0,1.0),
+                new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0,1.0)
         };
 
         //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag
@@ -222,36 +216,12 @@ public class Constants {
 
     }
 
-
-    public static final class Intake {
-        public static final int motorID = 18;
-        public static final String canBusName = "rio";
-        public static final double KP = 0.5;
-        public static final double KI = 0;
-        public static final double KD = 0;
-        public static final double KS = 0;
-        public static final double KV = 0;
-        public static final double KA = 0;
-        public static final double coralInSpeed = 15;
-        public static final double coralInSlowSpeed = 2;
-        public static final double coralInReverseSpeed = -3;
-        public static final double coralOutSpeed = 30;
-        public static final double BallInSpeed = -40;
-        public static final double BAllOutSpeed = 15;
-    }
-
-    public static final class Candle {
-        public static final int candleID = 23;
-        public static final String canBusName = "rio";
-    }
-
     public static final class PathPlanner {
         public static final double constraintsSpeed = 1.;
         public static final double constraintsAccel = 1.;
     }
 
     public final class FieldInfo {
-        
         // 常量Map定义
         public static final Map<Long, APInfo> AP_MAP;
         public static final long[] blueApIds = {
@@ -259,7 +229,7 @@ public class Constants {
         };
         public static final long[] redApIds = {
             6, 7, 8, 9, 10, 11,
-        };
+        }; 
 
         public static double coralBranchOffset = 0.164338;
         public static double coralVerticalOffset = 0.525;
@@ -329,46 +299,31 @@ public class Constants {
         private FieldInfo() {}
     }
 
-
-    public static class RollerConstants {
-        public static final int MotorID = 6;
-        public static final double kOpenPower = 0.8;
-    
-        // 编码器与换算常量（根据实际电机/齿比调整）
-        public static final double GEAR_RATIO = 27.0; // 机械减速比：输出轴转一圈编码器转几圈（若为 10:1，填 10）
-    
-    
-        //6  51.5
-        //8  69
-        //10  86
-        //12  103.5
-        // PID + SVA 常量
-        public static final double kP = 0.01;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
-        public static final double kS = 0.04;   
-        public static final double kV = 0.115; 
-        public static final double kA = 0.00000; 
-    }
-
     public static final class ShooterConstants {
         public static final int PRIMARY_CAN_ID = 10;
         public static final int FOLLOWER_CAN_ID = 11;
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
-        public static final double shootingSpeed = 100.0;
-        public static final double KP = 70.0;
-        public static final double KI = 0.3;
-        public static final double KD = 0.08;
-        public static final double KS = 0.22;
-        public static final double KV = 0.5;
-        public static final double KA = 10.0;
+        public static final double shootingSpeed = 40.0;
+        public static final double KP = 0.2;
+        public static final double KI = 0.002;
+        public static final double KD = 0.0015;
+        public static final double KS = 0.15;
+        public static final double KV = 0.125;
+        public static final double KA = 10.0; // velocity setpoint dont use ka
         public static final double kPreventShooterOscilliationRPS = 1.0;
 
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS)
-            new Point2D.Double(0.0, 100.0), 
-            new Point2D.Double(100.0, 100.0),
+            // new Point2D.Double(0.0, 100.0), 
+            // new Point2D.Double(100.0, 100.0),
+            new Point2D.Double(-1, 49),
+            new Point2D.Double(1.4, 49),
+            new Point2D.Double(2.471, 59),
+            new Point2D.Double(3.0, 85),
+            new Point2D.Double(3.35, 100),
+            // new Point2D.Double(4.358, 90),
+            new Point2D.Double(100, 100),
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
@@ -391,27 +346,37 @@ public class Constants {
         public static final double KA = 0.0;
     }
 
-    public static final class ExtenderConstants {
-        public static final int EXTENDER_CAN_ID = 1;
+    public static final class IntakeConstants {
+        public static double Intake_Voltage = 6;
+        public static double Extender_Voltage = 2;
+        public static double Tolerance = 0.5;
+        public static final int INTAKE_CAN_ID = 19;
+        public static final int EXTENDER_CAN_ID = 20;
         public static final double GEAR_RATIO = 27.0;
         public static final double SLOW_OUT_RPM = 10.0;
         public static final double IN_POS = 0.0;
-        public static final double OUT_POS = 2.0;
-        public static final double KP = 0.01;
-        public static final double KI = 0.0;
-        public static final double KD = 0.0;
-        public static final double KS = 0.04;
-        public static final double KV = 0.115;
-        public static final double KA = 0.0;
+        public static final double OUT_POS = 7.0;
+        public static final double EXTENDER_KP = 0.01;
+        public static final double EXTENDER_KI = 0.0;
+        public static final double EXTENDER_KD = 0.0;
+        public static final double EXTENDER_KS = 0.04;
+        public static final double EXTENDER_KV = 0.115;
+        public static final double EXTENDER_KA = 0.0;
+        public static final double INTAKE_KP = 0.01;
+        public static final double INTAKE_KI = 0.0;
+        public static final double INTAKE_KD = 0.0;
+        public static final double INTAKE_KS = 0.04;
+        public static final double INTAKE_KV = 0.115;
+        public static final double INTAKE_KA = 0.0;
     }
 
     public static class AimAprilTagCmdConstants{
         public static double LimeLightHeight = 0.2;// TODO 根据limelight安装高度确定
         public static double HeadingTorlerance = Math.toRadians(20.0);
-        public static int missingThreshold = 5; // 连续多少个周期无目标则退出
+        public static int missingThreshold = 5; 
     }
 
-    static Alliance alliance = Alliance.Blue;
+    public static Alliance alliance = Alliance.Blue;
     
 
     // 转盘电机
@@ -429,19 +394,19 @@ public class Constants {
     public static final class FeedMotor {
         public static final int motorID = 6;
         public static final String canBusName = "rio";
-        public static final double KP = 0.4;
+        public static final double KP = 0.6;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
-        public static final double speed = 2340/60;
+        public static final double speed = 2340/60*1.5;
     }
 
     public static final class TurrentMotor {
         public static final int motorID = 0;
         public static final String canBusName = "rio";
-        public static final double KP = 1;
+        public static final double KP = 0.4;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;

@@ -7,10 +7,10 @@ import frc.robot.utils.Models.AprilTagCoordinate;
 import frc.robot.utils.Models.CandidateTagInfo;
 
 public class FindAprilTag {
-    public static double TorrentTolerance=Math.PI * 2 / 3; // Radians
+    public static double TorrentTolerance=Math.PI; // Radians
 
     public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
-    public static double DisTolerance=5.0; // meters
+    public static double DisTolerance=7.0; // meters
 
     public static double AngleTolerance=60.0; // degrees
     public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians
@@ -59,12 +59,14 @@ public class FindAprilTag {
                 continue;
             }
 
-            // 计算机器人到标签的距离,大于阈值则跳过
+            // 计算机器人到标签的距离,大于阈值或太小（仰角不够）则跳过
             double distance = Point3D.distance(robotPos, tag.position);
             if (distance > DisTolerance) {
                 continue;
             }
-
+            if(distance < tag.UnReadableDistance){
+                continue;
+            }
             // 计算机器人朝向与标签法线方向的夹角,大于阈值则跳过
             Point3D TagToRobotVector = new Point3D(
                 robotPos.getX() - tag.position.getX(),
@@ -108,7 +110,6 @@ public class FindAprilTag {
             targetHeading = normalizeAngle(thisTargetHeading - LimeLightAngles[bestIdx]);
             
 			double finalAdjustAngle = absAngleDiff(normalizeAngle(robotHeading), targetHeading);
-            //TODO 计算死区
 
             // 满足条件的标签加入候选列表
             candidatesInfo[candidateCount] = new CandidateTagInfo(tag, distance, AngleToRobot, targetHeading, finalAdjustAngle);

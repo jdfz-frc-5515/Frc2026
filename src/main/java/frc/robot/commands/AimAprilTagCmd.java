@@ -49,7 +49,6 @@ public class AimAprilTagCmd extends Command {
         m_desiredTurretAngle = TurrentPose.getRotation().getRadians();
 
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
-        visionDesired = 0;
         if (!Double.isNaN(visionDesired)) {
             // enable auto-aim only when we have a valid target
             m_drivetrain.resetRotationController();
@@ -73,7 +72,6 @@ public class AimAprilTagCmd extends Command {
 
         // Ask vision for desired heading (radians). May return NaN when no target.
         double visionDesired = FindAprilTag.getTargetHeading(robotPos, robotHeading, m_desiredTurretAngle, turnOnly);
-        visionDesired = 0;
         if (!Double.isNaN(visionDesired)) {
             // enable auto-aim (in case it was off) and update target
             m_drivetrain.setUsingAutoAim(true);
