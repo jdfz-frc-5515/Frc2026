@@ -36,6 +36,7 @@ import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.TurrentCmd;
 import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
+import frc.robot.commands.SmartShootCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -66,7 +67,7 @@ public class RobotContainer {
     public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
     public final Shooter shooter_TEST = new Shooter();
     public final ShooterEx shooter = new ShooterEx();
-    public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
+    // public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
     public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
     public final TurrentSystem m_turrentSubsystem = new TurrentSystem();
 
@@ -88,9 +89,9 @@ public class RobotContainer {
     private final double HEADING_BLUE = 180;
 
     public RobotContainer() {
-        shootRPSManager.setShooter(shooter);
-        shootRPSManager.setSwerve(drivetrain);
-        shootRPSManager.setTurret(m_turrentSubsystem);
+        // shootRPSManager.setShooter(shooter);
+        // shootRPSManager.setSwerve(drivetrain);
+        // shootRPSManager.setTurret(m_turrentSubsystem);
         m_turrentSubsystem.setSwerve(drivetrain);
         configureBindings();
     }
@@ -194,7 +195,8 @@ public class RobotContainer {
         m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
         m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
         m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
-        m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
+        // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
+        m_driverController.x().whileTrue(new SmartShootCmd(drivetrain, m_turrentSubsystem, shooter));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 

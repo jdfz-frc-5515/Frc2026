@@ -41,7 +41,10 @@ import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants;
+import frc.robot.Constants.GlobalConstants;
 import frc.robot.Library.ImprovedCommandXboxController;
+import frc.robot.Library.team1706.FieldRelativeAccel;
+import frc.robot.Library.team1706.FieldRelativeSpeed;
 import frc.robot.Library.team1706.MathUtils;
 import edu.wpi.first.math.MathUtil;
 
@@ -84,7 +87,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     // 是否正在使用自动瞄准,对准AprilTag
     private boolean usingAutoAim = false;
     private double desiredHeading = 0.0;
-
+    private FieldRelativeSpeed m_fieldRelVel = new FieldRelativeSpeed();
+    private FieldRelativeSpeed m_lastFieldRelVel = new FieldRelativeSpeed();
+    private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();;
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -319,6 +324,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+        m_fieldRelVel = new FieldRelativeSpeed(getSpeeds(), getState().Pose.getRotation());
+        m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, 0.02); // time for one period
+        m_lastFieldRelVel = m_fieldRelVel;
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -372,6 +380,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public SwerveModuleState[] getModuleStates() {
         return this.getState().ModuleStates;
+    }
+    public FieldRelativeSpeed getFieldRelativeSpeed() {
+        return this.m_fieldRelVel;
+    }
+    public FieldRelativeAccel getFieldRelativeAccel() {
+        return this.m_fieldRelAccel;
     }
 
     public void driveFieldCentric(ChassisSpeeds speeds){

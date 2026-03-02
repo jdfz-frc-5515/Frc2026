@@ -23,7 +23,7 @@ import frc.robot.utils.MessageSender;
 
 public class TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.16, 0.16, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
+        public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
         public static double minAngle = -180;      // 炮台旋转的最小角度限制（度）
         public static double maxAngle = 180;       // 炮台旋转的最大角度限制（度）
         public static double kTurretDegreeForOneRotation = 14.48275862069;
@@ -33,6 +33,8 @@ public class TurrentSystem extends SubsystemBase{
     private PositionVoltage mPosVolt = new PositionVoltage(0);
     private int m_turnState = 0;    // 1正转，-1反转，0不转
     private boolean isAiming = false;
+    private boolean manualTarget = false;
+    private Translation2d target = new Translation2d();
     private CommandSwerveDrivetrain m_drivetrain;
     private DutyCycleOut dc = new DutyCycleOut(0);
     public TurrentSystem() {
@@ -82,7 +84,13 @@ public class TurrentSystem extends SubsystemBase{
         }
         }
         else {
-            double motorPosition = -calcTurrentAngle(m_drivetrain.getPose(), ShooterConstants.targetHub);
+            double motorPosition = 0;
+            if (!manualTarget) {
+                motorPosition = -calcTurrentAngle(m_drivetrain.getPose(), ShooterConstants.targetHub);
+            }
+            else {
+                motorPosition = -calcTurrentAngle(m_drivetrain.getPose(), target);
+            }
             m_motor.setControl(mPosVolt.withPosition(motorPosition / TurrentConst.kTurretDegreeForOneRotation));
             SmartDashboard.putNumber("turret position", motorPosition);
         }
@@ -104,11 +112,16 @@ public class TurrentSystem extends SubsystemBase{
         calcTurrentAngle(m_drivetrain.getPose(), Constants.ShooterConstants.targetHub);
     }
 
-    public void startAiming() {
+    public void startAiming(boolean manualTarget) {
         isAiming = true;
+        this.manualTarget = manualTarget;
     }
     public void stopAiming() {
         isAiming = false;
+        this.manualTarget = false;
+    }
+    public void setTarget(Translation2d target) {
+        this.target = target;
     }
 
     @Override
