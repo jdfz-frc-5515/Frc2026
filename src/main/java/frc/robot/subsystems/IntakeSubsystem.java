@@ -76,13 +76,6 @@ public class IntakeSubsystem extends SubsystemBase {
                 .withInverted(InvertedValue.Clockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Coast)
         )
-        .withCurrentLimits(
-            new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(40))
-                .withStatorCurrentLimitEnable(true)
-                .withSupplyCurrentLimit(Amps.of(30))
-                .withSupplyCurrentLimitEnable(true)
-        )
         .withSlot0(
             new Slot0Configs()
                 .withKP(INTAKE_KP)

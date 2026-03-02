@@ -210,11 +210,16 @@ public class RobotContainer {
         // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
         // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
+        // m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
+        // m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
+        // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
+        // m_driverController.a().onTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
     private void configureDriver2Bindings() {
-        m_driverController2.x().whileTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
-        m_driverController2.y().whileTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
+        m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
+        m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
         m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
         m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
         m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
