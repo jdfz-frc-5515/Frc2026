@@ -23,7 +23,7 @@ public class SmartShootCmd extends Command {
     private final LinearInterpolationTable distRpsTable = ShooterConstants.kRPMTable;
     private final LinearInterpolationTable distShotTimeTable = ShooterConstants.kShotTimeTable;
     private final Translation2d hubLocation = ShooterConstants.targetHub;
-    private int max_iteration = 5;
+    private int max_iteration = 1;
     private double accComp = 0.100;
     public SmartShootCmd(CommandSwerveDrivetrain drivetrain, TurrentSystem turret, ShooterEx shooter) {
         this.m_drivetrain = drivetrain;
@@ -53,8 +53,10 @@ public class SmartShootCmd extends Command {
             // }
             // shotTime = newShotTime;
         }
+        double calc_deviation = virtualTarget.getDistance(m_drivetrain.getPose().getTranslation());
+        SmartDashboard.putNumber("deviation", calc_deviation);
         m_turret.setTarget(virtualTarget);
-        m_shooter.setTargetSpeed(distRpsTable.getOutput(virtualTarget.getDistance(m_drivetrain.getPose().getTranslation())));
+        m_shooter.setTargetSpeed(distRpsTable.getOutput(calc_deviation));
     }
     
     @Override
