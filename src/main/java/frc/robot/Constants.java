@@ -304,7 +304,7 @@ public class Constants {
         public static final int FOLLOWER_CAN_ID = 11;
         public static final String canBusName = "rio";
         public static final double idleSpeed = 0.0;
-        public static final double shootingSpeed = 40.0;
+        public static final double shootingSpeed = 60.0;
         public static final double KP = 0.2;
         public static final double KI = 0.002;
         public static final double KD = 0.0015;
@@ -355,7 +355,7 @@ public class Constants {
         public static final double GEAR_RATIO = 27.0;
         public static final double SLOW_OUT_RPM = 10.0;
         public static final double IN_POS = 0.0;
-        public static final double OUT_POS = 7.0;
+        public static final double OUT_POS = 6.49;
         public static final double EXTENDER_KP = 0.01;
         public static final double EXTENDER_KI = 0.0;
         public static final double EXTENDER_KD = 0.0;
