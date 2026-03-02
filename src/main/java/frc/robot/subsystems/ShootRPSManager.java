@@ -9,7 +9,7 @@ public class ShootRPSManager extends SubsystemBase {
     private static ShootRPSManager instance = null;
     private ShooterEx shooter;
     private CommandSwerveDrivetrain m_drivetrain;
-    private TurrentSystem m_turret;
+    private bak_TurrentSystem m_turret;
     private final LinearInterpolationTable m_rpsTable = Constants.ShooterConstants.kRPMTable;
     
     private double currentDistance = 0.0;
@@ -32,7 +32,7 @@ public class ShootRPSManager extends SubsystemBase {
     public void setSwerve(CommandSwerveDrivetrain drivetrain) {
         this.m_drivetrain = drivetrain;
     }
-    public void setTurret(TurrentSystem turret) {
+    public void setTurret(bak_TurrentSystem turret) {
         this.m_turret = turret;
     }
 

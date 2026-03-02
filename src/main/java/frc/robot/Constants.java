@@ -328,7 +328,7 @@ public class Constants {
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
         private static final Translation2d redHub = new Translation2d(12.868148, 4.021328);
-        public static final Translation2d targetHub = (DriverStation.getAlliance().get() == Alliance.Blue) ? blueHub : redHub;
+        public static final Translation2d targetHub = (alliance == Alliance.Blue) ? blueHub : redHub;
     }
 
     public static final class FeedingConstants {
@@ -376,7 +376,7 @@ public class Constants {
         public static int missingThreshold = 5; 
     }
 
-    public static Alliance alliance = Alliance.Blue;
+    public static Alliance alliance = Alliance.Red;
     
 
     // 转盘电机

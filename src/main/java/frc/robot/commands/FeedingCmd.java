@@ -6,23 +6,23 @@ package frc.robot.commands;
 
 // import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.FeedingSubsystem;
+import frc.robot.subsystems.TurrentSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class FeedingCmd extends Command {
-    private final FeedingSubsystem m_subsystem;
+    private final TurrentSubsystem m_subsystem;
 
     // direction: 0 up 1 left 2 down 3 right
-    public FeedingCmd(FeedingSubsystem subsystem) {
+    public FeedingCmd(TurrentSubsystem subsystem) {
         m_subsystem = subsystem;
-        addRequirements(subsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_subsystem.startPathMotor();
-        m_subsystem.startFeedMotor();
+        m_subsystem.startFeeding();
+
+    
         // System.out.println("start");
     }
 
@@ -34,9 +34,7 @@ public class FeedingCmd extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        // System.out.println("end");
-        m_subsystem.stopFeedMotor();
-        m_subsystem.stopPathMotor();
+        m_subsystem.stopFeeding();
     }
 
     // Returns true when the command should end.

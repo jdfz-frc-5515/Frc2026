@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Library.team19725.Point3D;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.TurrentSystem;
+import frc.robot.subsystems.TurrentSubsystem;
 import frc.robot.utils.FindAprilTag;
 
 /**
@@ -16,14 +16,14 @@ import frc.robot.utils.FindAprilTag;
  */
 public class AimAprilTagCmd extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
-    private final TurrentSystem m_turret;
+    private final TurrentSubsystem m_turret;
     private double m_desiredTurretAngle = 0.0;
     private boolean turnOnly = true;
     private boolean isFinishedFlag = false;
     // 连续未检测到目标的计数器；超过阈值则自动结束命令
     private int consecutiveMissing = 0;
     public AimAprilTagCmd(CommandSwerveDrivetrain drivetrain,
-                        TurrentSystem turret,
+                        TurrentSubsystem turret,
                         boolean turnOnly) {
         m_drivetrain = drivetrain;
         m_turret = turret;

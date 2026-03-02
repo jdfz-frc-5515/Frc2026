@@ -6,14 +6,14 @@ package frc.robot.commands;
 
 // import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterEx;
+import frc.robot.subsystems.TurrentSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class ShooterCmd extends Command {
-    private final ShooterEx m_subsystem;
+    private final TurrentSubsystem m_subsystem;
 
     // direction: 0 up 1 left 2 down 3 right
-    public ShooterCmd(ShooterEx subsystem) {
+    public ShooterCmd(TurrentSubsystem subsystem) {
         m_subsystem = subsystem;
         addRequirements(subsystem);
     }

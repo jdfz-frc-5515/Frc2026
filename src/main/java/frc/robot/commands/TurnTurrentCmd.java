@@ -6,18 +6,18 @@ package frc.robot.commands;
 
 // import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.FeedingSubsystem;
-import frc.robot.subsystems.TurrentSystem;
+import frc.robot.subsystems.FeedingModule;
+import frc.robot.subsystems.TurrentSubsystem;
 
 /** An example command that uses an example subsystem. */
-public class TurrentCmd extends Command {
-    private final TurrentSystem m_subsystem;
+public class TurnTurrentCmd extends Command {
+    private final TurrentSubsystem m_subsystem;
     private boolean m_isTurnRight = true;
 
     // direction: 0 up 1 left 2 down 3 right
-    public TurrentCmd(TurrentSystem subsystem, boolean isTurnRight) {
+    public TurnTurrentCmd(TurrentSubsystem subsystem, boolean isTurnRight) {
         m_subsystem = subsystem;
-        addRequirements(subsystem);
+        // addRequirements(subsystem);
 
         m_isTurnRight = isTurnRight;
     }

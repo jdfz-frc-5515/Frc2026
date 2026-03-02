@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ShooterEx extends SubsystemBase {
+public class ShooterEx {
     public ShooterEx() {
         init();
     }
@@ -47,19 +47,27 @@ public class ShooterEx extends SubsystemBase {
         targetSpeed=speed;
     }
 
+    public double getTargetSpeed() {
+        return targetSpeed;
+    }
+
     public void startShooting() {
         isShooting = true;
     }
     public void stopShooting() {
         isShooting = false;
     }
+
+    public boolean getIsShooting() {
+        return isShooting;
+    }
     public void toggleShooting() {
         isShooting = !isShooting;
     }
-    @Override
-    public void periodic() {
-        update();
-    }
+    // @Override
+    // public void periodic() {
+    //     update();
+    // }
 
     public void update(){
         if (isShooting) {

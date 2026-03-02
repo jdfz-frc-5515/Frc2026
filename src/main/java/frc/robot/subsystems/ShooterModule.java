@@ -33,7 +33,7 @@ import frc.robot.Constants.ShooterConstants;
  *   var shooter = new Shooter(primaryId, followerId, "canbus", true);
  *   shooter.setVelocityRpm(5000);
  */
-public class Shooter extends SubsystemBase {
+public class ShooterModule extends SubsystemBase {
     private final TalonFX primary;
     private final TalonFX follower;
     private final int PrimaryCanID = ShooterConstants.PRIMARY_CAN_ID;
@@ -53,7 +53,7 @@ public class Shooter extends SubsystemBase {
      * Construct a Shooter with explicit IDs and bus name.
      * followerInverted: true means follower will be inverted relative to primary.
      */
-    public Shooter() {
+    public ShooterModule() {
     // IDs are used to construct TalonFX instances below; no need to store them separately
         this.primary = new TalonFX(PrimaryCanID, shooterCanBus);
         this.follower = new TalonFX(FollowerCanID, shooterCanBus);

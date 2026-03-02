@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.logging.LogManager;
-
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
@@ -21,12 +19,17 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.utils.MessageSender;
 
 
-public class TurrentSystem extends SubsystemBase{
+public class bak_TurrentSystem extends SubsystemBase{
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.16, 0.16, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
+        public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));       // 炮台相对于机器人中心的偏移（包含 X/Y 偏移和初始旋转）
         public static double minAngle = -180;      // 炮台旋转的最小角度限制（度）
         public static double maxAngle = 180;       // 炮台旋转的最大角度限制（度）
         public static double kTurretDegreeForOneRotation = 14.48275862069;
+        public static final double kAtTargetThreshold = 1.0; 
+
+        // --- 新增：运动参数控制 ---
+        public static final double kManualCruiseVelocity = 2.0; // 手动时的低速限制（圈/秒）
+        public static final double kAimingCruiseVelocity = 4; // 10.0; // 自动瞄准时的快速限制（圈/秒）
     }
 
     private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
@@ -35,7 +38,7 @@ public class TurrentSystem extends SubsystemBase{
     private boolean isAiming = false;
     private CommandSwerveDrivetrain m_drivetrain;
     private DutyCycleOut dc = new DutyCycleOut(0);
-    public TurrentSystem() {
+    public bak_TurrentSystem() {
         init();
     }
     public void setSwerve(CommandSwerveDrivetrain subsys) {
@@ -173,9 +176,9 @@ public class TurrentSystem extends SubsystemBase{
         // 使用 Math.atan2 计算弧度并转为 Rotation2d
         Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
 
-    // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
-    // 使用独立方法返回的位姿中的旋转部分
-    // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
+        // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
+        // 使用独立方法返回的位姿中的旋转部分
+        // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
         Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]

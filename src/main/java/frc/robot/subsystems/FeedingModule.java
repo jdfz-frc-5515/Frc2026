@@ -10,10 +10,9 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class FeedingSubsystem extends SubsystemBase {
+public class FeedingModule {
 
     private final TalonFX m_pathMotor = new TalonFX(Constants.PathMotor.motorID, new CANBus(Constants.PathMotor.canBusName));
     private final TalonFX m_feedMotor = new TalonFX(Constants.FeedMotor.motorID, new CANBus(Constants.FeedMotor.canBusName));
@@ -22,19 +21,8 @@ public class FeedingSubsystem extends SubsystemBase {
     private boolean m_isPathMotorOn = false;
     private boolean m_isFeedMotorOn = false;
 
-    public FeedingSubsystem() {
+    public FeedingModule() {
         init();
-    }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-        update();
-    }
-
-    @Override
-    public void simulationPeriodic() {
-        // This method will be called once per scheduler run during simulation
     }
 
     private TalonFXConfiguration getFeedMotorConfiguration() {

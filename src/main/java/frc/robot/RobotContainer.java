@@ -33,7 +33,7 @@ import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
-import frc.robot.commands.TurrentCmd;
+import frc.robot.commands.TurnTurrentCmd;
 import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
@@ -41,10 +41,11 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 
 import frc.robot.subsystems.ShootRPSManager;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterModule;
 import frc.robot.subsystems.ShooterEx;
-import frc.robot.subsystems.TurrentSystem;
-import frc.robot.subsystems.FeedingSubsystem;
+import frc.robot.subsystems.TurrentSubsystem;
+import frc.robot.subsystems.FeedingModule;
+import frc.robot.utils.MessageSender;
 import frc.robot.utils.SmartDashboardEx;
 
 public class RobotContainer {
@@ -64,11 +65,11 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    public final Shooter shooter_TEST = new Shooter();
+    public final ShooterModule shooter_TEST = new ShooterModule();
     public final ShooterEx shooter = new ShooterEx();
     public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
-    public final FeedingSubsystem m_feedingSubsystem = new FeedingSubsystem();
-    public final TurrentSystem m_turrentSubsystem = new TurrentSystem();
+    public final FeedingModule m_feedingSubsystem = new FeedingModule();
+    public final TurrentSubsystem m_turrentSubsystem = new TurrentSubsystem();
 
     private StructArrayPublisher<SwerveModuleState> swerveStatePublisher;
 
@@ -88,14 +89,19 @@ public class RobotContainer {
     private final double HEADING_BLUE = 180;
 
     public RobotContainer() {
-        shootRPSManager.setShooter(shooter);
-        shootRPSManager.setSwerve(drivetrain);
-        shootRPSManager.setTurret(m_turrentSubsystem);
-        m_turrentSubsystem.setSwerve(drivetrain);
-        configureBindings();
+        // shootRPSManager.setShooter(shooter);
+        // shootRPSManager.setSwerve(drivetrain);
+        // shootRPSManager.setTurret(m_turrentSubsystem);
+        // m_turrentSubsystem.setSwerve(drivetrain);
+        try {
+            configureBindings();
+        }
+        catch(Exception e) {
+            MessageSender.logException(e.toString());
+        }
     }
 
-    private void configureBindings() {
+    private void configureBindings() throws Exception {
         CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
         swerveStatePublisher = NetworkTableInstance.getDefault()
@@ -141,7 +147,7 @@ public class RobotContainer {
     }
 
     
-    private void configureDriver1Bindings() {
+    private void configureDriver1Bindings() throws Exception {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
 
@@ -172,7 +178,7 @@ public class RobotContainer {
             drivetrain.resetHeadingForOdo(0);
         }));
         
-        m_driverController.b().whileTrue(new ShooterCmd(shooter));
+        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -191,10 +197,18 @@ public class RobotContainer {
                             false)
         );
 
-        m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
-        m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
-        m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
-        m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
+        m_turrentSubsystem.setShootTrigger(m_driverController.a());
+        m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
+        m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
+
+        m_driverController.x().onTrue(new InstantCommand(()-> {
+            drivetrain.reseedGyroByVision();
+        }));
+
+        // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
+        // m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
+        // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
@@ -204,7 +218,7 @@ public class RobotContainer {
         m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
         m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
         m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
-        m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
+        // m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
         m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
         m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
 
