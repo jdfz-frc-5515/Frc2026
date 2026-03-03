@@ -867,14 +867,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             // 1. 更新 Pigeon 的 Yaw
             // 注意：这里需要考虑你的 zeroOdoDegree 偏移逻辑
             double newDeg = targetRot.getDegrees();
-            double curDeg = getRotationFromPigeon();
+            double curDeg = getRotationFromPigeon()- zeroOdoDegree;
             zeroOdoDegree -= newDeg - curDeg;       // TODO: 这里是加还是减要测试
             
             // 2. 同时通知 PoseEstimator 现在的最新位置和角度（保持坐标同步）
             // 这样可以消除重置瞬间的视觉跳变
             // resetPose(new Pose2d(getState().Pose.getTranslation(), targetRot));
-            
-            MessageSender.logWarning("Gyro reseeded by Vision to: " + targetRot.getDegrees());
+            MessageSender.log("curDeg:" + curDeg);
+            MessageSender.logWarning("Gyro reseeded by Vision to: " + newDeg);
         }
     }
 }

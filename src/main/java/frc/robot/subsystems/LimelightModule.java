@@ -47,7 +47,9 @@ public class LimelightModule {
             String llName = limelightNames[i];
             LimelightHelpers.SetRobotOrientation(llName, yaw - zeroOdoDegree, 0, pitch, 0, roll, 0);
             LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-
+            if (mt2 == null) {
+                continue;
+            }
             if (mt2.tagCount > 0
                     && mt2.avgTagDist < 4
                     && mt2.latency < MAX_LL_LATENCY // 抛弃高延时

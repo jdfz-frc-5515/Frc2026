@@ -98,6 +98,10 @@ public class TurrentSubsystem extends SubsystemBase {
         init();
     }
 
+    public void setDriver(CommandSwerveDrivetrain d) {
+        m_drivetrain = d;
+    }
+
     public void init() {
         m_shooter.init();
         m_feeding.init();
@@ -110,6 +114,7 @@ public class TurrentSubsystem extends SubsystemBase {
         update();
         SmartDashboard.putNumber("Turret/Current Angle", getCurrentAngle());
         SmartDashboard.putNumber("Turret/Target Angle", m_targetAngle);
+        SmartDashboard.putNumber("Turret/Position", m_motor.getPosition().getValueAsDouble());
     }
 
     public double getCurrentAngle() {

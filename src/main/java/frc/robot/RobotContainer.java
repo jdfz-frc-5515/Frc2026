@@ -93,6 +93,7 @@ public class RobotContainer {
         // shootRPSManager.setSwerve(drivetrain);
         // shootRPSManager.setTurret(m_turrentSubsystem);
         // m_turrentSubsystem.setSwerve(drivetrain);
+        m_turrentSubsystem.setDriver(drivetrain);
         try {
             configureBindings();
         }
@@ -138,7 +139,7 @@ public class RobotContainer {
         drivetrain.resetHeadingForOdo(headingAngle);
 
         configureDriver1Bindings();
-        configureDriver2Bindings();
+        // configureDriver2Bindings();
         registerPathplannerEventsAndNamedCommands();
 
         drivetrain.registerTelemetry(logger::telemeterize);
