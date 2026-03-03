@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import frc.robot.Library.team1706.FieldRelativeSpeed;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -209,5 +210,22 @@ public class TurrentSystem extends SubsystemBase{
         }
 
         return degrees;
+    }
+
+    public FieldRelativeSpeed getTurretSpeed(FieldRelativeSpeed robotSpeed) {
+        FieldRelativeSpeed turretSpeed = new FieldRelativeSpeed();
+
+        double robotSpeedX = robotSpeed.getX();
+        double robotSpeedY = robotSpeed.getY();
+        double robotOmega = robotSpeed.getOmega();
+
+        double turretSpeedX = robotSpeedX - robotOmega * TurrentConst.turrentOffset.getX();
+        double turretSpeedY = robotSpeedY + robotOmega * TurrentConst.turrentOffset.getY();
+
+        turretSpeed.setX(turretSpeedX);
+        turretSpeed.setY(turretSpeedY);
+        turretSpeed.setOmega(robotOmega);
+
+        return turretSpeed;
     }
 }
