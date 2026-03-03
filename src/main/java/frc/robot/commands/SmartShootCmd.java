@@ -23,7 +23,7 @@ public class SmartShootCmd extends Command {
     private final LinearInterpolationTable distRpsTable = ShooterConstants.kRPMTable;
     private final LinearInterpolationTable distShotTimeTable = ShooterConstants.kShotTimeTable;
     private final Translation2d hubLocation = ShooterConstants.targetHub;
-    private int max_iteration = 1;
+    private int max_iteration = 5;
     private double accComp = 0.100;
     public SmartShootCmd(CommandSwerveDrivetrain drivetrain, TurrentSystem turret, ShooterEx shooter) {
         this.m_drivetrain = drivetrain;
@@ -39,24 +39,33 @@ public class SmartShootCmd extends Command {
     public void execute() {
         m_turret.startAiming(true);
         Translation2d virtualTarget = hubLocation;
+        // Get drive speed
+        FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
+        FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
+        // Get initial virtual shot distance and time
+        double shotDistance = virtualTarget.getDistance(m_turret.getTurretWorldPose(m_drivetrain.getPose()).getTranslation());
+        double shotTime = distShotTimeTable.getOutput(shotDistance);
+
         for (int i=0; i < max_iteration; i++) {
-            double shotDistance = virtualTarget.getDistance(m_turret.getTurretWorldPose(m_drivetrain.getPose()).getTranslation());
-            double shotTime = distShotTimeTable.getOutput(shotDistance);
-            FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
-            FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
-            Translation2d targetShiftVector = new Translation2d(-shotTime*(driveFieldSpeed.vx+driveFieldAccel.ax*accComp), -shotTime*((driveFieldSpeed.vy+driveFieldAccel.ay*accComp)));
-            virtualTarget = virtualTarget.plus(targetShiftVector);
-            // Translation2d toVirtualTargetVector = virtualTarget.minus(m_drivetrain.getPose().getTranslation());
-            // double newShotTime = distShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
-            // if (Math.abs(newShotTime - shotTime) < 0.010) {
-            //     i = 4;
-            // }
-            // shotTime = newShotTime;
+            // Calculate new virtual shot target
+            Translation2d targetShiftVector = new Translation2d(-shotTime * (driveFieldSpeed.vx + driveFieldAccel.ax * accComp), 
+                                                                -shotTime * ((driveFieldSpeed.vy + driveFieldAccel.ay * accComp)));
+            virtualTarget = hubLocation.plus(targetShiftVector);
+            // Calculate new virtual shot time
+            Translation2d toVirtualTargetVector = virtualTarget.minus(m_drivetrain.getPose().getTranslation());
+            double newShotTime = distShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
+            // If time converge, break the loop
+            if (Math.abs(newShotTime - shotTime) < 0.010) {
+                i = 4;
+            }
+            // Update shot time
+            shotTime = newShotTime;
         }
+        
+        double calc_deviation = virtualTarget.getDistance(m_drivetrain.getPose().getTranslation());
+        SmartDashboard.putNumber("deviation", calc_deviation);
         m_turret.setTarget(virtualTarget);
-        double calc_deviation = virtualTarget.getDistance(m_turret.getTurretWorldPose(m_drivetrain.getPose()).getTranslation());
-        double virtual_rps = distRpsTable.getOutput(calc_deviation);
-        m_shooter.setTargetSpeed(distRpsTable.getOutput(virtual_rps));
+        m_shooter.setTargetSpeed(distRpsTable.getOutput(calc_deviation));
     }
     
     @Override
