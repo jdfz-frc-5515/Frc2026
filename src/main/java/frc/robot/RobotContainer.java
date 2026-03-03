@@ -192,12 +192,12 @@ public class RobotContainer {
                             false)
         );
 
-        m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
-        m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
-        m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
+        // m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
+        // m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
+        m_driverController.x().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
         // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
-        m_driverController.b().whileTrue(new ShooterCmd(shooter));
-        m_driverController.x().whileTrue(new SmartShootCmd(drivetrain, m_turrentSubsystem, shooter));
+        m_driverController.rightBumper().whileTrue(new ShooterCmd(shooter));
+        m_driverController.leftBumper().whileTrue(new SmartShootCmd(drivetrain, m_turrentSubsystem, shooter));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
