@@ -54,7 +54,7 @@ public class SmartShootCmd extends Command {
             // shotTime = newShotTime;
         }
         m_turret.setTarget(virtualTarget);
-        double calc_deviation = virtualTarget.getDistance(m_drivetrain.getPose().getTranslation());
+        double calc_deviation = virtualTarget.getDistance(m_turret.getTurretWorldPose(m_drivetrain.getPose()).getTranslation());
         double virtual_rps = distRpsTable.getOutput(calc_deviation);
         m_shooter.setTargetSpeed(distRpsTable.getOutput(virtual_rps));
     }
