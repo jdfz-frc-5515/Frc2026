@@ -53,8 +53,10 @@ public class SmartShootCmd extends Command {
             // }
             // shotTime = newShotTime;
         }
+        SmartDashboard.putNumber("distance fo smart", virtualTarget.getDistance(hubLocation));
         m_turret.setTarget(virtualTarget);
-        m_shooter.setTargetSpeed(distRpsTable.getOutput(virtualTarget.getDistance(m_drivetrain.getPose().getTranslation())));
+        double virtual_rps = distRpsTable.getOutput(virtualTarget.getDistance(m_drivetrain.getPose().getTranslation()));
+        m_shooter.setTargetSpeed(distRpsTable.getOutput(virtual_rps));
     }
     
     @Override
