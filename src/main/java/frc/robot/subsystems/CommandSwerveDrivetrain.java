@@ -326,6 +326,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public void periodic() {
         m_fieldRelVel = new FieldRelativeSpeed(getSpeeds(), getState().Pose.getRotation());
         m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, 0.02); // time for one period
+        SmartDashboard.putNumber("field rel vel x", m_fieldRelVel.vx);
+        SmartDashboard.putNumber("field rel vel y", m_fieldRelVel.vy);
+        SmartDashboard.putNumber("field rel vel dir", m_fieldRelVel.omega/Math.PI*180);
         m_lastFieldRelVel = m_fieldRelVel;
         /*
          * Periodically try to apply the operator perspective.

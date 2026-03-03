@@ -15,7 +15,7 @@ public class ShooterCmd extends Command {
     // direction: 0 up 1 left 2 down 3 right
     public ShooterCmd(ShooterEx subsystem) {
         m_subsystem = subsystem;
-        addRequirements(subsystem);
+        // addRequirements(subsystem);
     }
 
     // Called when the command is initially scheduled.
