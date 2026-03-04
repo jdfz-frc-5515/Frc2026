@@ -10,10 +10,15 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Library.team1706.FieldRelativeSpeed;
 import frc.robot.Library.team1706.FieldRelativeAccel;
 import frc.robot.Library.team1706.LinearInterpolationTable;
+
+import com.google.flatbuffers.Struct;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SmartShootCmd extends Command {
@@ -25,10 +30,12 @@ public class SmartShootCmd extends Command {
     private final Translation2d hubLocation = ShooterConstants.targetHub;
     private int max_iteration = 7;
     private double accComp = 0.020;
+    private StructPublisher<Pose2d> ntPub;
     public SmartShootCmd(CommandSwerveDrivetrain drivetrain, TurrentSystem turret, ShooterEx shooter) {
         this.m_drivetrain = drivetrain;
         this.m_turret = turret;
         this.m_shooter = shooter;
+        StructPublisher<Pose2d> ntPub = NetworkTableInstance.getDefault().getStructTopic("SmartShoot/VirtualTarget", Pose2d.struct).publish();
     }
     @Override
     public void initialize() {
@@ -68,6 +75,7 @@ public class SmartShootCmd extends Command {
         }
         double calc_deviation = virtualTarget.getDistance(drivetrainTranslation);
         SmartDashboard.putNumber("deviation", calc_deviation);
+        ntPub.set(new Pose2d(virtualTarget, new Rotation2d(0)));
         m_turret.setTarget(virtualTarget);
         m_shooter.setTargetSpeed(distRpsTable.getOutput(calc_deviation));
     }
