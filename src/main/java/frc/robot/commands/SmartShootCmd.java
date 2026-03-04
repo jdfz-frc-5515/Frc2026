@@ -23,8 +23,8 @@ public class SmartShootCmd extends Command {
     private final LinearInterpolationTable distRpsTable = ShooterConstants.kRPMTable;
     private final LinearInterpolationTable distShotTimeTable = ShooterConstants.kShotTimeTable;
     private final Translation2d hubLocation = ShooterConstants.targetHub;
-    private int max_iteration = 5;
-    private double accComp = 0.100;
+    private int max_iteration = 7;
+    private double accComp = 0.020;
     public SmartShootCmd(CommandSwerveDrivetrain drivetrain, TurrentSystem turret, ShooterEx shooter) {
         this.m_drivetrain = drivetrain;
         this.m_turret = turret;
