@@ -195,7 +195,7 @@ public class RobotContainer {
         m_driverController.povDown().whileTrue(
             new AimAprilTagCmd(drivetrain, 
                             m_turrentSubsystem, 
-                            false)
+                            true)
         );
 
         m_turrentSubsystem.setShootTrigger(m_driverController.a());

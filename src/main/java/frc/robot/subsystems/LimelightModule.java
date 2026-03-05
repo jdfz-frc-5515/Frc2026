@@ -24,14 +24,14 @@ public class LimelightModule {
                                                       // limelight
 
     private static final boolean m_isSmartMode = true;
-
+    public static long LastSeenAPTime = System.currentTimeMillis();
     public static void update(CommandSwerveDrivetrain swerve) {
         ChassisSpeeds chassisSpeeds = swerve.getSpeeds();
 
         if (Math.abs(chassisSpeeds.omegaRadiansPerSecond) > 4 * Math.PI
                 || Math.hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond) > 2) {
             // 旋转速度过快或者移动速度过快都忽略
-            return;
+            return; 
         }
 
         var pigeon = swerve.getPigeon2();
@@ -54,6 +54,7 @@ public class LimelightModule {
                     && mt2.avgTagDist < 4
                     && mt2.latency < MAX_LL_LATENCY // 抛弃高延时
             ) {
+                LastSeenAPTime = System.currentTimeMillis();
                 if (m_isSmartMode) {
                     if (bestMt2 == null) {
                         bestMt2 = mt2;
