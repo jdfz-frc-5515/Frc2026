@@ -10,7 +10,7 @@ public class FindAprilTag {
     public static double TorrentTolerance=Math.PI; // Radians
 
     public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
-    public static double DisTolerance=7.0; // meters
+    public static double DisTolerance=3.7; // meters
 
     public static double AngleTolerance=60.0; // degrees
     public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians

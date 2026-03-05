@@ -189,7 +189,7 @@ public class RobotContainer {
         m_driverController.povDown().whileTrue(
             new AimAprilTagCmd(drivetrain, 
                             m_turrentSubsystem, 
-                            false)
+                            true)
         );
 
         // m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
