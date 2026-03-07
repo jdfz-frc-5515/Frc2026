@@ -31,7 +31,7 @@ import frc.robot.utils.MiscUtils;
 
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.16, 0.16, Rotation2d.fromDegrees(0));
+        public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));
         public static double minAngle = -180;
         public static double maxAngle = 180;
         public static double kTurretDegreeForOneRotation = 14.48275862069;
