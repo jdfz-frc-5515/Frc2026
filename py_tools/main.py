@@ -57,6 +57,8 @@ class MyWindow(QtWidgets.QMainWindow):
 
     def update_robot_info(self):
         robotPosData = nt4.default_nt4.get_robot_pose()
+        shootTarget = nt4.default_nt4.get_shoot_target()
+        aimDir = nt4.default_nt4.get_aim_dir()
         if nt4.default_nt4.is_connected() == False or robotPosData is None:
             self.label_robotPos.setText("Pos X:--, Y:--")
             self.label_robotRot.setText("Rot deg:--")
@@ -68,6 +70,9 @@ class MyWindow(QtWidgets.QMainWindow):
             self.label_robotRot.setText(f"Rot deg:{deg:0.2f}")
 
             self.fieldCanvas.update_robot_pose(x, y, deg)
+            self.fieldCanvas.upate_aim_dir(aimDir.x, aimDir.y, aimDir.rotation().degrees())
+
+            self.fieldCanvas.update_shoot_target_pos(shootTarget.x, shootTarget.y)
 
     def update_connect_status(self):
         if nt4.default_nt4.is_connected():

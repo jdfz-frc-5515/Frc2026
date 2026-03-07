@@ -108,7 +108,24 @@ class FieldCanvas(FigureCanvas):
         self.ax.add_patch(patches.Rectangle((hub_x - trench_d/2, self.field_w - trench_w), trench_d, trench_w, color=color, alpha=0.15))
         self.ax.add_patch(patches.Rectangle((hub_x - trench_d/2, 0), trench_d, trench_w, color=color, alpha=0.15))
 
+    # def update_robot_pose(self, x, y, yaw):
+    #     if self.robot_rect is None:
+    #         self.robot_rect = patches.Rectangle((-self.rob_size/2, -self.rob_size/2), 
+    #                                           self.rob_size, self.rob_size, color='green', alpha=0.8, zorder=20)
+    #         self.robot_arrow = patches.Arrow(0, 0, 0.5, 0, width=0.2, color='gold', zorder=21)
+    #         self.ax.add_patch(self.robot_rect)
+    #         self.ax.add_patch(self.robot_arrow)
+
+    #     t = transforms.Affine2D().rotate_deg(yaw).translate(x, y) + self.ax.transData
+    #     self.robot_rect.set_transform(t)
+    #     self.robot_arrow.set_transform(t)
+    #     self.draw_idle()
     def update_robot_pose(self, x, y, yaw):
+        # 记录当前位姿，方便其他函数调用
+        self._last_rob_x = x
+        self._last_rob_y = y
+        self._last_rob_yaw = yaw
+
         if self.robot_rect is None:
             self.robot_rect = patches.Rectangle((-self.rob_size/2, -self.rob_size/2), 
                                               self.rob_size, self.rob_size, color='green', alpha=0.8, zorder=20)
@@ -119,6 +136,42 @@ class FieldCanvas(FigureCanvas):
         t = transforms.Affine2D().rotate_deg(yaw).translate(x, y) + self.ax.transData
         self.robot_rect.set_transform(t)
         self.robot_arrow.set_transform(t)
+        self.draw_idle()
+
+    def update_shoot_target_pos(self, x, y):
+        """在指定坐标描绘一个 X 图形"""
+        if not hasattr(self, 'target_cross'):
+            # 创建两条线段组成 X，并添加到坐标轴
+            self.target_cross, = self.ax.plot([], [], 'rx', markersize=12, markeredgewidth=2, zorder=30)
+        
+        self.target_cross.set_data([x], [y])
+        self.draw_idle()
+        
+    def upate_aim_dir(self, offset_x, offset_y, turret_degree):
+        """
+        现在只需要传入炮台相对于底盘的偏移和角度
+        机器人位姿自动从类成员变量读取
+        """
+        # 安全检查：确保已经调用过 update_robot_pose
+        if not hasattr(self, '_last_rob_x'):
+            return
+
+        ray_length = 4.0
+        if not hasattr(self, 'aim_ray'):
+            self.aim_ray, = self.ax.plot([], [], color='red', linestyle='--', linewidth=1.5, alpha=0.7, zorder=25)
+
+        # 1. 计算局部坐标（炮台系）
+        rad = np.radians(turret_degree)
+        local_end_x = offset_x + ray_length * np.cos(rad)
+        local_end_y = offset_y + ray_length * np.sin(rad)
+
+        # 2. 使用存储的底盘位姿进行变换
+        t = transforms.Affine2D().rotate_deg(self._last_rob_yaw).translate(self._last_rob_x, self._last_rob_y)
+        
+        start_global = t.transform([offset_x, offset_y])
+        end_global = t.transform([local_end_x, local_end_y])
+
+        self.aim_ray.set_data([start_global[0], end_global[0]], [start_global[1], end_global[1]])
         self.draw_idle()
 
 # ---------------------------------------------------------

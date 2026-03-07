@@ -2,10 +2,11 @@ import ntcore
 import time
 import threading
 from typing import Any, Callable
-from wpimath.geometry import Pose2d
+from wpimath.geometry import Pose2d, Translation2d
 
 ROBOT_POS_KEY = "MyPose"
-TEST_KEY = 'MyPoseIntArr'
+SHOOT_TARGET_KEY = "ShootTarget"
+AIM_DIR_KEY = "ShooterAimDir"
 
 class NT4Manager:
     def __init__(self, identity: str = "__5515PythonClient__", server_ip: str = None, team_number: int = 5515):
@@ -177,10 +178,17 @@ class NT4Manager:
     ############################################# 以下是应用层
     def _start_(self):
         self.subscribe_struct(ROBOT_POS_KEY, Pose2d)
+        self.subscribe_struct(SHOOT_TARGET_KEY, Translation2d)
+        self.subscribe_struct(AIM_DIR_KEY, Pose2d)
 
     def get_robot_pose(self) -> Pose2d:
         return self.get(ROBOT_POS_KEY)
     
+    def get_shoot_target(self) -> Translation2d:
+        return self.get(SHOOT_TARGET_KEY)
+    
+    def get_aim_dir(self) -> Pose2d:
+        return self.get(AIM_DIR_KEY)
     
 
 default_nt4 = NT4Manager()

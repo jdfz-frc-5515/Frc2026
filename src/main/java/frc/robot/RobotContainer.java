@@ -16,6 +16,8 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.events.EventTrigger;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -82,9 +84,13 @@ public class RobotContainer {
     private List<Trigger> pathplannerEvents = new ArrayList<Trigger>();
 
 
-    private final StructPublisher<Pose2d> robotPospublisher = NetworkTableInstance.getDefault()
+    private final StructPublisher<Pose2d> robotPosPublisher = NetworkTableInstance.getDefault()
         .getStructTopic("MyPose", Pose2d.struct).publish();
-
+    private final StructPublisher<Translation2d> shootTargetPublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("ShootTarget", Translation2d.struct).publish();
+    private final StructPublisher<Pose2d> shooterAimDirPrublisher = NetworkTableInstance.getDefault()
+        .getStructTopic("ShooterAimDir", Pose2d.struct).publish();
+        
     private final double HEADING_RED = 0;
     private final double HEADING_BLUE = 180;
 
@@ -255,7 +261,17 @@ public class RobotContainer {
         Pose2d pos = drivetrain.getPose();
 
         swerveStatePublisher.set(drivetrain.getModuleStates());
-        robotPospublisher.set(pos);
+        robotPosPublisher.set(pos);
+
+        Translation2d shootTarget = m_turrentSubsystem.getShootTarget();
+        Pose2d shooterAimDir = m_turrentSubsystem.getShooterAimDir();
+
+        if (shootTarget != null) {
+            shootTargetPublisher.set(shootTarget);
+        }
+        if (shooterAimDir != null) {
+            shooterAimDirPrublisher.set(shooterAimDir);
+        }
     }
 
     public void updateAlways() {

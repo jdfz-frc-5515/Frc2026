@@ -69,6 +69,11 @@ public class TurrentSubsystem extends SubsystemBase {
 
     private double m_curMaxSpeed = 0;
 
+    private Translation2d m_shootTarget = Constants.ShooterConstants.targetHub;
+    private Pose2d m_shooterAimDir = new Pose2d(
+        TurrentConst.turrentOffset.getTranslation(),
+        TurrentConst.turrentOffset.getRotation()
+    );
     public void setShootTrigger(Trigger trigger) throws  Exception {
         if (m_shootTrigger != null) {
             throw new Exception("setShootTrigger is called more than once!");
@@ -232,7 +237,8 @@ public class TurrentSubsystem extends SubsystemBase {
         // 2. 调用封装好的非线性补偿函数
         Translation2d shiftVector = calculateCompensationVector(turretFieldVelocity, currentDistance);
 
-        return originalTargetPos.minus(shiftVector);
+        m_shootTarget = originalTargetPos.minus(shiftVector);
+        return m_shootTarget;
     }
 
     private void startAndUpdateAim() {
@@ -244,10 +250,21 @@ public class TurrentSubsystem extends SubsystemBase {
         m_isStartAiming = false;
     }
 
+
+
+    public Translation2d getShootTarget() {
+        return m_shootTarget;
+    }
+
+    public Pose2d getShooterAimDir() {
+        return m_shooterAimDir;
+    }
+
     // 下划线的update函数不在this.update()中调用，它被间接调用
     private void _updateAim() {
         if (m_isStartAiming) {
             double angle = calcTurrentAngle(m_drivetrain.getPose(), getShootTargetPosWithShift());
+            m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
             setSpeed(TurrentConst.kAimingCruiseVelocity);
             setTargetAngle(angle);
         }
