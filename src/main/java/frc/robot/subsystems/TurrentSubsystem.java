@@ -32,14 +32,14 @@ import frc.robot.utils.MiscUtils;
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
         public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));
-        public static double minAngle = -180;
-        public static double maxAngle = 180;
+        public static double minAngle = -270;
+        public static double maxAngle = 75;
         public static double kTurretDegreeForOneRotation = 14.48275862069;
         public static final double kAtTargetThreshold = 1.0; 
         
         // --- 新增：运动参数控制 ---
-        public static final double kManualCruiseVelocity = 2.0; // 手动时的低速限制（圈/秒）
-        public static final double kAimingCruiseVelocity = 10.0; // 自动瞄准时的快速限制（圈/秒）
+        public static final double kManualCruiseVelocity = 80.0; // 手动时的低速限制（圈/秒）
+        public static final double kAimingCruiseVelocity = 80.0; // 自动瞄准时的快速限制（圈/秒）
 
         private static final double r_wheel = 0.05;      // 射击飞轮半径， 米
         
@@ -152,18 +152,20 @@ public class TurrentSubsystem extends SubsystemBase {
     public void turnLeft() {
         // 设置目标为最小角度限制，MotionMagic 会负责以设定的低速转过去
         setSpeed(TurrentConst.kManualCruiseVelocity);
-        setTargetAngle(TurrentConst.minAngle);
+        // setTargetAngle(TurrentConst.minAngle);
+        setTargetAngle(0);
     }
 
     public void turnRight() {
         // 设置目标为最大角度限制
         setSpeed(TurrentConst.kManualCruiseVelocity);
-        setTargetAngle(TurrentConst.maxAngle);
+        // setTargetAngle(TurrentConst.maxAngle);
+        setTargetAngle(-180);
     }
 
     public void stopTurn() {
         // 停止旋转：将目标设定为当前所在位置，让 PID 把它“锁”在那里
-        setTargetAngle(getCurrentAngle());
+        // setTargetAngle(getCurrentAngle());
     }
 
     public void setTargetAngle(double angle) {
@@ -307,8 +309,8 @@ public class TurrentSubsystem extends SubsystemBase {
         // --- 核心：Motion Magic 配置 ---
         // 通过这个配置来实现你要求的“低速”
         config.MotionMagic.MotionMagicCruiseVelocity = TurrentConst.kManualCruiseVelocity; 
-        config.MotionMagic.MotionMagicAcceleration = 4.0; // 加速度，决定起步有多“肉”
-        config.MotionMagic.MotionMagicJerk = 40.0;       // 让运动更丝滑
+        config.MotionMagic.MotionMagicAcceleration = 180.0; // 加速度，决定起步有多“肉”
+        config.MotionMagic.MotionMagicJerk = .0;       // 让运动更丝滑
 
         return config;
     }

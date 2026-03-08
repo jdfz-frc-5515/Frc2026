@@ -212,8 +212,8 @@ public class RobotContainer {
             drivetrain.reseedGyroByVision();
         }));
 
-        // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
-        // m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
+        m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
+        m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
         // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
         // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
