@@ -1,39 +1,39 @@
 package frc.robot.utils;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Constants;
 import frc.robot.Library.team19725.Point2D;
 import frc.robot.Library.team19725.Point3D;
 
-public class CalculateTarget {
-    //TODO 填入准确的场地参数
-    protected static double TrenchHeight = 0.2; //传球高度
-    protected static double TrenchX_Blue = 3;
-    protected static double TrenchX_Red = 7;
+public class CalculatePassFuelTarget {
+    public static double TrenchHeight = 1.8; //传球高度
+    public static double TrenchX_Blue = 4.61;
+    public static double TrenchX_Red = 12.86;
     //X坐标范围限制，如不满足说明在联盟区域内，不应当传球
-    protected static double XThreshold_Blue = 4;
-    protected static double XThreshold_Red = 6;
+    public static double XThreshold_Blue = 5;
+    public static double XThreshold_Red = 11;
     //受hub影响，传球有一个死区，该区域内无法传球
-    protected static double hubY1 = 4;
-    protected static double hubY2 = 6;
-    protected static double hubYMid = 5;
-    protected static Point2D Blue1 = new Point2D(XThreshold_Blue, hubY1);
-    protected static Point2D Blue2 = new Point2D(XThreshold_Blue + 2, hubYMid);
-    protected static Point2D Blue3 = new Point2D(XThreshold_Blue, hubY2);
-    protected static Point2D Red1 = new Point2D(XThreshold_Red, hubY1);
-    protected static Point2D Red2 = new Point2D(XThreshold_Red - 2, hubYMid);
-    protected static Point2D Red3 = new Point2D(XThreshold_Red, hubY2);
+    public static double hubYMid = 4.025; //hub中心的Y坐标
+    public static double hubY1 = hubYMid - 1.677;
+    public static double hubY2 = hubYMid + 1.677;
+    
+    public static Point2D Blue1 = new Point2D(TrenchX_Blue, hubY1);
+    public static Point2D Blue2 = new Point2D(TrenchX_Blue + 4, hubYMid);
+    public static Point2D Blue3 = new Point2D(TrenchX_Blue, hubY2);
+    public static Point2D Red1 = new Point2D(TrenchX_Red, hubY1);
+    public static Point2D Red2 = new Point2D(TrenchX_Red - 4, hubYMid);
+    public static Point2D Red3 = new Point2D(TrenchX_Red, hubY2);
 
     /**
      * 计算传球目标点
      * @param robotPos 机器人当前位置
-     * @param alliance 联盟颜色
      * @return 传球目标点,如无法传球，则返回 (NaN, NaN, NaN)
      */
-    public static Point3D calculatePassTarget(Point3D robotPos, Alliance alliance) {
+    public static Point3D calculatePassTarget(Point3D robotPos) {
         double robotY = robotPos.getY();
         double robotX = robotPos.getX();
         //蓝方
-        if(alliance == Alliance.Blue) {
+        if(Constants.alliance == Alliance.Blue) {
             if(robotX < XThreshold_Blue) {
                 return new Point3D(Double.NaN, Double.NaN, Double.NaN); //在联盟区域内，不传球
             }

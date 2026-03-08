@@ -386,7 +386,7 @@ public class Constants {
     }
 
     public static class AimAprilTagCmdConstants{
-        public static double LimeLightHeight = 0.22;// TODO 根据limelight安装高度确定
+        public static double LimeLightHeight = 0.22;
         public static double HeadingTorlerance = Math.toRadians(20.0);
         public static int missingThreshold = 5; 
     }
