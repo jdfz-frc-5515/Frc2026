@@ -46,19 +46,19 @@ public class IntakeSubsystem extends SubsystemBase {
     private static final double INTAKE_KA = IntakeConstants.INTAKE_KA;
     // Jam Detector
     private final Debouncer jamDebouncer = new Debouncer(0.2, DebounceType.kRising);
-    private final double jamCurrentThreshold = 8.0;
+    private final double jamCurrentThreshold = 100.0;
 
     private final TalonFXConfiguration ExtenderConfig = new TalonFXConfiguration()
         .withMotorOutput(
             new MotorOutputConfigs()
                 .withInverted(InvertedValue.Clockwise_Positive)
-                .withNeutralMode(NeutralModeValue.Coast)
+                .withNeutralMode(NeutralModeValue.Brake)
         )
         .withCurrentLimits(
             new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(40))
+                .withStatorCurrentLimit(Amps.of(100))
                 .withStatorCurrentLimitEnable(true)
-                .withSupplyCurrentLimit(Amps.of(30))
+                .withSupplyCurrentLimit(Amps.of(100))
                 .withSupplyCurrentLimitEnable(true)
         )
         .withSlot0(
