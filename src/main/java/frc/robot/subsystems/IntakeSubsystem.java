@@ -102,8 +102,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){
-        if (haveObstacle()) {
-            ExtenderMotor.stopMotor();
+        if (haveObstacle()
+            || ExtenderMotor.getPosition().getValueAsDouble() < -1 
+            || ExtenderMotor.getPosition().getValueAsDouble() > 6) {
+            
+                ExtenderMotor.stopMotor();
         }
     }
 

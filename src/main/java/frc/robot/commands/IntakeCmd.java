@@ -19,6 +19,7 @@ public class IntakeCmd extends Command{
 	private final BooleanSupplier supplier;
 	public static double InPosition = Constants.IntakeConstants.IN_POS;
 	public static double OutPosition = Constants.IntakeConstants.OUT_POS;
+	public static double CheckPoint = 2.646;
 	public IntakeCmd(IntakeSubsystem m_IntakeSubsystem, boolean ifIn, BooleanSupplier m_Supplier) {
 		this.ifIn = ifIn;
 		this.intakeSubsystem = m_IntakeSubsystem;
@@ -69,7 +70,12 @@ public class IntakeCmd extends Command{
 			if (now < targetPosition) {
 				intakeSubsystem.setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			} else if (now > targetPosition) {
-				intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
+				if(now > CheckPoint){
+					intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Push_Voltage);
+				}
+				else{
+					intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
+				}
 			}
 		}
 		if(hasReachedTarget()){
