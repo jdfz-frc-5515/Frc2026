@@ -169,7 +169,59 @@ public class TurrentSubsystem extends SubsystemBase {
     }
 
     public void setTargetAngle(double angle) {
-        m_targetAngle = MathUtil.clamp(angle, TurrentConst.minAngle, TurrentConst.maxAngle);
+        m_targetAngle = normalizeAngle(angle, TurrentConst.minAngle, TurrentConst.maxAngle);
+    }
+
+    private double normalizeAngle(double angle, double min, double max) {
+                // 确保 min <= max (根据题目描述通常满足，但做个防御)
+        if (min > max) {
+            // 如果配置反了，这里可以选择交换或报错，视业务而定。
+            // 假设输入总是合法的 min <= max
+            double temp = min;
+            min = max;
+            max = temp;
+        }
+
+        double range = max - min;
+
+        // --- 核心逻辑：寻找同余解 ---
+        // 目标：找到整数 k，使得 min <= angle + k * 360 <= max
+        // 变换不等式：
+        // k * 360 >= min - angle  =>  k >= (min - angle) / 360
+        // k * 360 <= max - angle  =>  k <= (max - angle) / 360
+        
+        double lowerK = (min - angle) / 360.0;
+        double upperK = (max - angle) / 360.0;
+        
+        // 计算最小的可行整数 k
+        long k = (long) Math.ceil(lowerK);
+        
+        // 检查这个 k 是否也在上限范围内
+        // 如果 range >= 360，lowerK 和 upperK 的差值 >= 1，必然存在整数 k
+        if (k <= Math.floor(upperK)) {
+            return angle + k * 360.0;
+        }
+
+        // --- 若无同余解：钳位到最近边界 ---
+        // 计算 angle 到 min 和 max 的环形最短距离
+        double distToMin = getShortestArcDistance(angle, min);
+        double distToMax = getShortestArcDistance(angle, max);
+        
+        if (distToMin < distToMax) {
+            return min;
+        } else {
+            return max;
+        }
+    }
+    /**
+     * 计算两个角度在圆环上的最短弧长距离 (0 ~ 180]
+     */
+    private static double getShortestArcDistance(double a1, double a2) {
+        double diff = (a1 - a2) % 360.0;
+        // 将 diff 规范化到 (-180, 180]
+        if (diff <= -180) diff += 360;
+        if (diff > 180) diff -= 360;
+        return Math.abs(diff);
     }
 
     public boolean isAtTarget() {
@@ -311,6 +363,17 @@ public class TurrentSubsystem extends SubsystemBase {
         config.MotionMagic.MotionMagicCruiseVelocity = TurrentConst.kManualCruiseVelocity; 
         config.MotionMagic.MotionMagicAcceleration = 180.0; // 加速度，决定起步有多“肉”
         config.MotionMagic.MotionMagicJerk = .0;       // 让运动更丝滑
+
+
+
+        // 在你的 getMotorConfiguration 方法中
+        // config.Slot0.kP = Constants.TurrentMotor.KP; // 必须有，决定力量
+        // config.Slot0.kI = Constants.TurrentMotor.KI; // 通常为 0
+        // config.Slot0.kD = Constants.TurrentMotor.KD; // 必须有，消除到达终点前的微小震荡
+
+        // // 强烈建议添加前馈参数（如果有的话）
+        // config.Slot0.kS = Constants.TurrentMotor.KS; // 克服静摩擦
+        // config.Slot0.kV = Constants.TurrentMotor.KV; // 速度前馈，让闭环更轻松
 
         return config;
     }
