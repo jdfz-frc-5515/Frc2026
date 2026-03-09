@@ -349,7 +349,8 @@ public class Constants {
     public static final class IntakeConstants {
         public static final String canBusName = "rio";
         public static double Intake_Voltage = 6;
-        public static double Extender_Voltage = 2;
+        public static double Extender_Voltage = 1;
+        public static double Extender_Push_Voltage = 3;
         public static double Tolerance = 0.5;
         public static final int INTAKE_CAN_ID = 19;
         public static final int EXTENDER_CAN_ID = 20;
