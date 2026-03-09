@@ -15,8 +15,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -31,7 +32,7 @@ import frc.robot.utils.MiscUtils;
 
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));
+        public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603, Rotation2d.fromDegrees(0));
         public static double minAngle = -120;
         public static double maxAngle = 75;
         public static double kTurretDegreeForOneRotation = 14.48275862069;
@@ -79,7 +80,14 @@ public class TurrentSubsystem extends SubsystemBase {
             throw new Exception("setShootTrigger is called more than once!");
         }
         m_shootTrigger = trigger;
-        m_shootTrigger.whileTrue(new ParallelCommandGroup(new FeedingCmd(this), new ShooterCmd(this)));
+        m_shootTrigger.whileTrue(new ParallelCommandGroup(
+            
+            new ShooterCmd(this),
+            new SequentialCommandGroup(
+                new WaitCommand(1),
+                new FeedingCmd(this)      
+            )
+        ));
     }
 
     public void setTurnLeftTrigger(Trigger trigger) throws Exception {
@@ -164,7 +172,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // 设置目标为最大角度限制
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.maxAngle);
-        setTargetAngle(-120);
+        setTargetAngle(-90);
     }
 
     public void stopTurn() {
@@ -447,6 +455,7 @@ public class TurrentSubsystem extends SubsystemBase {
     /////////////////////////////////////////////////////////
     /// Feeding
     /////////////////////////////////////////////////////////
+    /// 先启动shooter再path再feed
     public void startFeeding() {
         m_feeding.startPathMotor();
         m_feeding.startFeedMotor();
