@@ -26,4 +26,28 @@ public class FieldRelativeSpeed {
         this.omega = 0.0;
     }
 
+    public void setX(double x) {
+        this.vx = x;
+    }
+
+    public void setY(double y) {
+        this.vy = y;
+    }
+
+    public void setOmega(double omega) {
+        this.omega = omega;
+    }
+
+    public double getX() {
+        return this.vx;
+    }
+
+    public double getY() {
+        return this.vy;
+    }
+
+    public double getOmega() {
+        return this.omega;
+    }
+
 }

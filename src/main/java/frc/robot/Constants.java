@@ -326,6 +326,18 @@ public class Constants {
             new Point2D.Double(100, 100),
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
+        private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
+            // (distance, seconds)
+            new Point2D.Double(-100.0, 0.7),
+            new Point2D.Double(1.1, 0.7),
+            new Point2D.Double(1.6, 0.9),
+            new Point2D.Double(2.1, 0.97),
+            new Point2D.Double(2.6, 1.1),
+            new Point2D.Double(3.1, 1.3),
+            new Point2D.Double(3.6, 1.96),
+            new Point2D.Double(100.0, 1.96),
+        };
+        public static final LinearInterpolationTable kShotTimeTable = new LinearInterpolationTable(kShotTimePoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
         private static final Translation2d redHub = new Translation2d(12.868148, 4.021328);
         public static final Translation2d targetHub = (alliance == Alliance.Blue) ? blueHub : redHub;

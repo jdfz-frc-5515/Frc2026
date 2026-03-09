@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Library.team1706.FieldRelativeAccel;
+import frc.robot.Library.team1706.FieldRelativeSpeed;
 import frc.robot.Library.team1706.LinearInterpolationTable;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
@@ -259,6 +261,62 @@ public class TurrentSubsystem extends SubsystemBase {
     // 供未来实现非线性插值预留的方法
     private double getKFactorFromDistance(double distance) {
         return m_kFactorMap.get(distance); 
+    }
+
+    private Translation2d getPWYShootTargetPosWithShift() {
+        int max_iteration = 5;
+        double accComp = 0.010;
+        Translation2d virtualTarget = ShooterConstants.targetHub;
+        // Get drive speed, acc, and translation
+        FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
+        FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
+        Translation2d drivetrainTranslation = m_drivetrain.getPose().getTranslation();
+        Translation2d turretWorldTranslation = this.getTurretWorldPose(m_drivetrain.getPose()).getTranslation();
+        FieldRelativeSpeed turretSpeed = this.getTurretSpeed(driveFieldSpeed);
+        // Get initial virtual shot distance and time
+        double shotDistance = virtualTarget.getDistance(turretWorldTranslation);
+        double shotTime = ShooterConstants.kShotTimeTable.getOutput(shotDistance);
+        // Iterate to get better shot time and target
+        for (int i=0; i < max_iteration; i++) {
+            // Calculate new virtual shot target
+            Translation2d targetShiftVector = new Translation2d(
+                -shotTime * (turretSpeed.getX() + driveFieldAccel.ax * accComp), 
+                -shotTime * (turretSpeed.getY() + driveFieldAccel.ay * accComp));
+            virtualTarget = ShooterConstants.targetHub.plus(targetShiftVector);
+            // Calculate new virtual shot time
+            Translation2d toVirtualTargetVector = virtualTarget.minus(drivetrainTranslation);
+            double newShotTime = ShooterConstants.kShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
+            // If time converge, break the loop
+            if (Math.abs(newShotTime - shotTime) < 0.010) {
+                shotTime = newShotTime;
+                break;
+            }
+            // Update shot time
+            shotTime = newShotTime;
+        }
+        double calc_deviation = virtualTarget.getDistance(drivetrainTranslation);
+        SmartDashboard.putNumber("deviation", calc_deviation);
+        // ntPub.set(new Pose2d(virtualTarget, new Rotation2d(0)));
+        // m_turret.setTarget(virtualTarget);
+        return virtualTarget;
+        // m_shooter.setTargetSpeed(ShooterConstants.kShotTimeTable.getOutput(calc_deviation));
+    }
+    public FieldRelativeSpeed getTurretSpeed(FieldRelativeSpeed robotSpeed) {
+        // made by pwyhyh
+        FieldRelativeSpeed turretSpeed = new FieldRelativeSpeed();
+
+        double robotSpeedX = robotSpeed.getX();
+        double robotSpeedY = robotSpeed.getY();
+        double robotOmega = robotSpeed.getOmega();
+
+        double turretSpeedX = robotSpeedX - robotOmega * TurrentConst.turrentOffset.getX();
+        double turretSpeedY = robotSpeedY + robotOmega * TurrentConst.turrentOffset.getY();
+
+        turretSpeed.setX(turretSpeedX);
+        turretSpeed.setY(turretSpeedY);
+        turretSpeed.setOmega(robotOmega);
+
+        return turretSpeed;
     }
 
     private Translation2d getShootTargetPosWithShift() {
