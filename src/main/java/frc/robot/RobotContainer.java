@@ -192,8 +192,8 @@ public class RobotContainer {
         m_driverController.povRight().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 3));
 
         // 机器旋转微调
-        m_driverController.leftTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 4));
-        m_driverController.rightTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 5));
+        // m_driverController.leftTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 4));
+        // m_driverController.rightTrigger().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 5));
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
@@ -203,13 +203,13 @@ public class RobotContainer {
         //                     true)
         // );
 
-        m_turrentSubsystem.setShootTrigger(m_driverController.a());
+        m_turrentSubsystem.setShootTrigger(m_driverController.rightTrigger());
         // m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
         // m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
         m_driverController.leftBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(6)));
         m_driverController.rightBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(0)));
 
-        m_driverController.x().onTrue(new InstantCommand(()-> {
+        m_driverController.leftTrigger().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();
         }));
         // m_driverController.y().onTrue(new InstantCommand(() -> {
@@ -218,6 +218,7 @@ public class RobotContainer {
         // }));
         m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
         m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
+        m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
 
         // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));

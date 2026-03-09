@@ -455,6 +455,11 @@ public class TurrentSubsystem extends SubsystemBase {
     /////////////////////////////////////////////////////////
     /// Feeding
     /////////////////////////////////////////////////////////
+    
+    public void reverseFeed() {
+        m_feeding.reverseFeedMotor(1);      // 圈数待调
+    }
+
     /// 先启动shooter再path再feed
     public void startFeeding() {
         m_feeding.startPathMotor();
