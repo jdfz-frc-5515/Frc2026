@@ -70,7 +70,7 @@ public class FeedingModule {
     }
 
     int startTime = -1;
-    int startDelayTime = 100;
+    int startDelayTime = 20;
     public void startFeedMotor() {
         // m_isFeedMotorOn = true;
         startTime = startDelayTime;

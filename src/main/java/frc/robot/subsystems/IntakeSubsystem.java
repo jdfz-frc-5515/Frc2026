@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Volts;
 
+import java.security.MessageDigest;
+
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -19,8 +21,13 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.utils.MessageSender;
+import frc.robot.utils.MiscUtils;
+import frc.robot.utils.SmartDashboardEx;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final int extenderMotorCANID = IntakeConstants.EXTENDER_CAN_ID; 
@@ -28,9 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final CANBus MotorCANBus= new CANBus("rio");
     private final TalonFX ExtenderMotor;
     private final TalonFX IntakeMotor;
-    private final PositionVoltage positionRequest = new PositionVoltage(0).withSlot(0);
     private final VoltageOut voltageRequest = new VoltageOut(0);
-    private final VelocityVoltage velocityRequest = new VelocityVoltage(0).withSlot(0);
     // PID S V A constants for extender slot0 are defined in Constants.IntakeConstants
     private static final double EXT_KP = IntakeConstants.EXTENDER_KP;
     private static final double EXT_KI = IntakeConstants.EXTENDER_KI;
@@ -47,6 +52,22 @@ public class IntakeSubsystem extends SubsystemBase {
     // Jam Detector
     private final Debouncer jamDebouncer = new Debouncer(0.2, DebounceType.kRising);
     private final double jamCurrentThreshold = 100.0;
+    //state machine
+    private boolean runIntakeMode = false;
+    //true: in false: out
+    private boolean runExtenderMode = true;
+    public void toggleIntakeMode(){
+        MessageSender.log("222222222222222222222222222222222");
+        runIntakeMode = !runIntakeMode;
+    }
+    public void toggleExtenderMode(){
+        runExtenderMode = !runExtenderMode;
+    }
+    private double targetPosition = 0;
+    private boolean hasIntakeReachTarget = false;
+
+    private static final double TOLERANCE = Constants.IntakeConstants.Tolerance;
+	public static double CheckPoint = 2.646;
 
     private final TalonFXConfiguration ExtenderConfig = new TalonFXConfiguration()
         .withMotorOutput(
@@ -102,25 +123,27 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){
+        update();
         if (haveObstacle()
             || ExtenderMotor.getPosition().getValueAsDouble() < -1 
             || ExtenderMotor.getPosition().getValueAsDouble() > 6) {
-            
-                ExtenderMotor.stopMotor();
+            ExtenderMotor.stopMotor();
         }
     }
 
-    public void setExtenderPosition(double position) {
-        ExtenderMotor.setControl(
-            positionRequest.withPosition(position)
-        );
-    }
-
     public void setExtenderVoltage(double voltage) {
-        ExtenderMotor.setControl(
+        if(MiscUtils.compareDouble(voltage, 0)){
+            MessageSender.log("****************************");
+            ExtenderMotor.stopMotor();
+        }
+        else{
+            MessageSender.log("888888888888888888888888888888888");
+            ExtenderMotor.setControl(
             voltageRequest
                 .withOutput(Volts.of(voltage))
-        );
+            );
+        }
+        
     }
 
     public boolean haveObstacle() {
@@ -138,15 +161,64 @@ public class IntakeSubsystem extends SubsystemBase {
 
     
     public void setInatkeVoltage(double Voltage){
-        IntakeMotor.setControl(
+        if(MiscUtils.compareDouble(Voltage, 0)){
+            IntakeMotor.stopMotor();
+        }
+        else{
+            IntakeMotor.setControl(
             voltageRequest
                 .withOutput(Volts.of(Voltage))
-        );
-    }
-    public void setIntakeVelocity(double velocity){
-        IntakeMotor.setControl(
-            velocityRequest.withVelocity(velocity)
-        );
+            );
+        }
+        
     }
     
+    public void update(){
+        if(hasReachedTarget()){
+			hasIntakeReachTarget = true;
+		}
+        setTargetPoint();
+
+        if(runIntakeMode){
+            setInatkeVoltage(Constants.IntakeConstants.Intake_Voltage);
+        }
+        else{
+            setInatkeVoltage(0);
+        }
+
+            double now = getCurrentExtenderPosition();
+
+		    SmartDashboardEx.putBoolean("hasIntakeReachTarget", hasIntakeReachTarget);
+		    SmartDashboard.putBoolean("runIntakeMode", runIntakeMode);
+		    SmartDashboard.putNumber("MotorPos", now);
+            SmartDashboard.putNumber("targetPOS", targetPosition);
+		    if(!hasReachedTarget()){
+                MessageSender.log("29292929292929929292");
+			    if (now < targetPosition) {
+				    setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
+			    } else if (now > targetPosition) {
+				    if(now > CheckPoint){
+					    setExtenderVoltage(-Constants.IntakeConstants.Extender_Push_Voltage);
+				    }
+				    else{
+					    setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
+				    }
+			    }
+		    }
+            else{
+                MessageSender.log("3939393939939393939393");
+                ExtenderMotor.stopMotor();
+            }
+    }
+    private boolean hasReachedTarget(){
+		return (Math.abs(targetPosition - getCurrentExtenderPosition()) <= TOLERANCE); 
+	}
+    private void setTargetPoint(){
+		if(runExtenderMode){
+			targetPosition = Constants.IntakeConstants.IN_POS;
+		}
+		else{
+			targetPosition = Constants.IntakeConstants.OUT_POS;
+		}
+	}
 }

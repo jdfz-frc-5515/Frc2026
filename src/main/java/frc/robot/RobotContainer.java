@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
+import frc.robot.commands.ExtenderCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
@@ -203,8 +204,10 @@ public class RobotContainer {
         // );
 
         m_turrentSubsystem.setShootTrigger(m_driverController.a());
-        m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
-        m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
+        // m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
+        // m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
+        m_driverController.leftBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(6)));
+        m_driverController.rightBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(0)));
 
         m_driverController.x().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();
@@ -213,8 +216,8 @@ public class RobotContainer {
         //     m_turrentSubsystem.zeroCC();
         //     m_instakeSubstem2.zeroCC();
         // }));
-        m_driverController.y().whileTrue(new IntakeCmd(m_intakeSubsystem, false, ()->m_driverController.a().getAsBoolean()));
-        m_driverController.b().whileFalse(new IntakeCmd(m_intakeSubsystem, true, ()->m_driverController.a().getAsBoolean()));
+        m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
+        m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
         // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
 
         // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));

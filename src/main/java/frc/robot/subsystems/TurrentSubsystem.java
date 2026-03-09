@@ -84,7 +84,7 @@ public class TurrentSubsystem extends SubsystemBase {
             
             new ShooterCmd(this),
             new SequentialCommandGroup(
-                new WaitCommand(1),
+                new WaitCommand(0.3),
                 new FeedingCmd(this)      
             )
         ));

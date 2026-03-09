@@ -1,17 +1,18 @@
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utils.MessageSender;
 
-public class IntakeCmd extends Command{
-	private IntakeSubsystem intakeSubsystem;
-    public IntakeCmd(IntakeSubsystem m_IntakeSubsystem){
+public class ExtenderCmd extends Command {
+    private IntakeSubsystem intakeSubsystem;
+    public ExtenderCmd(IntakeSubsystem m_IntakeSubsystem){
         intakeSubsystem = m_IntakeSubsystem;
     }
     @Override
     public void initialize(){
-		MessageSender.log("1111111111111111111111111");
-        intakeSubsystem.toggleIntakeMode();
+        MessageSender.log("9999999999999999999999");
+        intakeSubsystem.toggleExtenderMode();
     }
     @Override
     public void execute(){
@@ -26,5 +27,4 @@ public class IntakeCmd extends Command{
     public boolean isFinished() {
         return true;
     }
-	
 }
