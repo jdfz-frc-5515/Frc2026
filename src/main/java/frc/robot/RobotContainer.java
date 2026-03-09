@@ -35,13 +35,14 @@ import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
+import frc.robot.commands.IntakeToggleCmd;
 import frc.robot.commands.TurnTurrentCmd;
 import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
-
+import frc.robot.subsystems.IntakeSubsystem2;
 import frc.robot.subsystems.ShootRPSManager;
 import frc.robot.subsystems.ShooterModule;
 import frc.robot.subsystems.ShooterEx;
@@ -66,7 +67,8 @@ public class RobotContainer {
     // private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    // public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    public final IntakeSubsystem2 m_instakeSubstem2 = new IntakeSubsystem2();
     public final ShooterModule shooter_TEST = new ShooterModule();
     public final ShooterEx shooter = new ShooterEx();
     public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
@@ -162,10 +164,6 @@ public class RobotContainer {
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
 
-
-
-
-
     
         // m_driverController.a().whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // m_driverController.b().whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
@@ -198,11 +196,11 @@ public class RobotContainer {
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
-        m_driverController.povDown().whileTrue(
-            new AimAprilTagCmd(drivetrain, 
-                            m_turrentSubsystem, 
-                            true)
-        );
+        // m_driverController.povDown().whileTrue(
+        //     new AimAprilTagCmd(drivetrain, 
+        //                     m_turrentSubsystem, 
+        //                     true)
+        // );
 
         m_turrentSubsystem.setShootTrigger(m_driverController.a());
         m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
@@ -211,9 +209,14 @@ public class RobotContainer {
         m_driverController.x().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();
         }));
+        m_driverController.y().onTrue(new InstantCommand(() -> {
+            m_turrentSubsystem.zeroCC();
+            m_instakeSubstem2.zeroCC();
+        }));
+        // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
 
-        m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
-        m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
+        // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
+        // m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
         // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
         // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
         // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
@@ -225,14 +228,14 @@ public class RobotContainer {
     }
 
     private void configureDriver2Bindings() {
-        m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
-        m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
-        m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
-        m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
-        m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
-        // m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
-        m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
-        m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
+        // m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
+        // m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
+        // m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
+        // m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        // m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        // // m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
+        // m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
+        // m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
 
     }   
 

@@ -107,11 +107,15 @@ public class TurrentSubsystem extends SubsystemBase {
         m_drivetrain = d;
     }
 
+    public void zeroCC() {
+        m_motor.setPosition(0);
+    }
+    
     public void init() {
         m_shooter.init();
         m_feeding.init();
         m_motor.getConfigurator().apply(getMotorConfiguration());
-        m_motor.setPosition(0);
+        zeroCC();
     }
 
     @Override

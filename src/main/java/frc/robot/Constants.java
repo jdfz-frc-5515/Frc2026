@@ -347,6 +347,7 @@ public class Constants {
     }
 
     public static final class IntakeConstants {
+        public static final String canBusName = "rio";
         public static double Intake_Voltage = 6;
         public static double Extender_Voltage = 2;
         public static double Tolerance = 0.5;
@@ -368,6 +369,12 @@ public class Constants {
         public static final double INTAKE_KS = 0.04;
         public static final double INTAKE_KV = 0.115;
         public static final double INTAKE_KA = 0.0;
+
+        public static final double INTAKE_SPEED = 5;
+
+        public static final double EXTENDER_MOTION_MAGIC_MAX_SPEED = 5;
+        public static final double EXTENDER_MOTION_MAGIC_ACC = 5;
+        public static final double EXTENDER_MOTION_MAGIC_JERK = 0;
     }
 
     public static class AimAprilTagCmdConstants{
