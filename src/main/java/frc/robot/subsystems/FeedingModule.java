@@ -47,7 +47,7 @@ public class FeedingModule {
     private TalonFXConfiguration getPathMotorConfiguration() {
         TalonFXConfiguration config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
         // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -200;
