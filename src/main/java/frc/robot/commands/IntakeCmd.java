@@ -66,10 +66,10 @@ public class IntakeCmd extends Command{
 		SmartDashboardEx.putBoolean("hasIntakeOut", hasIntakeReachTarget);
 		SmartDashboard.putNumber("MotorPos", now);
 		if(hasIntakeReachTarget){
-			if(intakeSubsystem.haveObstacle()){
-				intakeSubsystem.setExtenderVoltage(0);
-				return; // Stop if an obstacle is detected
-			}
+			// if(intakeSubsystem.haveObstacle()){
+			// 	intakeSubsystem.setExtenderVoltage(0);
+			// 	return; // Stop if an obstacle is detected
+			// }
 			if (now < targetPosition) {
 				intakeSubsystem.setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			} else if (now > targetPosition) {

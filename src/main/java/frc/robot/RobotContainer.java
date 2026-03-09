@@ -67,8 +67,8 @@ public class RobotContainer {
     // private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    // public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    public final IntakeSubsystem2 m_instakeSubstem2 = new IntakeSubsystem2();
+    public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+    // public final IntakeSubsystem2 m_instakeSubstem2 = new IntakeSubsystem2();
     public final ShooterModule shooter_TEST = new ShooterModule();
     public final ShooterEx shooter = new ShooterEx();
     public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
@@ -209,10 +209,12 @@ public class RobotContainer {
         m_driverController.x().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();
         }));
-        m_driverController.y().onTrue(new InstantCommand(() -> {
-            m_turrentSubsystem.zeroCC();
-            m_instakeSubstem2.zeroCC();
-        }));
+        // m_driverController.y().onTrue(new InstantCommand(() -> {
+        //     m_turrentSubsystem.zeroCC();
+        //     m_instakeSubstem2.zeroCC();
+        // }));
+        m_driverController.y().whileTrue(new IntakeCmd(m_intakeSubsystem, false, ()->m_driverController.a().getAsBoolean()));
+        m_driverController.b().whileFalse(new IntakeCmd(m_intakeSubsystem, true, ()->m_driverController.a().getAsBoolean()));
         // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
 
         // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
