@@ -15,8 +15,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -31,15 +32,15 @@ import frc.robot.utils.MiscUtils;
 
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.1875, 0.1603, Rotation2d.fromDegrees(0));
-        public static double minAngle = -270;
+        public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603, Rotation2d.fromDegrees(0));
+        public static double minAngle = -120;
         public static double maxAngle = 75;
         public static double kTurretDegreeForOneRotation = 14.48275862069;
         public static final double kAtTargetThreshold = 1.0; 
         
         // --- 新增：运动参数控制 ---
-        public static final double kManualCruiseVelocity = 80.0; // 手动时的低速限制（圈/秒）
-        public static final double kAimingCruiseVelocity = 80.0; // 自动瞄准时的快速限制（圈/秒）
+        public static final double kManualCruiseVelocity = 40.0; // 手动时的低速限制（圈/秒）
+        public static final double kAimingCruiseVelocity = 40.0; // 自动瞄准时的快速限制（圈/秒）
 
         private static final double r_wheel = 0.05;      // 射击飞轮半径， 米
         
@@ -79,7 +80,14 @@ public class TurrentSubsystem extends SubsystemBase {
             throw new Exception("setShootTrigger is called more than once!");
         }
         m_shootTrigger = trigger;
-        m_shootTrigger.whileTrue(new ParallelCommandGroup(new FeedingCmd(this), new ShooterCmd(this)));
+        m_shootTrigger.whileTrue(new ParallelCommandGroup(
+            
+            new ShooterCmd(this),
+            new SequentialCommandGroup(
+                new WaitCommand(1),
+                new FeedingCmd(this)      
+            )
+        ));
     }
 
     public void setTurnLeftTrigger(Trigger trigger) throws Exception {
@@ -164,7 +172,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // 设置目标为最大角度限制
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.maxAngle);
-        setTargetAngle(-180);
+        setTargetAngle(-90);
     }
 
     public void stopTurn() {
@@ -365,7 +373,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // --- 核心：Motion Magic 配置 ---
         // 通过这个配置来实现你要求的“低速”
         config.MotionMagic.MotionMagicCruiseVelocity = TurrentConst.kManualCruiseVelocity; 
-        config.MotionMagic.MotionMagicAcceleration = 180.0; // 加速度，决定起步有多“肉”
+        config.MotionMagic.MotionMagicAcceleration = 120.0; // 加速度，决定起步有多“肉”
         config.MotionMagic.MotionMagicJerk = .0;       // 让运动更丝滑
 
 
@@ -421,8 +429,8 @@ public class TurrentSubsystem extends SubsystemBase {
 
         // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
         // 使用独立方法返回的位姿中的旋转部分
-        // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
-        Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
+        Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
+        // Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
@@ -447,6 +455,7 @@ public class TurrentSubsystem extends SubsystemBase {
     /////////////////////////////////////////////////////////
     /// Feeding
     /////////////////////////////////////////////////////////
+    /// 先启动shooter再path再feed
     public void startFeeding() {
         m_feeding.startPathMotor();
         m_feeding.startFeedMotor();

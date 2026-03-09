@@ -47,7 +47,7 @@ public class FeedingModule {
     private TalonFXConfiguration getPathMotorConfiguration() {
         TalonFXConfiguration config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         // elevatorConfiguration.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
         // elevatorConfiguration.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -200;
@@ -69,8 +69,11 @@ public class FeedingModule {
         m_pathMotor.getConfigurator().apply(getPathMotorConfiguration());
     }
 
+    int startTime = -1;
+    int startDelayTime = 100;
     public void startFeedMotor() {
-        m_isFeedMotorOn = true;
+        // m_isFeedMotorOn = true;
+        startTime = startDelayTime;
     }
 
     public void stopFeedMotor() {
@@ -83,9 +86,19 @@ public class FeedingModule {
 
     public void stopPathMotor() {
         m_isPathMotorOn = false;
+        startTime = -1;
     }
 
     public void update() {
+        if (startTime >= 0) {
+            if (startTime > 0) {
+                startTime--;
+            }
+            if (startTime == 0) {
+                m_isFeedMotorOn = true;
+            }
+        }
+
         if (m_isFeedMotorOn) {
             m_feedMotorDutycycle.Velocity = Constants.FeedMotor.speed;
             m_feedMotor.setControl(m_feedMotorDutycycle);

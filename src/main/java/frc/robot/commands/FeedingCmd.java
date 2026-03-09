@@ -12,7 +12,6 @@ import frc.robot.subsystems.TurrentSubsystem;
 public class FeedingCmd extends Command {
     private final TurrentSubsystem m_subsystem;
 
-    // direction: 0 up 1 left 2 down 3 right
     public FeedingCmd(TurrentSubsystem subsystem) {
         m_subsystem = subsystem;
     }
