@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.commands.AimAprilTagCmd;
 import frc.robot.commands.ExtenderCmd;
@@ -204,10 +205,10 @@ public class RobotContainer {
         // );
 
         m_turrentSubsystem.setShootTrigger(m_driverController.rightTrigger());
-        // m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
-        // m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
-        m_driverController.leftBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(6)));
-        m_driverController.rightBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(0)));
+        m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
+        m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
+        // m_driverController.leftBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(6)));
+        // m_driverController.rightBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(0)));
 
         m_driverController.leftTrigger().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();

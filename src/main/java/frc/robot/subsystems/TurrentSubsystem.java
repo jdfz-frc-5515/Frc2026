@@ -429,8 +429,8 @@ public class TurrentSubsystem extends SubsystemBase {
 
         // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
         // 使用独立方法返回的位姿中的旋转部分
-        Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
-        // Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
+        // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
+        Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
@@ -457,7 +457,7 @@ public class TurrentSubsystem extends SubsystemBase {
     /////////////////////////////////////////////////////////
     
     public void reverseFeed() {
-        m_feeding.reverseFeedMotor(1);      // 圈数待调
+        m_feeding.reverseFeedMotor(2);      // 圈数待调
     }
 
     /// 先启动shooter再path再feed

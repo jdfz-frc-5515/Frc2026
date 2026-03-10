@@ -17,8 +17,9 @@ import frc.robot.LimelightHelpers;
 
 public class LimelightModule {
     private static final String[] limelightNames = new String[] {
-            Constants.LIME_LIGHT_ARPIL_TAG_NAME_FRONT, Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT,
-            Constants.LIME_LIGHT_ARPIL_TAG_NAME_FRONT
+            Constants.LIME_LIGHT_ARPIL_TAG_NAME_FRONT, 
+            Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT,
+            Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT,
     };
     private static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the
                                                       // limelight

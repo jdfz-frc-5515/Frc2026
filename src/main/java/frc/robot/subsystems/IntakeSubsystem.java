@@ -57,7 +57,7 @@ public class IntakeSubsystem extends SubsystemBase {
     //true: in false: out
     private boolean runExtenderMode = true;
     public void toggleIntakeMode(){
-        MessageSender.log("222222222222222222222222222222222");
+        // MessageSender.log("222222222222222222222222222222222");
         runIntakeMode = !runIntakeMode;
     }
     public void toggleExtenderMode(){
@@ -133,11 +133,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setExtenderVoltage(double voltage) {
         if(MiscUtils.compareDouble(voltage, 0)){
-            MessageSender.log("****************************");
+            // MessageSender.log("****************************");
             ExtenderMotor.stopMotor();
         }
         else{
-            MessageSender.log("888888888888888888888888888888888");
+            // MessageSender.log("888888888888888888888888888888888");
             ExtenderMotor.setControl(
             voltageRequest
                 .withOutput(Volts.of(voltage))
@@ -193,7 +193,7 @@ public class IntakeSubsystem extends SubsystemBase {
 		    SmartDashboard.putNumber("MotorPos", now);
             SmartDashboard.putNumber("targetPOS", targetPosition);
 		    if(!hasReachedTarget()){
-                MessageSender.log("29292929292929929292");
+                // MessageSender.log("29292929292929929292");
 			    if (now < targetPosition) {
 				    setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			    } else if (now > targetPosition) {
@@ -206,7 +206,7 @@ public class IntakeSubsystem extends SubsystemBase {
 			    }
 		    }
             else{
-                MessageSender.log("3939393939939393939393");
+                // MessageSender.log("3939393939939393939393");
                 ExtenderMotor.stopMotor();
             }
     }
