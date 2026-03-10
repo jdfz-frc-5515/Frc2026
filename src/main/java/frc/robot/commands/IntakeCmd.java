@@ -10,7 +10,6 @@ public class IntakeCmd extends Command{
     }
     @Override
     public void initialize(){
-		MessageSender.log("1111111111111111111111111");
         intakeSubsystem.toggleIntakeMode();
     }
     @Override

@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.IntakeToggleCmd;
 import frc.robot.utils.MessageSender;
 import frc.robot.utils.MiscUtils;
 import frc.robot.utils.SmartDashboardEx;
@@ -50,14 +51,13 @@ public class IntakeSubsystem extends SubsystemBase {
     private static final double INTAKE_KV = IntakeConstants.INTAKE_KV;
     private static final double INTAKE_KA = IntakeConstants.INTAKE_KA;
     // Jam Detector
-    private final Debouncer jamDebouncer = new Debouncer(0.2, DebounceType.kRising);
-    private final double jamCurrentThreshold = 100.0;
+    private final Debouncer jamDebouncer = new Debouncer(0.1, DebounceType.kRising);
+    private final double jamCurrentThreshold = 5.0;
     //state machine
     private boolean runIntakeMode = false;
     //true: in false: out
     private boolean runExtenderMode = true;
     public void toggleIntakeMode(){
-        // MessageSender.log("222222222222222222222222222222222");
         runIntakeMode = !runIntakeMode;
     }
     public void toggleExtenderMode(){
@@ -67,9 +67,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private boolean hasIntakeReachTarget = false;
 
     private static final double TOLERANCE = Constants.IntakeConstants.Tolerance;
-	public static double CheckPoint = 2.646;
-
-    private final TalonFXConfiguration ExtenderConfig = new TalonFXConfiguration()
+	private final TalonFXConfiguration ExtenderConfig = new TalonFXConfiguration()
         .withMotorOutput(
             new MotorOutputConfigs()
                 .withInverted(InvertedValue.Clockwise_Positive)
@@ -77,9 +75,9 @@ public class IntakeSubsystem extends SubsystemBase {
         )
         .withCurrentLimits(
             new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(100))
+                .withStatorCurrentLimit(Amps.of(IntakeConstants.EXTENDER_STATOR_CURRENT_LIMIT))
                 .withStatorCurrentLimitEnable(true)
-                .withSupplyCurrentLimit(Amps.of(100))
+                .withSupplyCurrentLimit(Amps.of(IntakeConstants.EXTENDER_SUPLLY_CURRENT_LIMIT))
                 .withSupplyCurrentLimitEnable(true)
         )
         .withSlot0(
@@ -99,9 +97,9 @@ public class IntakeSubsystem extends SubsystemBase {
         )
         .withCurrentLimits(
             new CurrentLimitsConfigs()
-                .withStatorCurrentLimit(Amps.of(40))
+                .withStatorCurrentLimit(Amps.of(IntakeConstants.INTAKE_STATOR_CURRENT_LIMIT))
                 .withStatorCurrentLimitEnable(true)
-                .withSupplyCurrentLimit(Amps.of(30))
+                .withSupplyCurrentLimit(Amps.of(IntakeConstants.INTAKE_SUPLLY_CURRENT_LIMIT))
                 .withSupplyCurrentLimitEnable(true)
         )
         .withSlot0(
@@ -127,17 +125,16 @@ public class IntakeSubsystem extends SubsystemBase {
         if (haveObstacle()
             || ExtenderMotor.getPosition().getValueAsDouble() < -1 
             || ExtenderMotor.getPosition().getValueAsDouble() > 6) {
+            MessageSender.log("EXTENDERSTUCKED!!!!!!!!!!!!!!!!!!!!");
             ExtenderMotor.stopMotor();
         }
     }
 
     public void setExtenderVoltage(double voltage) {
         if(MiscUtils.compareDouble(voltage, 0)){
-            // MessageSender.log("****************************");
             ExtenderMotor.stopMotor();
         }
         else{
-            // MessageSender.log("888888888888888888888888888888888");
             ExtenderMotor.setControl(
             voltageRequest
                 .withOutput(Volts.of(voltage))
@@ -193,11 +190,10 @@ public class IntakeSubsystem extends SubsystemBase {
 		    SmartDashboard.putNumber("MotorPos", now);
             SmartDashboard.putNumber("targetPOS", targetPosition);
 		    if(!hasReachedTarget()){
-                // MessageSender.log("29292929292929929292");
 			    if (now < targetPosition) {
 				    setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			    } else if (now > targetPosition) {
-				    if(now > CheckPoint){
+				    if(now > IntakeConstants.CheckPoint){
 					    setExtenderVoltage(-Constants.IntakeConstants.Extender_Push_Voltage);
 				    }
 				    else{
@@ -206,7 +202,6 @@ public class IntakeSubsystem extends SubsystemBase {
 			    }
 		    }
             else{
-                // MessageSender.log("3939393939939393939393");
                 ExtenderMotor.stopMotor();
             }
     }
