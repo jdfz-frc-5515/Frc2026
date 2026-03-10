@@ -11,7 +11,6 @@ public class ExtenderCmd extends Command {
     }
     @Override
     public void initialize(){
-        MessageSender.log("9999999999999999999999");
         intakeSubsystem.toggleExtenderMode();
     }
     @Override

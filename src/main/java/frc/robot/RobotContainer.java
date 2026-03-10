@@ -247,6 +247,12 @@ public class RobotContainer {
 
     private void configureDriver3Bindings() {
         // m_driverController3
+        m_driverController3.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
+        m_driverController3.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1.5), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController3.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1.5), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController3.x().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-3), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController3.povLeft().onTrue(new InstantCommand(() -> m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.IN_POS)));
+        m_driverController3.povRight().onTrue(new InstantCommand(() -> m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.OUT_POS)));
     }
 
     private void registerPathplannerEventsAndNamedCommands() {
