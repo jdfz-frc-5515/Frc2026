@@ -205,18 +205,20 @@ public class RobotContainer {
         // );
 
         m_turrentSubsystem.setShootTrigger(m_driverController.rightTrigger());
+        m_turrentSubsystem.setShootPassballTrigger(m_driverController.leftTrigger());
         m_turrentSubsystem.setTurnLeftTrigger(m_driverController.leftBumper());
         m_turrentSubsystem.setTurnRightTrigger(m_driverController.rightBumper());
         // m_driverController.leftBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(6)));
         // m_driverController.rightBumper().whileTrue(new InstantCommand(() -> m_intakeSubsystem.setInatkeVoltage(0)));
 
-        m_driverController.leftTrigger().onTrue(new InstantCommand(()-> {
-            drivetrain.reseedGyroByVision();
-        }));
+
         // m_driverController.y().onTrue(new InstantCommand(() -> {
         //     m_turrentSubsystem.zeroCC();
         //     m_instakeSubstem2.zeroCC();
         // }));
+        m_driverController.x().onTrue(new InstantCommand(()-> {
+            drivetrain.reseedGyroByVision();
+        }));
         m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
         m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
         m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));

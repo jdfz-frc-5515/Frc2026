@@ -16,6 +16,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -75,20 +76,37 @@ public class TurrentSubsystem extends SubsystemBase {
         TurrentConst.turrentOffset.getTranslation(),
         TurrentConst.turrentOffset.getRotation()
     );
+
+    private boolean m_isShootPassBall = false;
+
     public void setShootTrigger(Trigger trigger) throws  Exception {
         if (m_shootTrigger != null) {
             throw new Exception("setShootTrigger is called more than once!");
         }
         m_shootTrigger = trigger;
         m_shootTrigger.whileTrue(new ParallelCommandGroup(
-            
-            new ShooterCmd(this),
+            new ShooterCmd(this, false),
             new SequentialCommandGroup(
                 new WaitCommand(0.3),
                 new FeedingCmd(this)      
             )
         ));
     }
+
+    public void setShootPassballTrigger(Trigger trigger) throws  Exception {
+        if (m_shootTrigger != null) {
+            throw new Exception("setShootTrigger is called more than once!");
+        }
+        m_shootTrigger = trigger;
+        m_shootTrigger.whileTrue(new ParallelCommandGroup(
+            new ShooterCmd(this, true),
+            new SequentialCommandGroup(
+                new WaitCommand(0.3),
+                new FeedingCmd(this)      
+            )
+        ));
+    }
+
 
     public void setTurnLeftTrigger(Trigger trigger) throws Exception {
         if (m_turnLeftTrigger != null) {
@@ -331,10 +349,14 @@ public class TurrentSubsystem extends SubsystemBase {
         return m_shooterAimDir;
     }
 
+    private Translation2d getPassballTarget() {
+        return new Translation2d();
+    }
     // 下划线的update函数不在this.update()中调用，它被间接调用
     private void _updateAim() {
         if (m_isStartAiming) {
-            double angle = calcTurrentAngle(m_drivetrain.getPose(), getShootTargetPosWithShift());
+            Translation2d targetPos = m_isShootPassBall ? getPassballTarget() : getShootTargetPosWithShift();
+            double angle = calcTurrentAngle(m_drivetrain.getPose(), targetPos);
             m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
             setSpeed(TurrentConst.kAimingCruiseVelocity);
             setTargetAngle(angle);
@@ -478,8 +500,9 @@ public class TurrentSubsystem extends SubsystemBase {
     /// Shooting
     /////////////////////////////////////////////////////////
     private boolean m_isShooting = false;
-    public void startShooting() {
+    public void startShooting(boolean passball) {
         m_isShooting = true;
+        m_isShootPassBall = passball;
     }
 
     public void stopShooting() {

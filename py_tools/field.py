@@ -17,7 +17,7 @@ class FieldCanvas(FigureCanvas):
     def __init__(self, parent=None, width=12, height=8, dpi=100):
         self.to_m = 0.0254
         self.field_l, self.field_w = 651.2 * self.to_m, 317.7 * self.to_m
-        self.rob_size = 30 * self.to_m
+        self.rob_size = 0.686
 
         # 创建 Figure
         self.fig = Figure(figsize=(width, height), dpi=dpi)

@@ -11,9 +11,10 @@ import frc.robot.subsystems.TurrentSubsystem;
 /** An example command that uses an example subsystem. */
 public class ShooterCmd extends Command {
     private final TurrentSubsystem m_subsystem;
-
+    private boolean m_isPassall = true;
     // direction: 0 up 1 left 2 down 3 right
-    public ShooterCmd(TurrentSubsystem subsystem) {
+    public ShooterCmd(TurrentSubsystem subsystem, boolean passBall) {
+        m_isPassall = passBall;
         m_subsystem = subsystem;
         addRequirements(subsystem);
     }
@@ -21,7 +22,7 @@ public class ShooterCmd extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        m_subsystem.startShooting();
+        m_subsystem.startShooting(m_isPassall);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
