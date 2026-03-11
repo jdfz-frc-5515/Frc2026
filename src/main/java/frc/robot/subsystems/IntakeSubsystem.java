@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.IntakeToggleCmd;
 import frc.robot.utils.MessageSender;
 import frc.robot.utils.MiscUtils;
 import frc.robot.utils.SmartDashboardEx;
@@ -52,7 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private static final double INTAKE_KA = IntakeConstants.INTAKE_KA;
     // Jam Detector
     private final Debouncer jamDebouncer = new Debouncer(0.1, DebounceType.kRising);
-    private final double jamCurrentThreshold = 5.0;
+    private final double jamCurrentThreshold = 500.0;
     //state machine
     private boolean runIntakeMode = false;
     //true: in false: out
@@ -124,7 +123,7 @@ public class IntakeSubsystem extends SubsystemBase {
         update();
         if (haveObstacle()
             || ExtenderMotor.getPosition().getValueAsDouble() < -1 
-            || ExtenderMotor.getPosition().getValueAsDouble() > 6) {
+            || ExtenderMotor.getPosition().getValueAsDouble() > 7) {
             MessageSender.log("EXTENDERSTUCKED!!!!!!!!!!!!!!!!!!!!");
             ExtenderMotor.stopMotor();
         }

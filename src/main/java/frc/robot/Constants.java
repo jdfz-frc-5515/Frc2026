@@ -314,38 +314,36 @@ public class Constants {
     public static final class IntakeConstants {
         public static final String canBusName = "rio";
         public static double Intake_Voltage = 8;
-        public static double Extender_Voltage = 1.5;
+        public static double Extender_Voltage = 2;
         public static double Extender_Push_Voltage = 3;
-        public static double Tolerance = 0.7;
+        public static double Tolerance = 0.5;
         public static final int INTAKE_CAN_ID = 19;
         public static final int EXTENDER_CAN_ID = 20;
         public static final double GEAR_RATIO = 27.0;
-        public static final double SLOW_OUT_RPM = 10.0;
-        public static final double IN_POS = 0.0;
-        public static final double OUT_POS = 5;
+
+        //In：Extender推蓝色壳子到推不动，齿轮自然停下来为止（收最里面）；
+        //out同理，放出后拉到顺时针再也拉不动为止
+        public static final double IN_POS = 0.3;
+        public static final double OUT_POS = 3.7;
+
         public static final double EXTENDER_KP = 1;
         public static final double EXTENDER_KI = 0.0;
         public static final double EXTENDER_KD = 0.0;
         public static final double EXTENDER_KS = 0.0;
         public static final double EXTENDER_KV = 0.0;
         public static final double EXTENDER_KA = 0.0;
-        public static final double INTAKE_KP = 0.01;
+        public static final double INTAKE_KP = 0;
         public static final double INTAKE_KI = 0.0;
         public static final double INTAKE_KD = 0.0;
-        public static final double INTAKE_KS = 0.04;
-        public static final double INTAKE_KV = 0.115;
+        public static final double INTAKE_KS = 0.;
+        public static final double INTAKE_KV = 0.;
         public static final double INTAKE_KA = 0.0;
-
-        public static final double INTAKE_SPEED = 5;
 
         public static final double INTAKE_STATOR_CURRENT_LIMIT = 60;
         public static final double INTAKE_SUPLLY_CURRENT_LIMIT = 80;
         public static final double EXTENDER_STATOR_CURRENT_LIMIT = 50;
         public static final double EXTENDER_SUPLLY_CURRENT_LIMIT = 60;
 
-        public static final double EXTENDER_MOTION_MAGIC_MAX_SPEED = 5;
-        public static final double EXTENDER_MOTION_MAGIC_ACC = 5;
-        public static final double EXTENDER_MOTION_MAGIC_JERK = 0;
         public static double CheckPoint = 2.646;
     }
 
