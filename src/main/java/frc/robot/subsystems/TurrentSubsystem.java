@@ -334,8 +334,11 @@ public class TurrentSubsystem extends SubsystemBase {
     // 下划线的update函数不在this.update()中调用，它被间接调用
     private void _updateAim() {
         if (m_isStartAiming) {
-            double angle = calcTurrentAngle(m_drivetrain.getPose(), getShootTargetPosWithShift());
-            m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
+            Pose2d drivetrainPose = m_drivetrain.getPose();
+            // double angle = calcTurrentAngle(m_drivetrain.getPose(), getShootTargetPosWithShift());
+            double angle = calcTurrentAngle(drivetrainPose, ShooterConstants.targetHub); // debug use
+            // m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
+            m_shooterAimDir = new Pose2d(getTurretWorldPose(drivetrainPose).getTranslation(), Rotation2d.fromDegrees(angle));
             setSpeed(TurrentConst.kAimingCruiseVelocity);
             setTargetAngle(angle);
         }
@@ -425,7 +428,8 @@ public class TurrentSubsystem extends SubsystemBase {
 
         // 3. 计算目标相对于场地坐标系的角度 (World Frame Angle)
         // 使用 Math.atan2 计算弧度并转为 Rotation2d
-        Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
+        Rotation2d targetAngleWorld = vectorToTarget.getAngle();
+        // Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
 
         // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
         // 使用独立方法返回的位姿中的旋转部分
