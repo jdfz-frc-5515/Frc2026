@@ -42,47 +42,14 @@ public class Constants {
         public static final int IntakeButton = 0;
     }
 
-    public static class SwerveConstants {
-
-        /* IMPORTANT: Tune the motor gains in TunerConstants.java!!! */
-
-        public static final double MaxSpeed = 0.;
-
-        public static final double trackWidth = 0.55245;
-        public static final double wheelBase = 0.55245;
-        public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
-                new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
-                new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
-                new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
-                new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
-
-    }
-
-    public static final class PoseEstimatorConstants {
-        public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
-        public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
-        public static final InterpolatingDoubleTreeMap tAtoDev = new InterpolatingDoubleTreeMap();
-
-        public static final Point2D[] tAtoDevPoints = {
-                // new Point2D(0.374, 0.003),
-                // new Point2D(0.071, 0.2),
-                // new Point2D(0.046, 0.4)
-                new Point2D.Double(0.17, 0.08),
-                new Point2D.Double(0.12, 0.20),
-                new Point2D.Double(0.071, 0.35),
-                new Point2D.Double(0.046, 0.4),
-        };
-
-    }
-
     public static final class AutoConstants {
         // Path Following
-        public static final double followPathTranslationkP = 5.; // TODO
+        public static final double followPathTranslationkP = 3.; // TODO
         public static final double followPathTranslationkI = 0.; // TODO
         public static final double followPathTranslationkD = 0.; // TODO
 
         public static final double followPathRotationkP = 5.; // TODO
-        public static final double followPathRotationkI = 0.; // TODO
+        public static final double followPathRotationkI = 2.; // TODO
         public static final double followPathRotationkD = 0.; // TODO
 
         public static final PathConstraints generatedPathCommandConstraints = new PathConstraints( // TODO
@@ -109,8 +76,6 @@ public class Constants {
     }
 
     public static void initializeConstants() {
-        for (var p : PoseEstimatorConstants.tAtoDevPoints)
-            PoseEstimatorConstants.tAtoDev.put(p.getX(), p.getY());
     }
 
     public static final class FieldConstants {
