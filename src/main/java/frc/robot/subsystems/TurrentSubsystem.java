@@ -447,7 +447,8 @@ public class TurrentSubsystem extends SubsystemBase {
 
         // 3. 计算目标相对于场地坐标系的角度 (World Frame Angle)
         // 使用 Math.atan2 计算弧度并转为 Rotation2d
-        Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
+        Rotation2d targetAngleWorld = vectorToTarget.getAngle();
+        // Rotation2d targetAngleWorld = new Rotation2d(vectorToTarget.getX(), vectorToTarget.getY());
 
         // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
         // 使用独立方法返回的位姿中的旋转部分
