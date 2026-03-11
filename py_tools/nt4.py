@@ -19,7 +19,7 @@ class NT4Manager:
             self.targets.append(("Static IP", server_ip))
         if team_number:
             self.targets.append(("Team Number", team_number))
-        self.targets.append(("Localhost", "127.0.0.1"))
+        # self.targets.append(("Localhost", "127.0.0.1"))
         
         self.publishers = {}
         self.subscribers = {}

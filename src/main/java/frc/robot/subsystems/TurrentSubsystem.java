@@ -561,11 +561,11 @@ public class TurrentSubsystem extends SubsystemBase {
             
             // 找到机器人速度在“机器人到桶”连线方向上的投影速度（$V_{radial}$）。
             // Calculate target speed(RPM) based on distance. 
-            double targetSpeed = m_rpsTable.getOutput(distance);
-            double staticVlaunch = TurrentConst.C * targetSpeed;
+            double targetSpeed = m_rpsTable.getOutput(distance);    // RPM
+            double staticVlaunch = TurrentConst.C * targetSpeed;    // speed
             // 3. 减去机器人的径向速度 (靠近为正),换算成RPM
             double vRadial = calculateRadialVelocity(robotPos, chassisSpeeds, Constants.ShooterConstants.targetHub);
-            double adjustedVlaunch = (staticVlaunch - vRadial) / TurrentConst.C;
+            double adjustedVlaunch = (staticVlaunch - vRadial) / TurrentConst.C;    // RPM
 
             double lastShooterSpeed = m_shooter.getTargetSpeed();
             // Prevent shooter oscillation

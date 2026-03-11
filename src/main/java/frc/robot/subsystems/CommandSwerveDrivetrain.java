@@ -337,14 +337,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        // double dist = updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_SKY, -1);
-        // if (MiscUtils.compareDouble(dist, 0)) {
-        //     dist = -1;
-        // }
-        // updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT, -1);
-        // updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT, -1);
-        // updateOdometry(Constants.LIME_LIGHT_ARPIL_TAG_NAME_FRONT, -1);
-
         LimelightModule.update(this);
     }
 
@@ -407,64 +399,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
     }
 
-    static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the limelight
-    // 如果LL看到目标，则返回到目标的距离
-    // 参数minDist表示当前看到的目标距离大于这个值，则忽略此目标，负数则无效
-    public double updateOdometry(String llName, double minDist){
-
-        double botRot = getState().Pose.getRotation().getDegrees();
-        double pigeonRot = getRotationFromPigeon();
-
-        // Pose2d botPos =  LimelightHelpers.getBotPose2d(llName);
-        // SmartDashboardEx.putString("ROT-MT1", String.format("%f", botPos.getRotation().getDegrees()));
-        // SmartDashboardEx.putString( "ROT", String.format("%f - %f - %f", botRot, pigeonRot, pigeonRot - zeroOdoDegree));
-        LimelightHelpers.SetRobotOrientation(llName, getRotationFromPigeon() - zeroOdoDegree, 0, 0, 0, 0, 0);
-        LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(llName);
-        // ImprovedLL.MT2stddevs devs = ImprovedLL.getmt2Devs();
-        // ImprovedLL.mt2stdDev stdDev = ImprovedLL.getmt2Dev(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT); 
-        if(mt2 == null) {
-            // DriverStation.reportWarning(llName + " Diconnected!", false);
-            return -1;
-        }
-        
-        if (minDist > 0 && mt2.avgTagDist > minDist) {
-            return -1;
-        }
-        // SmartDashboardEx.putNumber(llName+"-DIST", mt2.avgTagDist);
-        if (Math.abs(getSpeeds().omegaRadiansPerSecond) <= 4*Math.PI 
-            && mt2.tagCount > 0 
-            && mt2.avgTagDist < 4 
-            && Math.hypot(getSpeeds().vxMetersPerSecond, getSpeeds().vyMetersPerSecond) < 2
-            // && mt2.latency < MAX_LL_LATENCY // 抛弃高延时
-        ) {
-
-            double captureTime2 = Utils.fpgaToCurrentTime(mt2.timestampSeconds);
-
-            double data = Constants.PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea);
-            // SmartDashboardEx.putString("MT2 pos: ", mt2.pose.toString());
-            addVisionMeasurement(mt2.pose,
-                captureTime2,
-                VecBuilder.fill(data, data, 100000000)
-                // VecBuilder.fill(0.5,0.5, 100000000.)
-                // VecBuilder.fill(devs.xdev, devs.ydev, 100000000.)
-            );
-
-            // SmartDashboardEx.putNumber("tA", mt2.avgTagArea );
-            // SmartDashboardEx.putNumber("Dev", data);
-
-            return mt2.avgTagDist;
-        }
-        else {
-            if (mt2.latency >= MAX_LL_LATENCY) {
-                DriverStation.reportWarning(llName + " latency too high: " + mt2.latency + " ms", false);
-            }
-            else {
-                DriverStation.reportWarning(llName + "vision ignored", false);
-            }
-        }
-        return -1;
-        
-    }
 
     public boolean isAtTranslation(Translation2d t){
         return getPose().getTranslation().minus(t).getNorm() <= Constants.AutoConstants.moveToPoseTranslationToleranceMeters;
