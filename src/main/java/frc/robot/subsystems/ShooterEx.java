@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+
 public class ShooterEx {
     public ShooterEx() {
         init();
@@ -25,17 +26,21 @@ public class ShooterEx {
     private double targetSpeed = Constants.ShooterConstants.shootingSpeed;
 
     private TalonFXConfiguration getMotorConfiguration(boolean isPrimary, boolean lockMotor) {
-        TalonFXConfiguration shooterConfiguration = new TalonFXConfiguration();
+        TalonFXConfiguration config = new TalonFXConfiguration();
 
-        shooterConfiguration.MotorOutput.Inverted = isPrimary ? InvertedValue.Clockwise_Positive: InvertedValue.CounterClockwise_Positive;
-        shooterConfiguration.MotorOutput.NeutralMode = lockMotor ? NeutralModeValue.Brake : NeutralModeValue.Coast;
-        shooterConfiguration.Slot0.kP = Constants.ShooterConstants.KP;
-        shooterConfiguration.Slot0.kI = Constants.ShooterConstants.KI;
-        shooterConfiguration.Slot0.kD = Constants.ShooterConstants.KD;
-        shooterConfiguration.Slot0.kS = Constants.ShooterConstants.KS;
-        shooterConfiguration.Slot0.kV = Constants.ShooterConstants.KV;
-        shooterConfiguration.Slot0.kA = Constants.ShooterConstants.KA;
-        return shooterConfiguration;
+        config.MotorOutput.Inverted = isPrimary ? InvertedValue.Clockwise_Positive: InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = lockMotor ? NeutralModeValue.Brake : NeutralModeValue.Coast;
+        config.Slot0.kP = Constants.ShooterConstants.KP;
+        config.Slot0.kI = Constants.ShooterConstants.KI;
+        config.Slot0.kD = Constants.ShooterConstants.KD;
+        config.Slot0.kS = Constants.ShooterConstants.KS;
+        config.Slot0.kV = Constants.ShooterConstants.KV;
+        config.Slot0.kA = Constants.ShooterConstants.KA;
+        
+        // config.CurrentLimits.SupplyCurrentLimitEnable = true;
+        // config.CurrentLimits.SupplyCurrentLimit = 1;
+        // config.CurrentLimits.SupplyCurrentLowerLimit
+        return config;
     }
     public void init() {
         m_primary.getConfigurator().apply(getMotorConfiguration(true, false));

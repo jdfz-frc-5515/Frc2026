@@ -62,6 +62,14 @@ public class IntakeSubsystem extends SubsystemBase {
     public void toggleExtenderMode(){
         runExtenderMode = !runExtenderMode;
     }
+
+    public void setIntakeMode(boolean mode) {
+        runIntakeMode = mode;
+    }
+
+    public void setExtenderMode(boolean mode) {
+        runExtenderMode= mode;
+    }
     private double targetPosition = 0;
     private boolean hasIntakeReachTarget = false;
 

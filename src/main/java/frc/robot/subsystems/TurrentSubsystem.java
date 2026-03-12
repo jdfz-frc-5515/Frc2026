@@ -16,6 +16,7 @@ import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -90,10 +91,24 @@ public class TurrentSubsystem extends SubsystemBase {
         m_shootTrigger.whileTrue(new ParallelCommandGroup(
             new ShooterCmd(this, false),
             new SequentialCommandGroup(
-                new WaitCommand(0.3),
+                new WaitCommand(0.5),
                 new FeedingCmd(this)      
             )
         ));
+    }
+
+    public Command getStartShootCmd() {
+        return new SequentialCommandGroup(
+            new InstantCommand(()-> {startShooting(false);}),
+            new WaitCommand(0.5),
+            new InstantCommand(()-> {
+                startFeeding();
+            })
+        );
+    }
+
+    public Command getStopShootCmd() {
+        return new InstantCommand(()-> {stopShooting(); stopFeeding();});
     }
 
     public void setShootPassballTrigger(Trigger trigger) throws  Exception {

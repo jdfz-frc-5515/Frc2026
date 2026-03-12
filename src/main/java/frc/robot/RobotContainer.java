@@ -38,14 +38,10 @@ import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.TurnTurrentCmd;
-import frc.robot.commands.TurretTempCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShootRPSManager;
-import frc.robot.subsystems.ShooterModule;
-import frc.robot.subsystems.ShooterEx;
 import frc.robot.subsystems.TurrentSubsystem;
 import frc.robot.subsystems.FeedingModule;
 import frc.robot.utils.MessageSender;
@@ -53,25 +49,11 @@ import frc.robot.utils.SmartDashboardEx;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
-    /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
     private final Telemetry logger = new Telemetry(MaxSpeed);
-
-    // private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-    // public final IntakeSubsystem2 m_instakeSubstem2 = new IntakeSubsystem2();
-    public final ShooterModule shooter_TEST = new ShooterModule();
-    public final ShooterEx shooter = new ShooterEx();
-    // public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
+
     public final FeedingModule m_feedingSubsystem = new FeedingModule();
     public final TurrentSubsystem m_turrentSubsystem = new TurrentSubsystem();
 
@@ -85,7 +67,6 @@ public class RobotContainer {
 
     private List<Trigger> pathplannerEvents = new ArrayList<Trigger>();
 
-
     private final StructPublisher<Pose2d> robotPosPublisher = NetworkTableInstance.getDefault()
         .getStructTopic("MyPose", Pose2d.struct).publish();
     private final StructPublisher<Translation2d> shootTargetPublisher = NetworkTableInstance.getDefault()
@@ -97,10 +78,6 @@ public class RobotContainer {
     private final double HEADING_BLUE = 180;
 
     public RobotContainer() {
-        // shootRPSManager.setShooter(shooter);
-        // shootRPSManager.setSwerve(drivetrain);
-        // shootRPSManager.setTurret(m_turrentSubsystem);
-        // m_turrentSubsystem.setSwerve(drivetrain);
         m_turrentSubsystem.setDriver(drivetrain);
         try {
             configureBindings();
@@ -183,7 +160,6 @@ public class RobotContainer {
             drivetrain.resetHeadingForOdo(0);
         }));
         
-        // m_driverController.b().whileTrue(new ShooterCmd(shooter));
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
         m_driverController.povLeft().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 1));
@@ -220,18 +196,6 @@ public class RobotContainer {
         m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
         m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
         // m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
-        // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
-
-        // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
-        // m_driverController.rightBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, true));
-        // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
-        // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
-        // m_driverController.a().whileTrue(new FeedingCmd(m_feedingSubsystem));
-        // m_driverController.leftBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, false));
-        // m_driverController.rightBumper().whileTrue(new TurrentCmd(m_turrentSubsystem, true));
-        // m_driverController.a().whileTrue(new ParallelCommandGroup(new FeedingCmd(m_feedingSubsystem), new ShooterCmd(shooter)) );
-        // m_driverController.x().whileTrue(new TurretTempCmd(m_turrentSubsystem));
-        // m_driverController.a().onTrue(new FeedingCmd(m_feedingSubsystem));
     }
 
     private void configureDriver2Bindings() {
@@ -257,7 +221,10 @@ public class RobotContainer {
     }
 
     private void registerPathplannerEventsAndNamedCommands() {
-        
+        regPPEnC("START_SHOOT", m_turrentSubsystem.getStartShootCmd());
+        regPPEnC("STOP_SHOOT", m_turrentSubsystem.getStopShootCmd());
+        regPPEnC("INTAKE_OUT", ()->{m_intakeSubsystem.setIntakeMode(true);m_intakeSubsystem.setExtenderMode(true);});
+        regPPEnC("INTAKE_IN", ()->{m_intakeSubsystem.setIntakeMode(false);m_intakeSubsystem.setExtenderMode(false);});
     }
 
     private void regPPEnC(String name, Runnable runnable) {
