@@ -174,11 +174,7 @@ public class RobotContainer {
 
         // Vision-assisted aiming while holding right bumper: keep X/Y from driver,
         // but use vision to compute rotation (DriveWithAim will run while held).
-        // m_driverController.povDown().whileTrue(
-        //     new AimAprilTagCmd(drivetrain, 
-        //                     m_turrentSubsystem, 
-        //                     true)
-        // );
+        
 
         m_turrentSubsystem.setShootTrigger(m_driverController.rightTrigger());
         m_turrentSubsystem.setShootPassballTrigger(m_driverController.leftTrigger());
@@ -192,30 +188,34 @@ public class RobotContainer {
         //     m_turrentSubsystem.zeroCC();
         //     m_instakeSubstem2.zeroCC();
         // }));
-        m_driverController.x().onTrue(new InstantCommand(()-> {
-            drivetrain.reseedGyroByVision();
-        }));
-        m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
+        m_driverController.y().onTrue(new ParallelCommandGroup(new IntakeCmd(m_intakeSubsystem),new ExtenderCmd(m_intakeSubsystem)));
         m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
-        m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         
     }
 
     private void configureDriver2Bindings() {
+        m_driverController.start().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         // m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
         // m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
-        m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setManualExtenderModeFalse()));
-        m_driverController2.a().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, true));
-        m_driverController2.b().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, false));
-        m_driverController2.povDown().onTrue(new InstantCommand(()->m_intakeSubsystem.setManualExtenderModeTrue()));
+        m_driverController2.a().onTrue(new InstantCommand(() -> m_intakeSubsystem.setManualExtenderModeFalse()));
+        m_driverController2.y().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, true));
+        m_driverController2.x().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, false));
+        m_driverController2.b().onTrue(new InstantCommand(()->m_intakeSubsystem.setManualExtenderModeTrue()));
         // m_driverController2.a().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeMode(true)));
         // m_driverController2.b().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeMode(false)));
         // m_driverController2.x().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(true)));
         // m_driverController2.y().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(false)));
-
-        // // m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
-        // m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
-        // m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
+        m_driverController.leftTrigger().whileTrue(
+            new AimAprilTagCmd(drivetrain, 
+                            m_turrentSubsystem, 
+                            true)
+        );
+        m_driverController2.rightTrigger().onTrue(new InstantCommand(()-> {
+            drivetrain.reseedGyroByVision();
+        }));
+        m_driverController2.start().whileTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
+        m_driverController2.povUp().onTrue(new InstantCommand(()->m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.IN_POS)));
+        m_driverController2.povDown().onTrue(new InstantCommand(()->m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.OUT_POS)));
 
     }   
 
