@@ -25,18 +25,20 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Library.team1706.LinearInterpolationTable;
+import frc.robot.Library.team19725.Point3D;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.TurnTurrentCmd;
+import frc.robot.utils.CalculatePassFuelTarget;
 import frc.robot.utils.MiscUtils;
 
 
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
-        public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603, Rotation2d.fromDegrees(0));
-        public static double minAngle = -120;
-        public static double maxAngle = 75;
-        public static double kTurretDegreeForOneRotation = 14.48275862069;
+        public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603+0.005, Rotation2d.fromDegrees(0));
+        public static double minAngle = -180;
+        public static double maxAngle = 180;
+        public static double kTurretDegreeForOneRotation = 17.48275862069;
         public static final double kAtTargetThreshold = 1.0; 
         
         // --- 新增：运动参数控制 ---
@@ -54,6 +56,7 @@ public class TurrentSubsystem extends SubsystemBase {
     }
 
     private Trigger m_shootTrigger;
+    private Trigger m_passTrigger;
     private Trigger m_turnLeftTrigger;
     private Trigger m_turnRightTrigger;
 
@@ -94,11 +97,11 @@ public class TurrentSubsystem extends SubsystemBase {
     }
 
     public void setShootPassballTrigger(Trigger trigger) throws  Exception {
-        if (m_shootTrigger != null) {
-            throw new Exception("setShootTrigger is called more than once!");
+        if (m_passTrigger != null) {
+            throw new Exception("setShootPassballTrigger is called more than once!");
         }
-        m_shootTrigger = trigger;
-        m_shootTrigger.whileTrue(new ParallelCommandGroup(
+        m_passTrigger = trigger;
+        m_passTrigger.whileTrue(new ParallelCommandGroup(
             new ShooterCmd(this, true),
             new SequentialCommandGroup(
                 new WaitCommand(0.3),
@@ -183,14 +186,14 @@ public class TurrentSubsystem extends SubsystemBase {
         // 设置目标为最小角度限制，MotionMagic 会负责以设定的低速转过去
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.minAngle);
-        setTargetAngle(0);
+        setTargetAngle(175);
     }
 
     public void turnRight() {
         // 设置目标为最大角度限制
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.maxAngle);
-        setTargetAngle(-90);
+        setTargetAngle(-175);
     }
 
     public void stopTurn() {
@@ -350,16 +353,28 @@ public class TurrentSubsystem extends SubsystemBase {
     }
 
     private Translation2d getPassballTarget() {
-        return new Translation2d();
+        Pose2d robotPos = m_drivetrain.getPose();
+        Point3D pt = CalculatePassFuelTarget.calculatePassTarget(robotPos);
+        if (pt == null) {
+            return null;
+        }
+        return new Translation2d(pt.getX(), pt.getY());
     }
     // 下划线的update函数不在this.update()中调用，它被间接调用
     private void _updateAim() {
         if (m_isStartAiming) {
             Translation2d targetPos = m_isShootPassBall ? getPassballTarget() : getShootTargetPosWithShift();
-            double angle = calcTurrentAngle(m_drivetrain.getPose(), targetPos);
-            m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
-            setSpeed(TurrentConst.kAimingCruiseVelocity);
-            setTargetAngle(angle);
+            if (targetPos != null) {
+                double angle = calcTurrentAngle(m_drivetrain.getPose(), targetPos);
+                m_shooterAimDir = new Pose2d(m_shooterAimDir.getTranslation(), Rotation2d.fromDegrees(angle));
+                setSpeed(TurrentConst.kAimingCruiseVelocity);
+                setTargetAngle(angle);
+            }
+            else {
+                stopAim();
+                stopShooting();
+            }
+
         }
         else {
             stopTurn();

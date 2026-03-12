@@ -124,7 +124,6 @@ public class IntakeSubsystem extends SubsystemBase {
         if (haveObstacle()
             || ExtenderMotor.getPosition().getValueAsDouble() < -1 
             || ExtenderMotor.getPosition().getValueAsDouble() > 7) {
-            MessageSender.log("EXTENDERSTUCKED!!!!!!!!!!!!!!!!!!!!");
             ExtenderMotor.stopMotor();
         }
     }

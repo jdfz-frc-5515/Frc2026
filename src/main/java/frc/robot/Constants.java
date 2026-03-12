@@ -324,7 +324,7 @@ public class Constants {
         //In：Extender推蓝色壳子到推不动，齿轮自然停下来为止（收最里面）；
         //out同理，放出后拉到顺时针再也拉不动为止
         public static final double IN_POS = 0.3;
-        public static final double OUT_POS = 3.7;
+        public static final double OUT_POS = 5;
 
         public static final double EXTENDER_KP = 1;
         public static final double EXTENDER_KI = 0.0;

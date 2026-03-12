@@ -71,7 +71,7 @@ public class RobotContainer {
     // public final IntakeSubsystem2 m_instakeSubstem2 = new IntakeSubsystem2();
     public final ShooterModule shooter_TEST = new ShooterModule();
     public final ShooterEx shooter = new ShooterEx();
-    public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
+    // public final ShootRPSManager shootRPSManager = ShootRPSManager.getInstance();
     public final FeedingModule m_feedingSubsystem = new FeedingModule();
     public final TurrentSubsystem m_turrentSubsystem = new TurrentSubsystem();
 
@@ -219,7 +219,7 @@ public class RobotContainer {
         }));
         m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
         m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
-        m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
+        // m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         // m_driverController.b().onTrue(new IntakeToggleCmd(m_instakeSubstem2));
 
         // m_driverController.leftBumper().whileTrue(new TurnTurrentCmd(m_turrentSubsystem, false));
