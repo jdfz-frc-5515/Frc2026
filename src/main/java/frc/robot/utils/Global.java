@@ -7,13 +7,13 @@ import edu.wpi.first.networktables.StructPublisher;
 
 public class Global {
     static int dt = -1;
-    static int MAX_DT = 60;
+    static int MAX_DT = 100;
     private static final StringPublisher infoPublisher = NetworkTableInstance.getDefault()
         .getStringTopic("INFO").publish();
     public static void update() {
         if (dt > 0) {
             dt--;
-            if (dt < 0) {
+            if (dt <= 0) {
                 infoPublisher.set("00000");
             }
         }

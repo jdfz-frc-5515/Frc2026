@@ -14,22 +14,18 @@ public class ManualExtenderCmd extends Command{
     @Override
     public void initialize(){
         if(ifIn){
-            MessageSender.log("99999999999999999999999999999999");
             intakeSubsystem.setExtenderVoltage(-2);
         }
        else{
-            MessageSender.log("8888888888888888888888888888888888");
             intakeSubsystem.setExtenderVoltage(1);
         }
     }
     @Override
     public void execute(){
         if(ifIn){
-            MessageSender.log("77777777777777777777777777777777");
             intakeSubsystem.setExtenderVoltage(-2);
         }
        else{
-        MessageSender.log("6666666666666666666666666666");
             intakeSubsystem.setExtenderVoltage(1);
         }
     }
