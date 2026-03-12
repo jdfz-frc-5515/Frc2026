@@ -195,7 +195,7 @@ public class RobotContainer {
             drivetrain.reseedGyroByVision();
         }));
         m_driverController.y().onTrue(new IntakeCmd(m_intakeSubsystem));
-        // m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
+        m_driverController.b().onTrue(new ExtenderCmd(m_intakeSubsystem));
         m_driverController.a().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         
     }

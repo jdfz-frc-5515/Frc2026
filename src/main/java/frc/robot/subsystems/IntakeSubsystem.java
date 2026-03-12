@@ -207,7 +207,6 @@ public class IntakeSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("targetPOS", targetPosition);
             SmartDashboard.putBoolean("manual?", manualExtender);
             if(!manualExtender){
-                MessageSender.log("autoautoauto");
                 if(!hasReachedTarget()){
 			    if (now < targetPosition) {
 				    setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
