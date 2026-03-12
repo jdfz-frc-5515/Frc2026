@@ -134,6 +134,7 @@ public class RobotContainer {
 
         configureDriver1Bindings();
         configureDriver2Bindings();
+        configureDriver3Bindings();
         registerPathplannerEventsAndNamedCommands();
 
         drivetrain.registerTelemetry(logger::telemeterize);
@@ -206,7 +207,7 @@ public class RobotContainer {
         m_driverController2.y().whileTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
         m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
         m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
-        m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        //m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
         m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
         m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
         m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
@@ -214,6 +215,8 @@ public class RobotContainer {
     }   
 
     private void configureDriver3Bindings() {
+        m_driverController3.a().onTrue(new InstantCommand(() -> m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.IN_POS)));
+        m_driverController3.b().onTrue(new InstantCommand(() -> m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.OUT_POS)));
         // m_driverController3
     }
 

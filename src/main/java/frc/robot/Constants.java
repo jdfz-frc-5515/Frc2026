@@ -361,20 +361,21 @@ public class Constants {
     }
 
     public static final class IntakeConstants {
-        public static double Intake_Voltage = 6;
-        public static double Extender_Voltage = 2;
+        public static double Intake_Voltage = 2;
+        public static double Extender_Voltage = 1;
+        public static double Extender_Push_Voltage = 3; 
         public static double Tolerance = 0.5;
         public static final int INTAKE_CAN_ID = 19;
         public static final int EXTENDER_CAN_ID = 20;
         public static final double GEAR_RATIO = 27.0;
         public static final double SLOW_OUT_RPM = 10.0;
         public static final double IN_POS = 0.0;
-        public static final double OUT_POS = 7.0;
-        public static final double EXTENDER_KP = 0.01;
+        public static final double OUT_POS = 5;
+        public static final double EXTENDER_KP = 1;
         public static final double EXTENDER_KI = 0.0;
         public static final double EXTENDER_KD = 0.0;
-        public static final double EXTENDER_KS = 0.04;
-        public static final double EXTENDER_KV = 0.115;
+        public static final double EXTENDER_KS = 0.0;
+        public static final double EXTENDER_KV = 0.0;
         public static final double EXTENDER_KA = 0.0;
         public static final double INTAKE_KP = 0.01;
         public static final double INTAKE_KI = 0.0;
@@ -385,7 +386,7 @@ public class Constants {
     }
 
     public static class AimAprilTagCmdConstants{
-        public static double LimeLightHeight = 0.2;// TODO 根据limelight安装高度确定
+        public static double LimeLightHeight = 0.22;
         public static double HeadingTorlerance = Math.toRadians(20.0);
         public static int missingThreshold = 5; 
     }

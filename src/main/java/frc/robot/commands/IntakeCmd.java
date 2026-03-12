@@ -9,7 +9,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.utils.SmartDashboardEx;
 
 public class IntakeCmd extends Command{
-	private boolean hasIntakeOut = false;
+	private boolean hasIntakeReachTarget = false;
 	private boolean hasIntakeStop = false;
 	private boolean hasSupplierPressed = false;
 	private final boolean ifIn;
@@ -19,6 +19,7 @@ public class IntakeCmd extends Command{
 	private final BooleanSupplier supplier;
 	public static double InPosition = Constants.IntakeConstants.IN_POS;
 	public static double OutPosition = Constants.IntakeConstants.OUT_POS;
+	public static double CheckPoint = 2.646;
 	public IntakeCmd(IntakeSubsystem m_IntakeSubsystem, boolean ifIn, BooleanSupplier m_Supplier) {
 		this.ifIn = ifIn;
 		this.intakeSubsystem = m_IntakeSubsystem;
@@ -34,13 +35,17 @@ public class IntakeCmd extends Command{
 
 	@Override
 	public void initialize() {
-		hasIntakeOut = false;
+		hasIntakeReachTarget = false;
+		if(hasReachedTarget()){
+			hasIntakeReachTarget = true;
+		}
 		if(ifIn){
 			hasIntakeStop = true;
 		}
 		else{
 			hasIntakeStop = false;
 		}
+		
 	}
 
 	@Override
@@ -59,21 +64,22 @@ public class IntakeCmd extends Command{
 			intakeSubsystem.setInatkeVoltage(0);
 		}
 		double now = intakeSubsystem.getCurrentExtenderPosition();
-		SmartDashboardEx.putBoolean("hasIntakeOut", hasIntakeOut);
+		SmartDashboardEx.putBoolean("hasIntakeOut", hasIntakeReachTarget);
 		SmartDashboard.putNumber("MotorPos", now);
-		if(!hasIntakeOut){
-			if(intakeSubsystem.haveObstacle()){
-				intakeSubsystem.setExtenderVoltage(0);
-				return; // Stop if an obstacle is detected
-			}
+		if(!hasIntakeReachTarget){
 			if (now < targetPosition) {
 				intakeSubsystem.setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			} else if (now > targetPosition) {
-				intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
+				if(now > CheckPoint){
+					intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Push_Voltage);
+				}
+				else{
+					intakeSubsystem.setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
+				}
 			}
 		}
-		if(Math.abs(targetPosition - now) <= TOLERANCE){
-			hasIntakeOut = true;
+		if(hasReachedTarget()){
+			hasIntakeReachTarget = true;
 		}
 	}
 
@@ -86,5 +92,8 @@ public class IntakeCmd extends Command{
 	public void end(boolean interrupted) {
 		intakeSubsystem.setExtenderVoltage(0);
 		intakeSubsystem.setInatkeVoltage(0);
+	}
+	private boolean hasReachedTarget(){
+		return (Math.abs(targetPosition - intakeSubsystem.getCurrentExtenderPosition()) <= TOLERANCE); 
 	}
 }
