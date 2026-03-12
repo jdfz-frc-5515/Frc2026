@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1382</width>
-    <height>966</height>
+    <width>469</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -204,8 +204,27 @@ QSplitter::handle:hover {
         </item>
         <item>
          <widget class="QGroupBox" name="groupBox_2">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="title">
            <string>GroupBox</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="info">
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>48</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>矫正机器角度</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -213,6 +232,7 @@ QSplitter::handle:hover {
        <zorder>groupBox_robot_info</zorder>
        <zorder>groupBox_status</zorder>
        <zorder>groupBox_2</zorder>
+       <zorder>info</zorder>
       </widget>
      </widget>
     </item>
@@ -223,8 +243,8 @@ QSplitter::handle:hover {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1382</width>
-     <height>23</height>
+     <width>469</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>

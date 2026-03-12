@@ -54,6 +54,15 @@ class MyWindow(QtWidgets.QMainWindow):
         self.timer.start(100)  # 每100毫秒触发一次（即10Hz）
         self.timer.timeout.connect(self.my_custom_update)
 
+    def update_info(self):
+        info = nt4.default_nt4.get_info()
+        # if info == '00000':
+        if info == '22222':
+            self.info.setText("矫正机器角度 --- 成功")
+            self.info.setStyleSheet("Color:green")
+        else:
+            self.info.setText("矫正机器角度")
+            self.info.setStyleSheet("Color:grey")
 
     def update_robot_info(self):
         robotPosData = nt4.default_nt4.get_robot_pose()
@@ -84,6 +93,7 @@ class MyWindow(QtWidgets.QMainWindow):
     def my_custom_update(self):
         self.update_connect_status()
         self.update_robot_info()
+        self.update_info()
 
 
 if __name__ == '__main__':

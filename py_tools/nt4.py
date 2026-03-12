@@ -7,7 +7,7 @@ from wpimath.geometry import Pose2d, Translation2d
 ROBOT_POS_KEY = "MyPose"
 SHOOT_TARGET_KEY = "ShootTarget"
 AIM_DIR_KEY = "ShooterAimDir"
-
+INFO_KEY = "INFO";
 class NT4Manager:
     def __init__(self, identity: str = "__5515PythonClient__", server_ip: str = None, team_number: int = 5515):
         self.inst = ntcore.NetworkTableInstance.getDefault()
@@ -190,6 +190,8 @@ class NT4Manager:
     def get_aim_dir(self) -> Pose2d:
         return self.get(AIM_DIR_KEY)
     
+    def get_info(self) -> str:
+        return self.get(INFO_KEY)
 
 default_nt4 = NT4Manager()
 

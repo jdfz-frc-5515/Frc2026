@@ -46,6 +46,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.TurrentSubsystem;
 import frc.robot.subsystems.FeedingModule;
+import frc.robot.utils.Global;
 import frc.robot.utils.MessageSender;
 import frc.robot.utils.SmartDashboardEx;
 
@@ -194,7 +195,7 @@ public class RobotContainer {
     }
 
     private void configureDriver2Bindings() {
-        m_driverController.start().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
+        m_driverController2.start().onTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         // m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
         // m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
         m_driverController2.a().onTrue(new InstantCommand(() -> m_intakeSubsystem.setManualExtenderModeFalse()));
@@ -205,7 +206,7 @@ public class RobotContainer {
         // m_driverController2.b().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeMode(false)));
         // m_driverController2.x().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(true)));
         // m_driverController2.y().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(false)));
-        m_driverController.leftTrigger().whileTrue(
+        m_driverController2.leftTrigger().whileTrue(
             new AimAprilTagCmd(drivetrain, 
                             m_turrentSubsystem, 
                             true)
@@ -251,6 +252,7 @@ public class RobotContainer {
     }
 
     public void update() {
+        Global.update();
         Pose2d pos = drivetrain.getPose();
 
         swerveStatePublisher.set(drivetrain.getModuleStates());

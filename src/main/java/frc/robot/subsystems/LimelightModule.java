@@ -14,6 +14,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.utils.Global;
 
 public class LimelightModule {
     private static final String[] limelightNames = new String[] {
@@ -118,6 +119,7 @@ public class LimelightModule {
 
             if (mt1 != null && mt1.tagCount >= 2 && mt1.avgTagDist < 3.0) {
                 // 只有看到2个以上标签且距离近时，才认为这个角度是“真理”
+                Global.onRotationAdjusted();
                 return Optional.of(mt1.pose.getRotation());
             }
         }

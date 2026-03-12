@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RedUT2A"
+            "pathName": "RedUT2B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of RedUT2B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Copy of RedUT2B"
           }
         }
       ]
