@@ -14,6 +14,28 @@ public class FieldRelativeSpeed {
         this.omega = omega;
     }
 
+    public void setX(double x) {
+        this.vx=x;
+    }
+    
+    public void setY(double y) {
+        this.vy=y;
+    }
+
+    public double getX() {
+        return this.vx;
+    }
+    public double getY() {
+        return this.vy;
+    }
+    public double getOmega() {
+        return this.omega;
+    }
+
+    public void setOmega(double omega) {
+        this.omega = omega;
+    }
+
     public FieldRelativeSpeed(ChassisSpeeds chassisSpeed, Rotation2d gyro) {
         this(chassisSpeed.vxMetersPerSecond * gyro.getCos() - chassisSpeed.vyMetersPerSecond * gyro.getSin(),
                 chassisSpeed.vyMetersPerSecond * gyro.getCos() + chassisSpeed.vxMetersPerSecond * gyro.getSin(),

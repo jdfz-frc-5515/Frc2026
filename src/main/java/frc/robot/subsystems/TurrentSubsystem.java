@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Library.team1706.LinearInterpolationTable;
+import frc.robot.Library.team1706.FieldRelativeSpeed;
+import frc.robot.Library.team1706.FieldRelativeAccel;
 import frc.robot.Library.team19725.Point3D;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
