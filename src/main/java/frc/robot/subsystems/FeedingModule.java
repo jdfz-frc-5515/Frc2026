@@ -46,6 +46,8 @@ public class FeedingModule {
         config.Slot0.kV = Constants.FeedMotor.KV;
         config.Slot0.kA = Constants.FeedMotor.KA;
 
+        config.CurrentLimits.SupplyCurrentLimitEnable = true;
+        config.CurrentLimits.SupplyCurrentLimit = 30;
         return config;
     }
     private TalonFXConfiguration getPathMotorConfiguration() {
@@ -65,6 +67,8 @@ public class FeedingModule {
         config.Slot0.kV = Constants.PathMotor.KV;
         config.Slot0.kA = Constants.PathMotor.KA;
 
+        config.CurrentLimits.SupplyCurrentLimitEnable = true;
+        config.CurrentLimits.SupplyCurrentLimit = 30;
         return config;
     }
 

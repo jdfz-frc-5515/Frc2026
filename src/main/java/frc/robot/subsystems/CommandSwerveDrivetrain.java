@@ -375,14 +375,22 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         this.setControl(m_manualDrive.withVelocityX(vx).withVelocityY(vy).withRotationalRate(omegaRadsPerSec));
     }
 
+    double driveSpeedScale = 1;
+    public void setShootSpeedScale() {
+        driveSpeedScale = 0.5;
+    }
+
+    public void restoreShootSpeedScale() {
+        driveSpeedScale = 1;
+    }
     public void driveFieldCentric(ImprovedCommandXboxController controller){
         SmartDashboard.putBoolean("usingAuto", usingAutoAim);
         SmartDashboard.putNumber("LastSeenApTimeDelta", (System.currentTimeMillis() - LimelightModule.LastSeenAPTime) /1000);
         if(!usingAutoAim){
             driveFieldCentric(
-                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed,
-                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed,
-                -controller.getRightX() * manual_MaxAngularRate
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 1.3) * manual_MaxSpeed * driveSpeedScale,
+                -MathUtils.signedPow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 1.3) * manual_MaxSpeed * driveSpeedScale,
+                -controller.getRightX() * manual_MaxAngularRate * driveSpeedScale
             );
         }
         else{
