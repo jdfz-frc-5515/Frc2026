@@ -52,6 +52,16 @@ public class IntakeSubsystem extends SubsystemBase {
     // Jam Detector
     private final Debouncer jamDebouncer = new Debouncer(0.1, DebounceType.kRising);
     private final double jamCurrentThreshold = 500.0;
+    private boolean manualExtender = false;
+    public void toggleManualExtenderMode(){
+        manualExtender = !manualExtender;
+    }
+    public void setManualExtenderModeTrue(){
+        manualExtender = true;
+    }
+    public void setManualExtenderModeFalse(){
+        manualExtender = false;
+    }
     //state machine
     private boolean runIntakeMode = false;
     //true: in false: out
@@ -195,7 +205,10 @@ public class IntakeSubsystem extends SubsystemBase {
 		    SmartDashboard.putBoolean("runIntakeMode", runIntakeMode);
 		    SmartDashboard.putNumber("MotorPos", now);
             SmartDashboard.putNumber("targetPOS", targetPosition);
-		    if(!hasReachedTarget()){
+            SmartDashboard.putBoolean("manual?", manualExtender);
+            if(!manualExtender){
+                MessageSender.log("autoautoauto");
+                if(!hasReachedTarget()){
 			    if (now < targetPosition) {
 				    setExtenderVoltage(Constants.IntakeConstants.Extender_Voltage);
 			    } else if (now > targetPosition) {
@@ -206,11 +219,15 @@ public class IntakeSubsystem extends SubsystemBase {
 					    setExtenderVoltage(-Constants.IntakeConstants.Extender_Voltage);
 				    }
 			    }
-		    }
-            else{
-                ExtenderMotor.stopMotor();
+		        }
+                else{
+                    ExtenderMotor.stopMotor();
+                }
             }
-    }
+            else{
+                MessageSender.log("manmanman");
+            }
+	}
     private boolean hasReachedTarget(){
 		return (Math.abs(targetPosition - getCurrentExtenderPosition()) <= TOLERANCE); 
 	}

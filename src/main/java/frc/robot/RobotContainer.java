@@ -37,6 +37,7 @@ import frc.robot.commands.ExtenderCmd;
 import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
+import frc.robot.commands.ManualExtenderCmd;
 import frc.robot.commands.TurnTurrentCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
@@ -124,7 +125,7 @@ public class RobotContainer {
         drivetrain.resetHeadingForOdo(headingAngle);
 
         configureDriver1Bindings();
-        // configureDriver2Bindings();
+        configureDriver2Bindings();
         registerPathplannerEventsAndNamedCommands();
 
         drivetrain.registerTelemetry(logger::telemeterize);
@@ -201,9 +202,15 @@ public class RobotContainer {
     private void configureDriver2Bindings() {
         // m_driverController2.x().onTrue(new IntakeCmd(m_intakeSubsystem, false ,()-> m_driverController2.b().getAsBoolean()));
         // m_driverController2.y().onTrue(new IntakeCmd(m_intakeSubsystem, true, () -> m_driverController2.b().getAsBoolean()));
-        // m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderVoltage(0.0)));
-        // m_driverController2.a().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
-        // m_driverController2.b().whileTrue(new StartEndCommand(() -> m_intakeSubsystem.setExtenderVoltage(-1), ()->m_intakeSubsystem.setExtenderVoltage(0)));
+        m_driverController2.povUp().onTrue(new InstantCommand(() -> m_intakeSubsystem.setManualExtenderModeFalse()));
+        m_driverController2.a().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, true));
+        m_driverController2.b().whileTrue(new ManualExtenderCmd(m_intakeSubsystem, false));
+        m_driverController2.povDown().onTrue(new InstantCommand(()->m_intakeSubsystem.setManualExtenderModeTrue()));
+        // m_driverController2.a().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeMode(true)));
+        // m_driverController2.b().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeMode(false)));
+        // m_driverController2.x().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(true)));
+        // m_driverController2.y().onTrue(new InstantCommand(() -> m_intakeSubsystem.setExtenderMode(false)));
+
         // // m_driverController2.start().whileTrue(new FeedingCmd(m_feedingSubsystem));
         // m_driverController2.povLeft().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(6)));
         // m_driverController2.povRight().onTrue(new InstantCommand(()->m_intakeSubsystem.setInatkeVoltage(0)));
@@ -223,8 +230,8 @@ public class RobotContainer {
     private void registerPathplannerEventsAndNamedCommands() {
         regPPEnC("START_SHOOT", m_turrentSubsystem.getStartShootCmd());
         regPPEnC("STOP_SHOOT", m_turrentSubsystem.getStopShootCmd());
-        regPPEnC("INTAKE_OUT", ()->{m_intakeSubsystem.setIntakeMode(true);m_intakeSubsystem.setExtenderMode(true);});
-        regPPEnC("INTAKE_IN", ()->{m_intakeSubsystem.setIntakeMode(false);m_intakeSubsystem.setExtenderMode(false);});
+        regPPEnC("INTAKE_OUT", ()->{m_intakeSubsystem.setIntakeMode(true);m_intakeSubsystem.setExtenderMode(false);});
+        regPPEnC("INTAKE_IN", ()->{m_intakeSubsystem.setIntakeMode(false);m_intakeSubsystem.setExtenderMode(true);});
     }
 
     private void regPPEnC(String name, Runnable runnable) {
