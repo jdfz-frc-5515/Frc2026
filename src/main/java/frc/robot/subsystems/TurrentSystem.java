@@ -33,7 +33,7 @@ public class TurrentSystem extends SubsystemBase{
 
     private final TalonFX m_motor = new TalonFX(Constants.TurrentMotor.motorID, new CANBus(Constants.TurrentMotor.canBusName));
     private PositionVoltage mPosVolt = new PositionVoltage(0);
-    private MotionMagicVoltage mMMV = new MotionMagicVoltage(0);
+    // private MotionMagicVoltage mMMV = new MotionMagicVoltage(0);
     private int m_turnState = 0;    // 1正转，-1反转，0不转
     private boolean isAiming = false;
     private boolean manualTarget = false;
@@ -94,7 +94,7 @@ public class TurrentSystem extends SubsystemBase{
             else {
                 motorPosition = -calcTurrentAngle(m_drivetrain.getPose(), target);
             }
-            m_motor.setControl(mMMV.withPosition(motorPosition / TurrentConst.kTurretDegreeForOneRotation));
+            m_motor.setControl(mPosVolt.withPosition(motorPosition / TurrentConst.kTurretDegreeForOneRotation));
             SmartDashboard.putNumber("turret position", motorPosition);
         }
     }
