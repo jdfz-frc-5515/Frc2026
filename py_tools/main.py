@@ -57,6 +57,7 @@ class MyWindow(QtWidgets.QMainWindow):
     def update_info(self):
         info = nt4.default_nt4.get_info()
         # if info == '00000':
+        print(f'info: {info}')
         if info == '22222':
             self.info.setText("矫正机器角度 --- 成功")
             self.info.setStyleSheet("Color:green")

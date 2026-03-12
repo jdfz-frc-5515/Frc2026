@@ -180,6 +180,7 @@ class NT4Manager:
         self.subscribe_struct(ROBOT_POS_KEY, Pose2d)
         self.subscribe_struct(SHOOT_TARGET_KEY, Translation2d)
         self.subscribe_struct(AIM_DIR_KEY, Pose2d)
+        self.subscribe(INFO_KEY)
 
     def get_robot_pose(self) -> Pose2d:
         return self.get(ROBOT_POS_KEY)
