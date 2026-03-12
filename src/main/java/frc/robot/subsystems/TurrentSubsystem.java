@@ -31,6 +31,7 @@ import frc.robot.commands.FeedingCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.TurnTurrentCmd;
 import frc.robot.utils.CalculatePassFuelTarget;
+import frc.robot.utils.MessageSender;
 import frc.robot.utils.MiscUtils;
 
 
@@ -39,12 +40,12 @@ public class TurrentSubsystem extends SubsystemBase {
         public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603+0.005, Rotation2d.fromDegrees(0));
         public static double minAngle = -180;
         public static double maxAngle = 180;
-        public static double kTurretDegreeForOneRotation = 17.48275862069;
-        public static final double kAtTargetThreshold = 1.0; 
+        public static double kTurretDegreeForOneRotation = 18.48275862069;
+        public static final double kAtTargetThreshold = 3.0; 
         
         // --- 新增：运动参数控制 ---
         public static final double kManualCruiseVelocity = 40.0; // 手动时的低速限制（圈/秒）
-        public static final double kAimingCruiseVelocity = 40.0; // 自动瞄准时的快速限制（圈/秒）
+        public static final double kAimingCruiseVelocity = 120.0; // 自动瞄准时的快速限制（圈/秒）
 
         private static final double r_wheel = 0.05;      // 射击飞轮半径， 米
         
@@ -201,14 +202,14 @@ public class TurrentSubsystem extends SubsystemBase {
         // 设置目标为最小角度限制，MotionMagic 会负责以设定的低速转过去
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.minAngle);
-        setTargetAngle(175);
+        setTargetAngle(0);
     }
 
     public void turnRight() {
         // 设置目标为最大角度限制
         setSpeed(TurrentConst.kManualCruiseVelocity);
         // setTargetAngle(TurrentConst.maxAngle);
-        setTargetAngle(-175);
+        setTargetAngle(0);
     }
 
     public void stopTurn() {
@@ -284,10 +285,14 @@ public class TurrentSubsystem extends SubsystemBase {
         // 数据点格式：m_kFactorMap.put(距离_米, 对应的K系数);
         // 这里的 K 约等于球的飞行时间 (ToF)
         // 注意：随着距离增加，K 增加的速度通常会快于距离增加的速度（因为空气阻力减速）
-        m_kFactorMap.put(1.0, 0.12); // 1米处，K=0.12
-        m_kFactorMap.put(2.5, 0.28); // 2.5米处
-        m_kFactorMap.put(4.0, 0.45); // 4米处
-        m_kFactorMap.put(6.0, 0.70); // 6米处
+        m_kFactorMap.put(-100.0, 0.7); 
+        m_kFactorMap.put(1.1, 0.7); 
+        m_kFactorMap.put(1.6, 0.9); 
+        m_kFactorMap.put(2.1, 0.97);
+        m_kFactorMap.put(2.6, 1.1);
+        m_kFactorMap.put(3.1, 1.3);
+        m_kFactorMap.put(3.6, 1.96); 
+        m_kFactorMap.put(100.0, 1.96);       
     }
     // 新增一个独立函数来处理偏移向量的计算
     private Translation2d calculateCompensationVector(Translation2d turretFieldVelocity, double distanceToTarget) {
@@ -425,7 +430,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // --- 核心：Motion Magic 配置 ---
         // 通过这个配置来实现你要求的“低速”
         config.MotionMagic.MotionMagicCruiseVelocity = TurrentConst.kManualCruiseVelocity; 
-        config.MotionMagic.MotionMagicAcceleration = 120.0; // 加速度，决定起步有多“肉”
+        config.MotionMagic.MotionMagicAcceleration = 140.0; // 加速度，决定起步有多“肉”
         config.MotionMagic.MotionMagicJerk = .0;       // 让运动更丝滑
 
 
@@ -515,14 +520,14 @@ public class TurrentSubsystem extends SubsystemBase {
 
     /// 先启动shooter再path再feed
     public void startFeeding() {
-        m_feeding.startPathMotor();
-        m_feeding.startFeedMotor();
-    }
+                m_feeding.startPathMotor();
+                m_feeding.startFeedMotor();
+            }
 
     public void stopFeeding() {
         m_feeding.stopFeedMotor();
         m_feeding.stopPathMotor();
-    }
+        }
 
     private void updateFeeding() {
         m_feeding.update();
@@ -534,11 +539,13 @@ public class TurrentSubsystem extends SubsystemBase {
     public void startShooting(boolean passball) {
         m_isShooting = true;
         m_isShootPassBall = passball;
+        m_drivetrain.setShootSpeedScale();
     }
 
     public void stopShooting() {
         m_isShooting = false;
         m_shooter.stopShooting();
+        m_drivetrain.restoreShootSpeedScale();
     }
 
 

@@ -353,8 +353,8 @@ public class Constants {
         public static final double INTAKE_KV = 0.;
         public static final double INTAKE_KA = 0.0;
 
-        public static final double INTAKE_STATOR_CURRENT_LIMIT = 60;
-        public static final double INTAKE_SUPLLY_CURRENT_LIMIT = 80;
+        public static final double INTAKE_STATOR_CURRENT_LIMIT = 30;
+        public static final double INTAKE_SUPLLY_CURRENT_LIMIT = 40;
         public static final double EXTENDER_STATOR_CURRENT_LIMIT = 50;
         public static final double EXTENDER_SUPLLY_CURRENT_LIMIT = 60;
 
@@ -398,9 +398,9 @@ public class Constants {
     public static final class TurrentMotor {
         public static final int motorID = 0;
         public static final String canBusName = "rio";
-        public static final double KP = 2;
-        public static final double KI = 0.3;
-        public static final double KD = 0.;
+        public static final double KP = 10;
+        public static final double KI = 0.5;
+        public static final double KD = 0.0;
         public static final double KS = 0.;
         public static final double KV = 0;
         public static final double KA = 0;

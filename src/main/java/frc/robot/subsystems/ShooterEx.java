@@ -40,6 +40,8 @@ public class ShooterEx {
         // config.CurrentLimits.SupplyCurrentLimitEnable = true;
         // config.CurrentLimits.SupplyCurrentLimit = 1;
         // config.CurrentLimits.SupplyCurrentLowerLimit
+        config.CurrentLimits.StatorCurrentLimitEnable = true;
+        config.CurrentLimits.StatorCurrentLimit = 60;
         return config;
     }
     public void init() {
@@ -74,6 +76,12 @@ public class ShooterEx {
     //     update();
     // }
 
+    double startTimeCount = 0;
+    boolean isAtMaxSpeed = false;
+    public boolean getIsAtMaxSpeed() {
+        return isAtMaxSpeed;
+    }
+    
     public void update(){
         if (isShooting) {
             SmartDashboard.putNumber("shooting speed", targetSpeed);
@@ -83,8 +91,22 @@ public class ShooterEx {
         else {
             velocityRequest.Velocity = Constants.ShooterConstants.idleSpeed;
             m_primary.stopMotor();
+            isAtMaxSpeed = false;
+            startTimeCount = 0;
         }
-        
+
+        if (m_primary.getMotorVoltage().getValueAsDouble() >= (targetSpeed / 10)) {
+            startTimeCount++;
+            if (startTimeCount >= 20) {
+                isAtMaxSpeed = true;
+            }
+        }
+        else {
+            isAtMaxSpeed = false;
+            startTimeCount = 0;
+        }
+
+        SmartDashboard.putNumber("ShootingSpeed", m_primary.getMotorVoltage() .getValueAsDouble());
         SmartDashboard.putBoolean("isShooting", isShooting);
     }
 }
