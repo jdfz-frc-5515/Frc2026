@@ -36,8 +36,8 @@
         "y": 7.003539518900343
       },
       "prevControl": {
-        "x": 7.539166666666667,
-        "y": 7.327517182130585
+        "x": 7.682319587628866,
+        "y": 7.3953264604811
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "INTAKE_OUT",
-      "waypointRelativePos": 1.0136518771331062,
+      "waypointRelativePos": 1.7533783783783778,
       "endWaypointRelativePos": null,
       "command": null
     }
