@@ -16,7 +16,7 @@ public class MessageSender {
     
     private static DatagramSocket socket;
     private static InetAddress broadcastAddress;
-    private static final int DEFAULT_UDP_PORT = 7777; // 端口号提取成常数
+    private static final int DEFAULT_UDP_PORT = 5805; // 端口号提取成常数
     private static int udpPort = DEFAULT_UDP_PORT;
     private static boolean initialized = false;
     private static PrintStream originalErr;
