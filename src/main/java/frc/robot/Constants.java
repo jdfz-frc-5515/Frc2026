@@ -283,11 +283,11 @@ public class Constants {
             // (distance, shooterSpeedRPS)
             // new Point2D.Double(0.0, 100.0), 
             // new Point2D.Double(100.0, 100.0),
-            new Point2D.Double(-1, 49),
-            new Point2D.Double(1.4, 49),
-            new Point2D.Double(2.471, 59),
-            new Point2D.Double(3.0, 85),
-            new Point2D.Double(3.35, 100),
+            new Point2D.Double(-1, 44),
+            new Point2D.Double(1.4, 44),
+            new Point2D.Double(2.471, 54),
+            new Point2D.Double(3.0, 80),
+            new Point2D.Double(3.35, 95),
             // new Point2D.Double(4.358, 90),
             new Point2D.Double(100, 100),
         };
