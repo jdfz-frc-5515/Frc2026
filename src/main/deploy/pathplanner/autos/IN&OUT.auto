@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartBLUEDT2D"
+            "pathName": "IN "
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "BLUEINTAKED"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BLUEDTDSHOOT"
+            "waitTime": 1.0
           }
         }
       ]

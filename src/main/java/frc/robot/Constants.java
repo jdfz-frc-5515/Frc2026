@@ -283,11 +283,11 @@ public class Constants {
             // (distance, shooterSpeedRPS)
             // new Point2D.Double(0.0, 100.0), 
             // new Point2D.Double(100.0, 100.0),
-            new Point2D.Double(-1, 49),
-            new Point2D.Double(1.4, 49),
-            new Point2D.Double(2.471, 59),
-            new Point2D.Double(3.0, 85),
-            new Point2D.Double(3.35, 100),
+            new Point2D.Double(-1, 41),
+            new Point2D.Double(1.4, 41),
+            new Point2D.Double(2.471, 51),
+            new Point2D.Double(3.0, 77),
+            new Point2D.Double(3.35, 92),
             // new Point2D.Double(4.358, 90),
             new Point2D.Double(100, 100),
         };
@@ -376,12 +376,13 @@ public class Constants {
     public static final class PathMotor {
         public static final int motorID = 7;
         public static final String canBusName = "rio";
-        public static final double KP = 0.5;
+        public static final double KP = 1;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
+        //TODO CHECK
         public static final double speed = 50;
     }
     public static final class FeedMotor {
@@ -394,7 +395,8 @@ public class Constants {
         public static final double KV = 0;
         public static final double KA = 0;
         //public static final double speed = 2340/60*1.5;
-        public static final double speed = 36;
+        //TODO CHECK
+        public static final double speed = 100;
     }
 
     public static final class TurrentMotor {
