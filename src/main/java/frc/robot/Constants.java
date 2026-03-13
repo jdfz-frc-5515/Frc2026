@@ -376,7 +376,7 @@ public class Constants {
     public static final class PathMotor {
         public static final int motorID = 7;
         public static final String canBusName = "rio";
-        public static final double KP = 0.5;
+        public static final double KP = 1;
         public static final double KI = 0;
         public static final double KD = 0;
         public static final double KS = 0;
@@ -396,7 +396,7 @@ public class Constants {
         public static final double KA = 0;
         //public static final double speed = 2340/60*1.5;
         //TODO CHECK
-        public static final double speed = 35;
+        public static final double speed = 100;
     }
 
     public static final class TurrentMotor {

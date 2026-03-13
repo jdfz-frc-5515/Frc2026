@@ -132,7 +132,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("BLUEDTDSHOOT");
+        m_autoPath = new PathPlannerAuto("REDDTESHOOT");
     }
 
     
