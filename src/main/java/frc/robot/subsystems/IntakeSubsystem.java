@@ -71,6 +71,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
     public void toggleExtenderMode(){
         runExtenderMode = !runExtenderMode;
+        if(runExtenderMode){
+            runIntakeMode = false;
+        }
+        else{
+            runIntakeMode = true;
+        }
     }
 
     public void setIntakeMode(boolean mode) {
@@ -139,6 +145,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic(){
         update();
+        //TODO看看跳齿有多厉害，调整这里的阈值
         if (haveObstacle()
             || ExtenderMotor.getPosition().getValueAsDouble() < -1 
             || ExtenderMotor.getPosition().getValueAsDouble() > 7) {
