@@ -282,7 +282,6 @@ public class TurrentSubsystem extends SubsystemBase {
 
     private final InterpolatingDoubleTreeMap m_kFactorMap = new InterpolatingDoubleTreeMap();
 
-    // TODO: 要测出K值
     private void setupKFactorMap() {
         // 数据点格式：m_kFactorMap.put(距离_米, 对应的K系数);
         // 这里的 K 约等于球的飞行时间 (ToF)
@@ -670,7 +669,7 @@ public class TurrentSubsystem extends SubsystemBase {
                 .getTranslation()
                 .getDistance(Constants.ShooterConstants.targetHub);
 
-            // TODO: 这个判断是否有必要？
+            // TODOS: 这个判断是否有必要？
             if (distance < 0.1) {
                 distance = 0.1;
             }

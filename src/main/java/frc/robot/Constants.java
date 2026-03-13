@@ -44,34 +44,34 @@ public class Constants {
 
     public static final class AutoConstants {
         // Path Following
-        public static final double followPathTranslationkP = 3.; // TODO
-        public static final double followPathTranslationkI = 0.; // TODO
-        public static final double followPathTranslationkD = 0.; // TODO
+        public static final double followPathTranslationkP = 3.;  
+        public static final double followPathTranslationkI = 0.;  
+        public static final double followPathTranslationkD = 0.;  
 
-        public static final double followPathRotationkP = 5.; // TODO
-        public static final double followPathRotationkI = 2.; // TODO
-        public static final double followPathRotationkD = 0.; // TODO
+        public static final double followPathRotationkP = 5.;  
+        public static final double followPathRotationkI = 2.;  
+        public static final double followPathRotationkD = 0.;  
 
-        public static final PathConstraints generatedPathCommandConstraints = new PathConstraints( // TODO
+        public static final PathConstraints generatedPathCommandConstraints = new PathConstraints(  
                 3.,
                 3.,
                 Units.degreesToRadians(540.),
                 Units.degreesToRadians(720.));
 
         // Move To Pose
-        public static final double moveToPoseTranslationkP = 3; // TODO
-        public static final double moveToPoseTranslationkI = 0.; // TODO
-        public static final double moveToPoseTranslationkD = 0.0; // TODO
+        public static final double moveToPoseTranslationkP = 3;  
+        public static final double moveToPoseTranslationkI = 0.;  
+        public static final double moveToPoseTranslationkD = 0.0;  
 
-        public static final double moveToPoseRotationkP = 5; // TODO
-        public static final double moveToPoseRotationkI = 2.; // TODO
-        public static final double moveToPoseRotationkD = 0.; // TODO
+        public static final double moveToPoseRotationkP = 5;  
+        public static final double moveToPoseRotationkI = 2.;  
+        public static final double moveToPoseRotationkD = 0.;  
 
-        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.); // TODO
-        public static final double moveToPoseTranslationToleranceMeters = 0.02; // TODO
+        public static final double moveToPoseRotationToleranceRadians = Units.degreesToRadians(3.);  
+        public static final double moveToPoseTranslationToleranceMeters = 0.02;  
 
-        public static final double maxMoveToSpeed = 3; // TODO
-        public static final double maxMoveToAngularVelocity = Units.degreesToRadians(200.); // TODO
+        public static final double maxMoveToSpeed = 3;  
+        public static final double maxMoveToAngularVelocity = Units.degreesToRadians(200.);  
 
     }
 
@@ -81,33 +81,6 @@ public class Constants {
     public static final class FieldConstants {
 
         public static final Translation2d FieldCenter = new Translation2d(17.548225 / 2, 8.0518 / 2.);
-
-        // public static final double elevatorHeights[] = { //TODO
-        // 0.,
-        // 0.3,
-        // 0.46,
-        // 0.82,
-        // 1.39
-        // };
-
-        // public static final double elevatorHeightInAdvance = 0.1; //TODO
-
-        // public static final double elevatorHeightsInAdvance[] = {
-        // 0.,
-        // 0., //0.3,
-        // 0.0, //0.42
-        // 0.0, //0.82
-        // 0.0 //0.65
-        // };
-
-        public static final Translation2d BlueReefCenterPos = new Translation2d(4.489323, 8.0518 / 2.); // TODO
-        public static final Translation2d DReefTranslation12 = new Translation2d(1.31, 0.161); // TODO
-                                                                                               // Translation2d(1.32,
-                                                                                               // 0.162)
-
-        public static final double reefTranslationAdjustmentRange = 0.15;
-        public static final double reefRotationAdjustmentRangeDegs = 20;
-
         public static final Translation2d BlueRightStationCenterPos = new Translation2d(1.2, 1.05);
         public static final Translation2d DStationTranslationRSL = new Translation2d(-0.675, 0.42);
         public static final Rotation2d DStationRotationRSL = Rotation2d.fromRadians(0.935);
@@ -382,7 +355,7 @@ public class Constants {
         public static final double KS = 0;
         public static final double KV = 0;
         public static final double KA = 0;
-        //TODO CHECK
+        //TODOS CHECK
         public static final double speed = 50;
     }
     public static final class FeedMotor {
@@ -395,7 +368,7 @@ public class Constants {
         public static final double KV = 0;
         public static final double KA = 0;
         //public static final double speed = 2340/60*1.5;
-        //TODO CHECK
+        //TODOS CHECK
         public static final double speed = 100;
     }
 

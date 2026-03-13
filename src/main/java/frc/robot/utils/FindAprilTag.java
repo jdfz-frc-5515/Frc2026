@@ -12,8 +12,7 @@ public class FindAprilTag {
     public static double[] LimeLightAngles = {0,Math.PI/2,-Math.PI/2}; // radians
     public static double DisTolerance=3.0; // meters
 
-    //TODO 角度限制是否取消？
-    public static double AngleTolerance=70.0; // degrees
+    public static double AngleTolerance=75.0; // degrees
     public static double AngleToleranceRad=AngleTolerance*Math.PI/180.0; // radians
     
     public static double kDis = 0.5; // 权重系数，距离越近权重越大

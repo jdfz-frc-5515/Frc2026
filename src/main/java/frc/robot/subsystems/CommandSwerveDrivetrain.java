@@ -603,7 +603,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         );
     }
 
-    public Command hybridMoveToPoseCommand(Supplier<Pose2d> pose, ImprovedCommandXboxController driverController, double translationAdjustmentRange, double rotationAdjustmentRangeDegs) { // TODO
+    public Command hybridMoveToPoseCommand(Supplier<Pose2d> pose, ImprovedCommandXboxController driverController, double translationAdjustmentRange, double rotationAdjustmentRangeDegs) { 
         return this.applyRequest(() -> m_moveToPoseDrive.withSpeeds(getHybridMoveToPoseSpeeds(pose.get(), driverController, translationAdjustmentRange, rotationAdjustmentRangeDegs)));
     }
 
