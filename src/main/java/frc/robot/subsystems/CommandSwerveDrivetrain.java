@@ -43,6 +43,9 @@ import frc.robot.LimelightHelpers;
 import frc.robot.Constants;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.Library.team1706.MathUtils;
+import frc.robot.Library.team1706.FieldRelativeAccel;
+import frc.robot.Library.team1706.FieldRelativeSpeed;
+import frc.robot.Library.team1706.FieldRelativeSpeed;
 import edu.wpi.first.math.MathUtil;
 
 /**
@@ -80,6 +83,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static double manual_MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private static double manual_MaxAngularRate = RotationsPerSecond.of(1.).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     private static final SwerveRequest.FieldCentric m_manualDrive = new SwerveRequest.FieldCentric().withDeadband(0.15).withRotationalDeadband(0.05 * manual_MaxAngularRate).withDriveRequestType(DriveRequestType.Velocity);
+    private FieldRelativeSpeed m_fieldRelVel = new FieldRelativeSpeed();
+    private FieldRelativeSpeed m_lastFieldRelVel = new FieldRelativeSpeed();
+    private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();
 
     // 是否正在使用自动瞄准,对准AprilTag
     private boolean usingAutoAim = false;
@@ -319,6 +325,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+        m_fieldRelVel = new FieldRelativeSpeed(getSpeeds(), getState().Pose.getRotation());
+        m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, 0.02);
+        m_lastFieldRelVel = m_fieldRelVel;
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -377,11 +386,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     double driveSpeedScale = 1;
     public void setShootSpeedScale() {
-        driveSpeedScale = 0.5;
+        driveSpeedScale = 0.3;
     }
 
     public void restoreShootSpeedScale() {
         driveSpeedScale = 1;
+    }
+
+    public FieldRelativeSpeed getFieldRelativeSpeed() {
+        return this.m_fieldRelVel;
+    }
+    public FieldRelativeAccel getFieldRelativeAccel() {
+        return this.m_fieldRelAccel;
     }
     public void driveFieldCentric(ImprovedCommandXboxController controller){
         SmartDashboard.putBoolean("usingAuto", usingAutoAim);
