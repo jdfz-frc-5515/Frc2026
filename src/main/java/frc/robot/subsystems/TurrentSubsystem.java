@@ -54,7 +54,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // $\eta$ η(效率系数): 这是一个关键变量，通常在 0.5 到 0.8 之间。
         // 单轮结构（带有固定盖板/Hood）：理论上，球的中心速度只有轮缘速度的一半（因为球的一侧在动，另一侧静止在盖板上）。
         // 此时 $\eta \approx 0.5$。
-        private static final double eta = 0.5;
+        private static final double eta = 0.4;
         // 常数 C 用于换算射击飞轮的RPM和射击小球初速度
         public static final double C = (2 * Math.PI * TurrentConst.r_wheel * TurrentConst.eta);
     }

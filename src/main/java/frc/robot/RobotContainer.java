@@ -78,7 +78,7 @@ public class RobotContainer {
         .getStructTopic("ShooterAimDir", Pose2d.struct).publish();
         
     private final double HEADING_RED = 0;
-    private final double HEADING_BLUE = 180;
+    private final double HEADING_BLUE = 0;
 
     public RobotContainer() {
         m_turrentSubsystem.setDriver(drivetrain);
@@ -132,7 +132,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("New Auto");
+        m_autoPath = new PathPlannerAuto("BLUEDTDSHOOT");
     }
 
     
