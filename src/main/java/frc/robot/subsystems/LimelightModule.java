@@ -44,7 +44,6 @@ public class LimelightModule {
         double pitch = pigeon.getPitch().getValueAsDouble() % 360; // 或者是 getRoll()，取决于安装方向
         double roll = pigeon.getRoll().getValueAsDouble() % 360;
 
-        // String selectedLimelight = null;
         LimelightHelpers.PoseEstimate bestMt2 = null;
         for (int i = 0; i < limelightNames.length; ++i) {
             String llName = limelightNames[i];
@@ -61,13 +60,11 @@ public class LimelightModule {
                 if (m_isSmartMode) {
                     if (bestMt2 == null) {
                         bestMt2 = mt2;
-                        // selectedLimelight = llName;
                     } else {
                         if (mt2.tagCount > bestMt2.tagCount) {
                             bestMt2 = mt2;
                         } else if (mt2.tagCount == bestMt2.tagCount && mt2.avgTagDist < bestMt2.avgTagDist) {
                             bestMt2 = mt2;
-                            // selectedLimelight = llName;
                         }
                     }
                 } else {
@@ -94,7 +91,8 @@ public class LimelightModule {
         // 关键：动态旋转修正！
         // 如果误差较小且距离较近，我们给出一个可以接受的旋转标准差（例如 0.8 弧度）
         // 这样当陀螺仪在坡道漂移时，视觉可以慢慢把它拉回来
-        double rotStdDev = (mt2.tagCount >= 2 && mt2.avgTagDist < 3.0) ? 0.8 : 999999.0;
+        // double rotStdDev = (mt2.tagCount >= 2 && mt2.avgTagDist < 3.0) ? 0.8 : 999999.0;
+        double rotStdDev = 999999.0;
 
         return VecBuilder.fill(xyStdDev, xyStdDev, rotStdDev);
     }

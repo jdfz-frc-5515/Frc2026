@@ -823,15 +823,52 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (visionRot.isPresent()) {
             Rotation2d targetRot = visionRot.get();
             
-            // 1. 更新 Pigeon 的 Yaw
-            // 注意：这里需要考虑你的 zeroOdoDegree 偏移逻辑
+            // ########################################################################################
             double newDeg = targetRot.getDegrees();
             double curDeg = getRotationFromPigeon()- zeroOdoDegree;
-            zeroOdoDegree -= newDeg - curDeg;       // TODO: 这里是加还是减要测试
+            zeroOdoDegree -= newDeg - curDeg;
+
+            // ### 1. 数学逻辑验证
+
+            // 根据你在 `LimelightModule` 中的写法，公式关系如下：
+
+
+            // $$Heading_{field} = Yaw_{pigeon} - ZeroOdoDegree$$
+
+            // 你想通过视觉观测值 $Heading_{vision}$ 来更新 $ZeroOdoDegree$。
+            // 将 $Heading_{vision}$ 代入公式：
+
+
+            // $$Heading_{vision} = Yaw_{pigeon} - ZeroOdoDegree_{new}$$
+
+
+            // 解方程得：
+
+
+            // $$ZeroOdoDegree_{new} = Yaw_{pigeon} - Heading_{vision}$$
+
+            // 再看你的代码实现：
+
+            // ```java
+            // double newDeg = targetRot.getDegrees(); // Heading_vision
+            // double curDeg = getRotationFromPigeon() - zeroOdoDegree; // Heading_current
+            // zeroOdoDegree -= (newDeg - curDeg);
+
+            // ```
+
+            // 展开你的代码：
+            // `zeroOdoDegree = zeroOdoDegree - (Heading_vision - (Yaw_pigeon - zeroOdoDegree))`
+            // `zeroOdoDegree = zeroOdoDegree - Heading_vision + Yaw_pigeon - zeroOdoDegree`
+            // `zeroOdoDegree = Yaw_pigeon - Heading_vision`
+
+            // **结论：数学公式完全正确。**
+            // ########################################################################################
             
             // 2. 同时通知 PoseEstimator 现在的最新位置和角度（保持坐标同步）
             // 这样可以消除重置瞬间的视觉跳变
-            // resetPose(new Pose2d(getState().Pose.getTranslation(), targetRot));
+            resetPose(new Pose2d(getState().Pose.getTranslation(), targetRot));
+
+            
             MessageSender.log("curDeg:" + curDeg);
             MessageSender.logWarning("Gyro reseeded by Vision to: " + newDeg);
         }
