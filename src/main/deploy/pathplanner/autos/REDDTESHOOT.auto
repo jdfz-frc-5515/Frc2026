@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedDT2E"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " REDDINTAKEE"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedDB2SHOOT"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

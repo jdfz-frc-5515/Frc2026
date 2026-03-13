@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.259056122448978,
-        "y": 5.712933673469388
+        "x": 14.89224489795918,
+        "y": 5.287857142857144
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.967517006802723,
-        "y": 6.74952380952381
+        "x": 15.600705782312925,
+        "y": 6.324447278911565
       },
       "isLocked": false,
       "linkedName": "REDUB"
@@ -92,7 +92,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 1.0946905918529934
   },
   "useDefaultConstraints": true
 }

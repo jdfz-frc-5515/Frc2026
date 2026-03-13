@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedDT2C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDINTAKEC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " RedDB2TC"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

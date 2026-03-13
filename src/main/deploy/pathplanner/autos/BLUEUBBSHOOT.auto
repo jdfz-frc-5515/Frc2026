@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartBLUEUB2B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLUEINTAKEB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLUEUTBSHOOT"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

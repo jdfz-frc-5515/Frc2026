@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartBLUEDT2C"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLUEINTAKEC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLUEDTCSHOOT"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
