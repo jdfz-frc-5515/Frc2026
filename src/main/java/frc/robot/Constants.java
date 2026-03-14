@@ -363,7 +363,7 @@ public class Constants {
         public static final double KV = 0;
         public static final double KA = 0;
         //TODOS CHECK
-        public static final double speed = 70;
+        public static final double speed = 50;
     }
     public static final class FeedMotor {
         public static final int motorID = 6;
@@ -376,7 +376,7 @@ public class Constants {
         public static final double KA = 0;
         //public static final double speed = 2340/60*1.5;
         //TODOS CHECK
-        public static final double speed = 40;
+        public static final double speed = 40 *0.3;
     }
 
     public static final class TurrentMotor {
