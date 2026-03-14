@@ -78,12 +78,6 @@
       "waypointRelativePos": 0.7013698630136984,
       "endWaypointRelativePos": null,
       "command": null
-    },
-    {
-      "name": "STOP_SHOOT",
-      "waypointRelativePos": 2.0,
-      "endWaypointRelativePos": null,
-      "command": null
     }
   ],
   "globalConstraints": {

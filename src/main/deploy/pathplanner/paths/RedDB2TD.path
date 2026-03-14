@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 14.718576641741418,
-        "y": 0.5266795282115586
+        "y": 0.5266795282115584
       },
       "nextControl": {
         "x": 14.651606529209623,
@@ -92,12 +92,6 @@
     {
       "name": "START_SHOOT",
       "waypointRelativePos": 0.6993243243243241,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "STOP_SHOOT",
-      "waypointRelativePos": 3.0,
       "endWaypointRelativePos": null,
       "command": null
     }

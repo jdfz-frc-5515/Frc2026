@@ -21,6 +21,18 @@
           "data": {
             "pathName": "RedDB2TD"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 9.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "STOP_SHOOT"
+          }
         }
       ]
     }

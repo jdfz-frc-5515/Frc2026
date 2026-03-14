@@ -21,6 +21,18 @@
           "data": {
             "pathName": "BLUEDTDSHOOT"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 11.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "STOP_SHOOT"
+          }
         }
       ]
     }

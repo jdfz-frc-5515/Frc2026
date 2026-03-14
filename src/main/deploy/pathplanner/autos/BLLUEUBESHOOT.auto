@@ -15,6 +15,18 @@
           "data": {
             "pathName": "BLUEUTESHOOT"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 14.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "STOP_SHOOT"
+          }
         }
       ]
     }
