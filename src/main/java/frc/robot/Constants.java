@@ -343,7 +343,7 @@ public class Constants {
         public static int missingThreshold = 5; 
     }
 
-    public static Alliance alliance = Alliance.Blue;
+    public static Alliance alliance = Alliance.Red;
     
 
     // 转盘电机
