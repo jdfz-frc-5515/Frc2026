@@ -57,7 +57,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "DD"
     }
   ],
   "rotationTargets": [
@@ -85,7 +85,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -90.0
   },
   "reversed": false,

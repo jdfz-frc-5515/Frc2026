@@ -118,7 +118,7 @@ public class RobotContainer {
         // //     switch (alliance.get()) {
         // //         case Blue:
         // //         headingAngle = 180;
-        // //         break;
+        // //         break;auto
         // //         case Red:
         // //         headingAngle = 0;
         // //         break;
@@ -132,7 +132,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("REDDTESHOOT");
+        m_autoPath = new PathPlannerAuto("INAOUT");
     }
 
     

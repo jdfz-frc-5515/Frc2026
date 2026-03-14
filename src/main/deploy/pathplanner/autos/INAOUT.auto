@@ -15,6 +15,12 @@
           "data": {
             "waitTime": 1.0
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "OUT "
+          }
         }
       ]
     }

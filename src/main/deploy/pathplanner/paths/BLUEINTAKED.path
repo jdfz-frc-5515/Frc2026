@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 7.8,
-        "y": 1.036323024054983
+        "y": 1.0061855670103101
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.792465635738831,
-        "y": 1.42057560137457
+        "y": 1.3904381443298972
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEDIN"
     },
     {
       "anchor": {
         "x": 7.8,
-        "y": 1.9555154639175258
+        "y": 2.0
       },
       "prevControl": {
         "x": 7.788648084770337,
-        "y": 1.705773328864951
+        "y": 1.7502578649474252
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEDOUT"
     }
   ],
   "rotationTargets": [],

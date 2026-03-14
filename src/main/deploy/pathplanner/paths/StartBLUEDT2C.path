@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 6.6727147766323025,
-        "y": 2.19
+        "x": 6.657646048109966,
+        "y": 2.1363402061855665
       },
       "prevControl": {
-        "x": 6.280927835051546,
-        "y": 2.521512027491409
+        "x": 6.26585910652921,
+        "y": 2.4678522336769757
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUECIN"
     }
   ],
   "rotationTargets": [],
@@ -64,7 +64,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 180.0
   },
   "reversed": false,

@@ -48,16 +48,16 @@
     },
     {
       "anchor": {
-        "x": 6.635,
-        "y": 5.9
+        "x": 6.627508591065292,
+        "y": 5.941194158075601
       },
       "prevControl": {
-        "x": 6.4469512085425835,
-        "y": 6.106803689203158
+        "x": 6.439459799607876,
+        "y": 6.147997847278758
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEBIN"
     }
   ],
   "rotationTargets": [],
@@ -80,7 +80,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 180.0
   },
   "reversed": false,

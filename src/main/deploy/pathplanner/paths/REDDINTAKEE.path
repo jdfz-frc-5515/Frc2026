@@ -12,7 +12,7 @@
         "y": 2.1184268707482987
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "EO"
     },
     {
       "anchor": {
@@ -32,7 +32,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.29432485322896207,
+      "minWaypointRelativePos": 0.0,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 0.5,
@@ -62,14 +62,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -178.99491399474584
+    "velocity": 0.5,
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 178.5497837090665
+    "velocity": 0.5,
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

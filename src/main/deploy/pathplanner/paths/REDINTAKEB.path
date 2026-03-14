@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 9.813698979591836,
+        "x": 9.9,
         "y": 5.847168367346939
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.564083891290483,
+        "x": 9.650384911698648,
         "y": 5.83330086244131
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BIN"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BOUT"
     }
   ],
   "rotationTargets": [],
@@ -35,7 +35,7 @@
       "minWaypointRelativePos": 0,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 3.0,
+        "maxVelocity": 1.0,
         "maxAcceleration": 4.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -62,13 +62,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.5,
     "rotation": 0.0
   },
   "useDefaultConstraints": true

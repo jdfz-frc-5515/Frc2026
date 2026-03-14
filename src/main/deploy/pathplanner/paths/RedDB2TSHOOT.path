@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 9.06049319727891,
-        "y": 2.1855442176870756
+        "x": 9.023205782312925,
+        "y": 2.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.420687285226101,
-        "y": 0.14726804124174908
+        "x": 8.383399870260115,
+        "y": 0.16172382355467363
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "REDCOUT"
     },
     {
       "anchor": {
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.3973333333333333,
-      "rotationDegrees": -177.7643369481155
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [
@@ -69,7 +69,7 @@
   "eventMarkers": [
     {
       "name": "INTAKE_IN",
-      "waypointRelativePos": 0.33,
+      "waypointRelativePos": 0.1,
       "endWaypointRelativePos": null,
       "command": null
     },

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.747278911564626,
-        "y": 6.070892857142858
+        "x": 8.76219387755102,
+        "y": 5.996318027211728
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.58997448979592,
-        "y": 6.5780017006802725
+        "x": 9.604889455782313,
+        "y": 6.503426870749142
       },
       "isLocked": false,
-      "linkedName": "RedA"
+      "linkedName": "AOUT"
     },
     {
       "anchor": {
@@ -112,7 +112,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 87.90474743537614
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

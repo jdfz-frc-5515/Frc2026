@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 7.80286941580756,
-        "y": 7.003539518900343
+        "x": 7.765197594501718,
+        "y": 7.048745704467353
       },
       "prevControl": {
-        "x": 7.682319587628866,
-        "y": 7.3953264604811
+        "x": 7.644647766323024,
+        "y": 7.44053264604811
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEAIN"
     }
   ],
   "rotationTargets": [
@@ -69,7 +69,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 90.0
   },
   "reversed": false,

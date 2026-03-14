@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.52409793814433,
-        "y": 5.918591065292096
+        "x": 7.4788917525773195,
+        "y": 5.941194158075601
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.704922680412372,
-        "y": 6.2199656357388315
+        "x": 7.6597164948453615,
+        "y": 6.242568728522336
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEBOUT"
     },
     {
       "anchor": {
