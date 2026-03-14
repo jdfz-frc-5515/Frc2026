@@ -41,7 +41,7 @@ public class ShooterEx {
         // config.CurrentLimits.SupplyCurrentLimit = 1;
         // config.CurrentLimits.SupplyCurrentLowerLimit
         config.CurrentLimits.StatorCurrentLimitEnable = true;
-        config.CurrentLimits.StatorCurrentLimit = 60;
+        config.CurrentLimits.StatorCurrentLimit = 100;
         return config;
     }
     double speed_dt = 0;
