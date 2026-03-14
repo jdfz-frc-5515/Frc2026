@@ -354,6 +354,7 @@ public class Constants {
 
     // 转盘电机
     public static final class PathMotor {
+
         public static final int motorID = 7;
         public static final String canBusName = "rio";
         public static final double KP = 1;
@@ -364,6 +365,7 @@ public class Constants {
         public static final double KA = 0;
         //TODOS CHECK
         public static final double speed = 50;
+        public static final double voltage = 10;
     }
     public static final class FeedMotor {
         public static final int motorID = 6;
