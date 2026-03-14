@@ -24,6 +24,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -132,7 +133,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("BLUEUTASHOOT");
+        m_autoPath = new PathPlannerAuto("AUTOSHOOT");
     }
 
     
@@ -217,7 +218,13 @@ public class RobotContainer {
         m_driverController2.start().whileTrue(new InstantCommand(() -> m_turrentSubsystem.reverseFeed()));
         m_driverController2.povUp().onTrue(new InstantCommand(()->m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.IN_POS)));
         m_driverController2.povDown().onTrue(new InstantCommand(()->m_intakeSubsystem.resetExtenderPosition(Constants.IntakeConstants.OUT_POS)));
+        m_driverController2.leftBumper().onTrue(new InstantCommand(()-> {
+            m_turrentSubsystem.decShootSpeed();
+        }));
 
+        m_driverController2.rightBumper().onTrue(new InstantCommand(()-> {
+            m_turrentSubsystem.incShootSpeed();
+        }));
     }   
 
     private void configureDriver3Bindings() {
@@ -264,6 +271,7 @@ public class RobotContainer {
         if (shootTarget != null) {
             shootTargetPublisher.set(shootTarget);
         }
+        SmartDashboard.putNumber("testrpsdist", pos.getTranslation().getDistance(shootTarget));
         if (shooterAimDir != null) {
             shooterAimDirPrublisher.set(shooterAimDir);
         }

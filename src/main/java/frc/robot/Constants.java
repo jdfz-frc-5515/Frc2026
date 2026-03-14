@@ -256,13 +256,20 @@ public class Constants {
             // (distance, shooterSpeedRPS)
             // new Point2D.Double(0.0, 100.0), 
             // new Point2D.Double(100.0, 100.0),
-            new Point2D.Double(-1, 49),
-            new Point2D.Double(1.4, 49),
-            new Point2D.Double(2.471, 59),
-            new Point2D.Double(3.0, 85),
-            new Point2D.Double(3.35, 100),
+            new Point2D.Double(-1, 36
+            ),
+            new Point2D.Double(1.47, 41),
+            new Point2D.Double(2.05, 45),
+            new Point2D.Double(2.56, 48),
+            new Point2D.Double(2.73, 50.2),
+            new Point2D.Double(3.15, 60.5),
+            new Point2D.Double(100, 80),
+            // new Point2D.Double(1.4, 36),
+            // new Point2D.Double(2.471, 48),
+            // new Point2D.Double(3.0, 74),
+            // new Point2D.Double(3.35, 82),
             // new Point2D.Double(4.358, 90),
-            new Point2D.Double(100, 100),
+            // new Point2D.Double(100, 100)/,
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
@@ -342,7 +349,7 @@ public class Constants {
         public static int missingThreshold = 5; 
     }
 
-    public static Alliance alliance = Alliance.Red;
+    public static Alliance alliance = Alliance.Blue;
     
 
     // 转盘电机
@@ -356,7 +363,7 @@ public class Constants {
         public static final double KV = 0;
         public static final double KA = 0;
         //TODOS CHECK
-        public static final double speed = 50;
+        public static final double speed = 70;
     }
     public static final class FeedMotor {
         public static final int motorID = 6;

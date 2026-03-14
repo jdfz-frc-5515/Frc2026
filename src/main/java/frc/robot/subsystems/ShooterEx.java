@@ -44,10 +44,20 @@ public class ShooterEx {
         config.CurrentLimits.StatorCurrentLimit = 60;
         return config;
     }
+    double speed_dt = 0;
+    double DT = 3;
+
     public void init() {
         m_primary.getConfigurator().apply(getMotorConfiguration(true, false));
         m_follower.getConfigurator().apply(getMotorConfiguration(false, false));
         m_follower.setControl(new Follower(m_primary.getDeviceID(), MotorAlignmentValue.Opposed));
+    }
+
+    public void incSpeed() {
+        speed_dt += DT;
+    }
+    public void decSpeed() {
+        speed_dt -= DT;
     }
     public void setTargetSpeed(double speed) {
         // targetSpeed = Math.min(speed, Constants.ShooterConstants.shootingSpeed);
@@ -83,9 +93,10 @@ public class ShooterEx {
     }
     
     public void update(){
+        double spd = targetSpeed + speed_dt;
         if (isShooting) {
-            SmartDashboard.putNumber("shooting speed", targetSpeed);
-            velocityRequest.Velocity = targetSpeed;
+            SmartDashboard.putNumber("shooting speed", spd);
+            velocityRequest.Velocity = spd;
             m_primary.setControl(velocityRequest);
         }
         else {
@@ -95,7 +106,7 @@ public class ShooterEx {
             startTimeCount = 0;
         }
 
-        if (m_primary.getMotorVoltage().getValueAsDouble() >= (targetSpeed / 10)) {
+        if (m_primary.getMotorVoltage().getValueAsDouble() >= (spd / 10)) {
             startTimeCount++;
             if (startTimeCount >= 20) {
                 isAtMaxSpeed = true;

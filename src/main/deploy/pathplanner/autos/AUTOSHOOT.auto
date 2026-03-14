@@ -7,19 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RedUT2A"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "REDRINTAKEA"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "REDUTSR"
+            "pathName": "blueshoot"
           }
         },
         {
@@ -29,9 +17,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "STOP_SHOOT"
+            "pathName": "AFTERBLUESHOOT"
           }
         }
       ]

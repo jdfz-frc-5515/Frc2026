@@ -35,10 +35,10 @@ public class fineTuneDrivetrainCmd extends Command {
             double x_speed = 0;
             double y_speed = 0;
             if (direction == 0) {
-                x_speed = 0.5;
+                x_speed = 0.25;
             }
             if (direction == 2) {
-                x_speed = -0.5;
+                x_speed = -0.25;
             }
             if (direction == 1) {
                 y_speed = 0.5;

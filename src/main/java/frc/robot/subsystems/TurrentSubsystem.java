@@ -100,6 +100,14 @@ public class TurrentSubsystem extends SubsystemBase {
         ));
     }
 
+    public void incShootSpeed() {
+        m_shooter.incSpeed();
+    }
+
+    public void decShootSpeed() {
+        m_shooter.decSpeed();
+    }
+
     public Command getStartShootCmd() {
         return new SequentialCommandGroup(
             new InstantCommand(()-> {startShooting(false);}),
