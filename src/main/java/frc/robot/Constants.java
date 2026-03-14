@@ -256,11 +256,12 @@ public class Constants {
             // (distance, shooterSpeedRPS)
             // new Point2D.Double(0.0, 100.0), 
             // new Point2D.Double(100.0, 100.0),
-            new Point2D.Double(-1, 41),
-            new Point2D.Double(1.4, 41),
-            new Point2D.Double(2.471, 51),
-            new Point2D.Double(3.0, 77),
-            new Point2D.Double(3.35, 92),
+            new Point2D.Double(-1, 38
+            ),
+            new Point2D.Double(1.4, 38),
+            new Point2D.Double(2.471, 48),
+            new Point2D.Double(3.0, 74),
+            new Point2D.Double(3.35, 89),
             // new Point2D.Double(4.358, 90),
             new Point2D.Double(100, 100),
         };
@@ -342,21 +343,21 @@ public class Constants {
         public static int missingThreshold = 5; 
     }
 
-    public static Alliance alliance = Alliance.Red;
+    public static Alliance alliance = Alliance.Blue;
     
 
     // 转盘电机
     public static final class PathMotor {
         public static final int motorID = 7;
         public static final String canBusName = "rio";
-        public static final double KP = 1;
-        public static final double KI = 0;
+        public static final double KP = 0.25;
+        public static final double KI = 0.0;
         public static final double KD = 0;
-        public static final double KS = 0;
-        public static final double KV = 0;
+        public static final double KS = 0.15;
+        public static final double KV = 0.12;
         public static final double KA = 0;
         //TODOS CHECK
-        public static final double speed = 50;
+        public static final double speed = 60;
     }
     public static final class FeedMotor {
         public static final int motorID = 6;
@@ -369,7 +370,7 @@ public class Constants {
         public static final double KA = 0;
         //public static final double speed = 2340/60*1.5;
         //TODOS CHECK
-        public static final double speed = 100;
+        public static final double speed = 40;
     }
 
     public static final class TurrentMotor {
