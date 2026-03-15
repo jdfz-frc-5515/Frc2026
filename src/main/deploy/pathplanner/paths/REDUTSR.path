@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.76219387755102,
-        "y": 5.996318027211728
+        "x": 8.762,
+        "y": 5.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.604889455782313,
-        "y": 6.503426870749142
+        "x": 9.604695578231293,
+        "y": 5.907108843537367
       },
       "isLocked": false,
       "linkedName": "AOUT"
@@ -57,7 +57,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "REDUTEND"
     }
   ],
   "rotationTargets": [
@@ -84,14 +84,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "START_SHOOT",
-      "waypointRelativePos": 2.0054794520547947,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "STOP_SHOOT",
-      "waypointRelativePos": 3.0,
+      "name": "INTAKE_IN",
+      "waypointRelativePos": 0.9215686274509802,
       "endWaypointRelativePos": null,
       "command": null
     }

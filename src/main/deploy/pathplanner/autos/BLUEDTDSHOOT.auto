@@ -23,15 +23,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "START_SHOOT"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 12.0
+            "waitTime": 10.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "STOP_SHOOT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLUEBACK2DT"
           }
         }
       ]

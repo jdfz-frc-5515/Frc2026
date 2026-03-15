@@ -23,15 +23,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "START_SHOOT"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 10.0
+            "waitTime": 8.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "STOP_SHOOT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDBACK2UT"
           }
         }
       ]

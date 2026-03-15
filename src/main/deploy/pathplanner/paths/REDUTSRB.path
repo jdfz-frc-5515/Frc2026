@@ -84,20 +84,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "INTAKE_OUT",
+      "name": "INTAKE_IN",
       "waypointRelativePos": 0.8594911937377689,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "START_SHOOT",
-      "waypointRelativePos": 2.0054794520547947,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "STOP_SHOOT",
-      "waypointRelativePos": 3.0,
       "endWaypointRelativePos": null,
       "command": null
     }

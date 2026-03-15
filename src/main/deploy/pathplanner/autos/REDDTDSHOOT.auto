@@ -33,6 +33,12 @@
           "data": {
             "name": "STOP_SHOOT"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDBACK2DT"
+          }
         }
       ]
     }

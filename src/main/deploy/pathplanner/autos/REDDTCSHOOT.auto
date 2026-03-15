@@ -23,6 +23,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "START_SHOOT"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 10.0
@@ -32,6 +38,12 @@
           "type": "named",
           "data": {
             "name": "STOP_SHOOT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDBACK2DT"
           }
         }
       ]

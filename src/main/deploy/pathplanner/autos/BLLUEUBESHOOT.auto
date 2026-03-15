@@ -11,6 +11,18 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_IN"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "BLUEUTESHOOT"
@@ -19,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 14.0
+            "waitTime": 9.0
           }
         },
         {
