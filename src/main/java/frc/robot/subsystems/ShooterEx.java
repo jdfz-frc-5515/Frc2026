@@ -70,9 +70,11 @@ public class ShooterEx {
 
     public void startShooting() {
         isShooting = true;
+        isAtMaxSpeed = false;
     }
     public void stopShooting() {
         isShooting = false;
+        isAtMaxSpeed = false;
     }
 
     public boolean getIsShooting() {
@@ -106,11 +108,12 @@ public class ShooterEx {
             startTimeCount = 0;
         }
 
-        if (m_primary.getMotorVoltage().getValueAsDouble() >= (spd / 10)) {
+        
+        if (m_primary.getVelocity().getValueAsDouble() > spd - 7) {
             startTimeCount++;
-            if (startTimeCount >= 20) {
+            // if (startTimeCount >= 20) {
                 isAtMaxSpeed = true;
-            }
+            // }
         }
         else {
             isAtMaxSpeed = false;

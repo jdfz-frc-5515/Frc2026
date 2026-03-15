@@ -585,9 +585,16 @@ public class TurrentSubsystem extends SubsystemBase {
     }
 
     /// 先启动shooter再path再feed
+    boolean delayFeeding = false;
     public void startFeeding() {
-                m_feeding.startPathMotor();
-                m_feeding.startFeedMotor();
+                if (m_shooter.getIsAtMaxSpeed()) {
+                    m_feeding.startPathMotor();
+                    m_feeding.startFeedMotor();
+                    delayFeeding = false;
+                }
+                else {
+                    delayFeeding = true;
+                }
             }
 
     public void stopFeeding() {
@@ -596,6 +603,9 @@ public class TurrentSubsystem extends SubsystemBase {
         }
 
     private void updateFeeding() {
+        if (delayFeeding) {
+            startFeeding();
+        }
         m_feeding.update();
     }
     /////////////////////////////////////////////////////////

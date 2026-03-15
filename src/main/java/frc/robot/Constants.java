@@ -258,12 +258,13 @@ public class Constants {
             // new Point2D.Double(100.0, 100.0),
             new Point2D.Double(-1, 36
             ),
-            new Point2D.Double(1.47, 41),
-            new Point2D.Double(2.05, 45),
-            new Point2D.Double(2.56, 48),
-            new Point2D.Double(2.73, 50.2),
-            new Point2D.Double(3.15, 60.5),
-            new Point2D.Double(100, 80),
+            new Point2D.Double(1.47, 36),
+            new Point2D.Double(2.05, 40),
+            new Point2D.Double(2.56, 45),
+            new Point2D.Double(2.73, 47.2),
+            new Point2D.Double(2.8, 50),
+            new Point2D.Double(3.15, 56),
+            new Point2D.Double(100, 75),
             // new Point2D.Double(1.4, 36),
             // new Point2D.Double(2.471, 48),
             // new Point2D.Double(3.0, 74),
@@ -379,7 +380,7 @@ public class Constants {
         //public static final double speed = 2340/60*1.5;
         //TODOS CHECK
         public static final double speed = 40 *0.3;
-                public static final double voltage = 10;
+                public static final double voltage = 5;
 
     }
 
