@@ -138,9 +138,9 @@ public class FeedingModule {
                 m_feedMotor.setControl(m_voltageRequest);
             }
             else {
-                                m_voltageRequest.Output = 0;
+                    m_voltageRequest.Output = 0;
 
-                                m_feedMotor.setControl(m_voltageRequest);
+                    m_feedMotor.setControl(m_voltageRequest);
 
                 // m_feedMotorDutycycle.Velocity = 0;
                 // m_feedMotor.stopMotor();
@@ -153,10 +153,6 @@ public class FeedingModule {
             // m_pathMotor.setControl(m_voltageRequest);
         }
         else {
-            // m_pathMotorDutycycle.Velocity = 0;
-            // m_pathMotor.stopMotor();
-            m_voltageRequest.Output = 0;
-            m_pathMotor.setControl(m_voltageRequest);
             // m_pathMotorDutycycle.Velocity = 0;
             // m_pathMotor.stopMotor();
             m_voltageRequest.Output = 0;
