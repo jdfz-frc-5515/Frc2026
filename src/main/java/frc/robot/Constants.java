@@ -252,25 +252,26 @@ public class Constants {
         public static final double KA = 10.0; // velocity setpoint dont use ka
         public static final double kPreventShooterOscilliationRPS = 1.0;
 
+        // private static final Point2D[] kRPMPoints = new Point2D.Double[] {
+            // (distance, shooterSpeedRPS) for hard balls
+        //     new Point2D.Double(-1, 36),
+        //     new Point2D.Double(1.47, 36),
+        //     new Point2D.Double(2.05, 40),
+        //     new Point2D.Double(2.56, 45),
+        //     new Point2D.Double(2.73, 47.2),
+        //     new Point2D.Double(2.8, 50),
+        //     new Point2D.Double(3.15, 56),
+        //     new Point2D.Double(100, 75),
+        // };
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
-            // (distance, shooterSpeedRPS)
-            // new Point2D.Double(0.0, 100.0), 
-            // new Point2D.Double(100.0, 100.0),
-            new Point2D.Double(-1, 36
-            ),
-            new Point2D.Double(1.47, 36),
-            new Point2D.Double(2.05, 40),
-            new Point2D.Double(2.56, 45),
-            new Point2D.Double(2.73, 47.2),
-            new Point2D.Double(2.8, 50),
-            new Point2D.Double(3.15, 56),
-            new Point2D.Double(100, 75),
-            // new Point2D.Double(1.4, 36),
-            // new Point2D.Double(2.471, 48),
-            // new Point2D.Double(3.0, 74),
-            // new Point2D.Double(3.35, 82),
+            // (distance, shooterSpeedRPS) for soft balls
+            new Point2D.Double(-1, 49),
+            new Point2D.Double(1.4, 49),
+            new Point2D.Double(2.471, 59),
+            new Point2D.Double(3.0, 85),
+            new Point2D.Double(3.35, 100),
             // new Point2D.Double(4.358, 90),
-            // new Point2D.Double(100, 100)/,
+            new Point2D.Double(100, 100),
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
