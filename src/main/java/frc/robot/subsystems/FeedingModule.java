@@ -8,6 +8,7 @@ import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -20,6 +21,7 @@ public class FeedingModule {
     private VelocityVoltage m_feedMotorDutycycle = new VelocityVoltage(0);
     private PositionVoltage m_feedPositionControl = new PositionVoltage(0); // 新增位置控制请求
     private VelocityVoltage m_pathMotorDutycycle = new VelocityVoltage(0);
+    private VoltageOut m_voltageRequest = new VoltageOut(0);
     private boolean m_isPathMotorOn = false;
     private boolean m_isFeedMotorOn = false;
     private boolean m_isReversing = false; // 新增：是否正在执行反转任务
@@ -130,21 +132,31 @@ public class FeedingModule {
             }
 
             if (m_isFeedMotorOn) {
-                m_feedMotorDutycycle.Velocity = Constants.FeedMotor.speed;
-                m_feedMotor.setControl(m_feedMotorDutycycle);
+                // m_feedMotorDutycycle.Velocity = Constants.FeedMotor.speed;
+                // m_feedMotor.setControl(m_feedMotorDutycycle);
+                m_voltageRequest.Output = 11;
+                m_feedMotor.setControl(m_voltageRequest);
             }
             else {
-                m_feedMotorDutycycle.Velocity = 0;
-                m_feedMotor.stopMotor();
+                                m_voltageRequest.Output = 0;
+
+                                m_feedMotor.setControl(m_voltageRequest);
+
+                // m_feedMotorDutycycle.Velocity = 0;
+                // m_feedMotor.stopMotor();
             }
         }
         if (m_isPathMotorOn) {
             m_pathMotorDutycycle.Velocity = Constants.PathMotor.speed;
             m_pathMotor.setControl(m_pathMotorDutycycle);
+            // m_voltageRequest.Output = Constants.PathMotor.voltage;
+            // m_pathMotor.setControl(m_voltageRequest);
         }
         else {
-            m_pathMotorDutycycle.Velocity = 0;
-            m_pathMotor.stopMotor();
+            // m_pathMotorDutycycle.Velocity = 0;
+            // m_pathMotor.stopMotor();
+            m_voltageRequest.Output = 0;
+            m_pathMotor.setControl(m_voltageRequest);
         }
     }
 }
