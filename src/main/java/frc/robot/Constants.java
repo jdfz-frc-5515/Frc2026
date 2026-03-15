@@ -275,6 +275,7 @@ public class Constants {
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
             // (distance, seconds)
+            // TODO: 要测出K值
             new Point2D.Double(-100.0, 0.7),
             new Point2D.Double(1.1, 0.7),
             new Point2D.Double(1.6, 0.9),
