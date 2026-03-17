@@ -5,6 +5,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.patches as patches
 import matplotlib.transforms as transforms
+from matplotlib.ticker import MultipleLocator # 需要在文件顶部添加此引用
 
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                              QHBoxLayout, QPushButton, QLabel, QGroupBox, QLineEdit)
@@ -47,6 +48,18 @@ class FieldCanvas(FigureCanvas):
         self.ax.add_patch(patches.Rectangle((self.field_l/2 - fuel_d/2, self.field_w/2 - fuel_w/2), 
                                          fuel_d, fuel_w, color='gold', alpha=0.2))
 
+        # --- 新增：添加1米单位的格子 ---
+        # 设置主刻度间隔为 1.0 (米)
+        self.ax.xaxis.set_major_locator(MultipleLocator(1.0))
+        self.ax.yaxis.set_major_locator(MultipleLocator(1.0))
+        
+        # 开启网格，设置颜色和透明度，zorder 设为 0 确保在机器人下方
+        self.ax.grid(True, which='major', color='gray', linestyle='--', linewidth=0.5, alpha=0.5, zorder=0)
+        
+        # (可选) 如果需要更细的 0.5 米辅助线，可以取消下面两行的注释
+        self.ax.xaxis.set_minor_locator(MultipleLocator(0.5))
+        self.ax.grid(True, which='minor', color='lightgray', linestyle=':', linewidth=0.3, alpha=0.3)
+        
     def _draw_side(self, is_blue):
         x_base = 0 if is_blue else self.field_l
         direction = 1 if is_blue else -1

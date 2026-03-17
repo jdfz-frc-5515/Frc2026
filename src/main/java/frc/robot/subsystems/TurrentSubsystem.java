@@ -327,7 +327,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // Get drive speed, acc, and translation
         FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
         FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
-        Translation2d drivetrainTranslation = m_drivetrain.getPose().getTranslation();
+        // Translation2d drivetrainTranslation = m_drivetrain.getPose().getTranslation();
         Translation2d turretWorldTranslation = this.getTurretWorldPose(m_drivetrain.getPose()).getTranslation();
         FieldRelativeSpeed turretSpeed = this.getTurretSpeed(driveFieldSpeed);
         // Get initial virtual shot distance and time
@@ -341,7 +341,7 @@ public class TurrentSubsystem extends SubsystemBase {
                 -shotTime * (turretSpeed.getY() + driveFieldAccel.ay * accComp));
             virtualTarget = ShooterConstants.targetHub.plus(targetShiftVector);
             // Calculate new virtual shot time
-            Translation2d toVirtualTargetVector = virtualTarget.minus(drivetrainTranslation);
+            Translation2d toVirtualTargetVector = virtualTarget.minus(turretWorldTranslation);
             double newShotTime = ShooterConstants.kShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
             // If time converge, break the loop
             if (Math.abs(newShotTime - shotTime) < 0.010) {
@@ -351,7 +351,7 @@ public class TurrentSubsystem extends SubsystemBase {
             // Update shot time
             shotTime = newShotTime;
         }
-        double calc_deviation = virtualTarget.getDistance(drivetrainTranslation);
+        double calc_deviation = virtualTarget.getDistance(turretWorldTranslation);
         SmartDashboard.putNumber("deviation", calc_deviation);
         // ntPub.set(new Pose2d(virtualTarget, new Rotation2d(0)));
         // m_turret.setTarget(virtualTarget);
@@ -555,7 +555,7 @@ public class TurrentSubsystem extends SubsystemBase {
         // 4. 计算炮台基座（0度参考位）在场地坐标系中的当前角度
         // 使用独立方法返回的位姿中的旋转部分
         // Rotation2d turretBaseAngleWorld = turretWorldPose.getRotation();
-        Rotation2d turretBaseAngleWorld = m_drivetrain.getPose().getRotation();
+        Rotation2d turretBaseAngleWorld = robotPos.getRotation();
 
         // 5. 计算相对旋转角度：目标角度 - 基座角度 [4]
         // 使用 Rotation2d 的 minus 方法可以自动处理角度跨越 180/-180 度的问题
