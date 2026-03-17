@@ -44,11 +44,11 @@ public class Constants {
 
     public static final class AutoConstants {
         // Path Following
-        public static final double followPathTranslationkP = 3.;  
-        public static final double followPathTranslationkI = 0.;  
+        public static final double followPathTranslationkP = 14.;  
+        public static final double followPathTranslationkI = 2.;  
         public static final double followPathTranslationkD = 0.;  
 
-        public static final double followPathRotationkP = 5.;  
+        public static final double followPathRotationkP = 10.;  
         public static final double followPathRotationkI = 2.;  
         public static final double followPathRotationkD = 0.;  
 

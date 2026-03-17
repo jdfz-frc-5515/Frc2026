@@ -160,9 +160,9 @@ public class RobotContainer {
         m_driverController.back().onTrue(drivetrain.runOnce(() -> drivetrain.setFieldCentric()));
         
         // 角度归零，应该让机器正面朝向红方场地，然后按这个按钮，使得机器的0°正对着红方场地。对视觉定位有重要影响
-        m_driverController.start().onTrue(new InstantCommand(() -> {
-            drivetrain.resetHeadingForOdo(0);
-        }));
+        // m_driverController.start().onTrue(new InstantCommand(() -> {
+        //     drivetrain.resetHeadingForOdo(0);
+        // }));
         
         // 机器移动微调，前后左右平移
         m_driverController.povUp().whileTrue(new fineTuneDrivetrainCmd(drivetrain, 0));
@@ -190,9 +190,13 @@ public class RobotContainer {
         //     m_turrentSubsystem.zeroCC();
         //     m_instakeSubstem2.zeroCC();
         // }));
+
         m_driverController.y().onTrue(new ParallelCommandGroup(new IntakeCmd(m_intakeSubsystem),new ExtenderCmd(m_intakeSubsystem)));
         m_driverController.b().onTrue(new IntakeCmd(m_intakeSubsystem));
         
+        m_driverController.start().onTrue(new InstantCommand(()-> {
+            drivetrain.reseedGyroByVision();
+        }));
     }
 
     private void configureDriver2Bindings() {
