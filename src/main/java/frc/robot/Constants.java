@@ -290,8 +290,11 @@ public class Constants {
         };
         public static final LinearInterpolationTable kShotTimeTable = new LinearInterpolationTable(kShotTimePoints);
         private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
-        private static final Translation2d redHub = new Translation2d(12.868148, 4.021328);
+        private static final Translation2d redHub = new Translation2d(12.868148-1, 4.021328);
         public static final Translation2d targetHub = (alliance == Alliance.Blue) ? blueHub : redHub;
+        private static final Translation2d blueHubA = new Translation2d(4.611624+1, 4.021328);
+        private static final Translation2d redHubA = new Translation2d(12.868148-1, 4.021328);
+        public static final Translation2d targetHubA = (alliance == Alliance.Blue) ? blueHubA : redHubA;
     }
 
     public static final class FeedingConstants {

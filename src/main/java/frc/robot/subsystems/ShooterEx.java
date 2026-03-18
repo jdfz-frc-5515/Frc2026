@@ -120,7 +120,8 @@ public class ShooterEx {
             startTimeCount = 0;
         }
 
-        SmartDashboard.putNumber("ShootingSpeed", m_primary.getMotorVoltage() .getValueAsDouble());
+        SmartDashboard.putNumber("%% ShootingSpeed", m_primary.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber("%% targetShootingSpeed", spd);
         SmartDashboard.putBoolean("isShooting", isShooting);
     }
 }
