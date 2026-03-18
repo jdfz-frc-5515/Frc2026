@@ -41,10 +41,12 @@ import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ManualExtenderCmd;
 import frc.robot.commands.TurnTurrentCmd;
+import frc.robot.commands.WaitLLCmd;
 import frc.robot.commands.fineTuneDrivetrainCmd;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightModule;
 import frc.robot.subsystems.TurrentSubsystem;
 import frc.robot.subsystems.FeedingModule;
 import frc.robot.utils.Global;
@@ -133,7 +135,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("REDUTASHOOT");
+        m_autoPath = new PathPlannerAuto("pp");
     }
 
     
@@ -242,6 +244,7 @@ public class RobotContainer {
     }
 
     private void registerPathplannerEventsAndNamedCommands() {
+        regPPEnC("WAIT_LL", new WaitLLCmd());
         regPPEnC("START_SHOOT", m_turrentSubsystem.getStartShootCmd());
         regPPEnC("STOP_SHOOT", m_turrentSubsystem.getStopShootCmd());
         regPPEnC("INTAKE_OUT", ()->{m_intakeSubsystem.setIntakeMode(true);m_intakeSubsystem.setExtenderMode(false);});
@@ -293,6 +296,7 @@ public class RobotContainer {
     }
 
     public void autoInit() {
+        LimelightModule.resetIsSeen();
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT, 0);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT, 0);
         // // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_OBJECT_DETECTION, 0);

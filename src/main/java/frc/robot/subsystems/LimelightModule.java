@@ -22,11 +22,19 @@ public class LimelightModule {
             Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT,
             Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT,
     };
+    private static boolean m_isSeen = false;
     private static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the
                                                       // limelight
 
     private static final boolean m_isSmartMode = false;
     public static long LastSeenAPTime = System.currentTimeMillis();
+
+    public static boolean getIsSeen() {
+        return m_isSeen;
+    }
+    public static void resetIsSeen() {
+        m_isSeen = false;
+    }
     public static void update(CommandSwerveDrivetrain swerve) {
         ChassisSpeeds chassisSpeeds = swerve.getSpeeds();
 
@@ -100,6 +108,7 @@ public class LimelightModule {
     // 如果LL看到目标，则返回到目标的距离
     // 参数minDist表示当前看到的目标距离大于这个值，则忽略此目标，负数则无效
     private static void updateOdometry(CommandSwerveDrivetrain swerve, LimelightHelpers.PoseEstimate mt2) {
+        m_isSeen = true;
         double captureTime2 = Utils.fpgaToCurrentTime(mt2.timestampSeconds);
 
         swerve.addVisionMeasurement(mt2.pose,

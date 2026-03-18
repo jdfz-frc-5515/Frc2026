@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,7 +41,8 @@ import frc.robot.utils.MiscUtils;
 public class TurrentSubsystem extends SubsystemBase {
     public static class TurrentConst {
         // 0.1748
-        public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603+0.005*2, Rotation2d.fromDegrees(0));
+        // public static Pose2d turrentOffset = new Pose2d(0.1875-0.0127, 0.1603+0.005*2, Rotation2d.fromDegrees(0));
+        public static Pose2d turrentOffset = new Pose2d(0.127, 0.174, Rotation2d.fromDegrees(0));
         public static double minAngle = -180;
         public static double maxAngle = 180;
         public static double kTurretDegreeForOneRotation = 14.48275862069;
@@ -79,7 +81,7 @@ public class TurrentSubsystem extends SubsystemBase {
 
     private double m_curMaxSpeed = 0;
 
-    private Translation2d m_shootTarget = Constants.ShooterConstants.targetHub;
+    private Translation2d m_shootTarget = Constants.ShooterConstants.targetHubA;
     private Pose2d m_shooterAimDir = new Pose2d(
         TurrentConst.turrentOffset.getTranslation(),
         TurrentConst.turrentOffset.getRotation()
@@ -323,7 +325,7 @@ public class TurrentSubsystem extends SubsystemBase {
     private Translation2d getPWYShootTargetPosWithShift() {
         int max_iteration = 5;
         double accComp = 0.010;
-        Translation2d virtualTarget = ShooterConstants.targetHub;
+        Translation2d virtualTarget = ShooterConstants.targetHubA;
         // Get drive speed, acc, and translation
         FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
         FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
@@ -339,7 +341,7 @@ public class TurrentSubsystem extends SubsystemBase {
             Translation2d targetShiftVector = new Translation2d(
                 -shotTime * (turretSpeed.getX() + driveFieldAccel.ax * accComp), 
                 -shotTime * (turretSpeed.getY() + driveFieldAccel.ay * accComp));
-            virtualTarget = ShooterConstants.targetHub.plus(targetShiftVector);
+            virtualTarget = ShooterConstants.targetHubA.plus(targetShiftVector);
             // Calculate new virtual shot time
             Translation2d toVirtualTargetVector = virtualTarget.minus(turretWorldTranslation);
             double newShotTime = ShooterConstants.kShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
