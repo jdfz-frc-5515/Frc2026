@@ -8,30 +8,42 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.924863945578231,
-        "y": 7.375952380952381
+        "x": 11.521357586512865,
+        "y": 7.52377107364685
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.762,
-        "y": 7.055280612244899
+        "x": 10.048589174800357,
+        "y": 6.3246317657497775
       },
       "prevControl": {
-        "x": 8.446288573966113,
-        "y": 7.055280612244899
+        "x": 9.493283052351376,
+        "y": 7.59620230700976
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "RedAIn"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "INTAKE_OUT",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 4.5,

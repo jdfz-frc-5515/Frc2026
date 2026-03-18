@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.762,
-        "y": 7.055280612244899
+        "x": 10.048589174800357,
+        "y": 6.3246317657497775
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.79300868364108,
-        "y": 6.807211143065704
+        "x": 10.079597858441437,
+        "y": 6.076562296570582
       },
       "isLocked": false,
       "linkedName": "RedAIn"
     },
     {
       "anchor": {
-        "x": 8.762,
-        "y": 4.8
+        "x": 10.048589174800357,
+        "y": 4.610425909494232
       },
       "prevControl": {
-        "x": 8.776914965984759,
-        "y": 5.05355442176874
+        "x": 10.063504140785115,
+        "y": 4.863980331262972
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,14 +45,7 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "INTAKE_OUT",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 4.5,
