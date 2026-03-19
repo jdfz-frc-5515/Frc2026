@@ -340,10 +340,11 @@ public class Constants {
         public static final double INTAKE_KV = 0.;
         public static final double INTAKE_KA = 0.0;
 
-        public static final double INTAKE_STATOR_CURRENT_LIMIT = 30;
+        //TODO: check current limit
+        public static final double INTAKE_STATOR_CURRENT_LIMIT = 50;
         public static final double INTAKE_SUPLLY_CURRENT_LIMIT = 40;
-        public static final double EXTENDER_STATOR_CURRENT_LIMIT = 50;
-        public static final double EXTENDER_SUPLLY_CURRENT_LIMIT = 60;
+        public static final double EXTENDER_STATOR_CURRENT_LIMIT = 60;
+        public static final double EXTENDER_SUPLLY_CURRENT_LIMIT = 50;
 
         //public static double CheckPoint = 2.646;
         public static double CheckPoint = 1.5;
