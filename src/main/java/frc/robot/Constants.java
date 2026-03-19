@@ -287,8 +287,8 @@ public class Constants {
            
         };
         public static final LinearInterpolationTable kShotTimeTable = new LinearInterpolationTable(kShotTimePoints);
-        private static final Translation2d blueHub = new Translation2d(4.022+0.6, 4.021328);    // 0.6是hub的半径
-        private static final Translation2d redHub = new Translation2d(12.519-0.6, 4.021328);
+        private static final Translation2d blueHub = new Translation2d(4.022+0.55, 4.021328);    // 0.55是hub的半径
+        private static final Translation2d redHub = new Translation2d(12.519-0.55, 4.021328);
         public static final Translation2d targetHub = (alliance == Alliance.Blue) ? blueHub : redHub;
     }
 
