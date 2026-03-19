@@ -104,47 +104,45 @@ public class Constants {
 
         public static final double StationDetectionArea = 0.3;
 
+        // 换成Welded场地坐标
         public static AprilTagCoordinate[] AprilTagCoordinates = new AprilTagCoordinate[] {
             // 战壕 (Trench) - 高度 35.00" (0.89m)
-                new AprilTagCoordinate(1,  11.86,  7.41,  0.89,  -1,  0,  0, 1.41), // 180°
-                new AprilTagCoordinate(6,  11.86,  0.63,  0.89,  -1,  0,  0, 1.41), // 180°
-                new AprilTagCoordinate(7,  11.94,  0.63,  0.89,   1,  0,  0, 1.41), // 0°
-                new AprilTagCoordinate(12, 11.94,  7.41,  0.89,   1,  0,  0, 1.41), // 0°
-        
-                // 中枢 (Hub) - 高度 44.25" (1.12m)
-                new AprilTagCoordinate(2,  11.90,  4.62,  1.12,   0,  1,  0, 1.54), // 90°
-                new AprilTagCoordinate(3,  11.30,  4.38,  1.12,  -1,  0,  0, 1.54), // 180°
-                new AprilTagCoordinate(4,  11.30,  4.02,  1.12,  -1,  0,  0, 1.54), // 180°
-                new AprilTagCoordinate(5,  11.90,  3.42,  1.12,   0, -1,  0, 1.54), // 270°
-                new AprilTagCoordinate(8,  12.26,  3.42,  1.12,   0, -1,  0, 1.54), // 270°
-                new AprilTagCoordinate(9,  12.51,  3.67,  1.12,   1,  0,  0, 1.54), // 0°
-                new AprilTagCoordinate(10, 12.51,  4.02,  1.12,   1,  0,  0, 1.54), // 0°
-                new AprilTagCoordinate(11, 12.26,  4.62,  1.12,   0,  1,  0, 1.54), // 90°
-        
-                // 哨站 (Outpost) - 高度 21.75" (0.55m)
-                new AprilTagCoordinate(13, 16.50,  7.39,  0.55,  -1,  0,  0, 0.93), // 180°
-                new AprilTagCoordinate(14, 16.50,  6.96,  0.55,  -1,  0,  0, 0.93), // 180°
-        
-                // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
-                new AprilTagCoordinate(15, 16.50,  4.31,  0.55,  -1,  0,  0, 0.93), // 180°
-                new AprilTagCoordinate(16, 16.50,  3.88,  0.55,  -1,  0,  0,0.93),  // 180°
+            new AprilTagCoordinate(1, 11.878, 7.425, 0.889, -1.0, 0.0, 0.0, 1.41), // 180.0°
+            new AprilTagCoordinate(6, 11.878, 0.644, 0.889, -1.0, 0.0, 0.0, 1.41), // 180.0°
+            new AprilTagCoordinate(7, 11.953, 0.644, 0.889, 1.0, 0.0, 0.0, 1.41), // 0.0°
+            new AprilTagCoordinate(12, 11.953, 7.425, 0.889, 1.0, 0.0, 0.0, 1.41), // 0.0°
+            // 中枢 (Hub) - 高度 44.25" (1.12m)
+            new AprilTagCoordinate(2, 11.915, 4.638, 1.124, 0.0, 1.0, 0.0, 1.54), // 90.0°
+            new AprilTagCoordinate(3, 11.312, 4.390, 1.124, -1.0, 0.0, 0.0, 1.54), // 180.0°
+            new AprilTagCoordinate(4, 11.312, 4.035, 1.124, -1.0, 0.0, 0.0, 1.54), // 180.0°
+            new AprilTagCoordinate(5, 11.915, 3.431, 1.124, 0.0, -1.0, 0.0, 1.54), // 270.0°
+            new AprilTagCoordinate(8, 12.271, 3.431, 1.124, 0.0, -1.0, 0.0, 1.54), // 270.0°
+            new AprilTagCoordinate(9, 12.519, 3.679, 1.124, 1.0, 0.0, 0.0, 1.54), // 0.0°
+            new AprilTagCoordinate(10, 12.519, 4.035, 1.124, 1.0, 0.0, 0.0, 1.54), // 0.0°
+            new AprilTagCoordinate(11, 12.271, 4.638, 1.124, 0.0, 1.0, 0.0, 1.54), // 90.0°
+            // 哨站 (Outpost) - 高度 21.75" (0.55m)
+            new AprilTagCoordinate(13, 16.533, 7.403, 0.552, -1.0, 0.0, 0.0, 0.93), // 180.0°
+            new AprilTagCoordinate(14, 16.533, 6.972, 0.552, -1.0, 0.0, 0.0, 0.93), // 180.0°
+            // 塔墙 (Tower Wall) - 高度 21.75" (0.55m)
+            new AprilTagCoordinate(15, 16.533, 4.324, 0.552, -1.0, 0.0, 0.0, 0.93), // 180.0°
+            new AprilTagCoordinate(16, 16.533, 3.892, 0.552, -1.0, 0.0, 0.0, 0.93), // 180.0°
+            new AprilTagCoordinate(17, 4.663, 0.644, 0.889, 1.0, 0.0, 0.0, 1.41), // 0.0°
+            new AprilTagCoordinate(18, 4.626, 3.431, 1.124, 0.0, -1.0, 0.0, 1.54), // 270.0°
+            new AprilTagCoordinate(19, 5.229, 3.679, 1.124, 1.0, 0.0, 0.0, 1.54), // 0.0°
+            new AprilTagCoordinate(20, 5.229, 4.035, 1.124, 1.0, 0.0, 0.0, 1.54), // 0.0°
+            new AprilTagCoordinate(21, 4.626, 4.638, 1.124, 0.0, 1.0, 0.0, 1.54), // 90.0°
+            new AprilTagCoordinate(22, 4.663, 7.425, 0.889, 1.0, 0.0, 0.0, 1.41), // 0.0°
+            new AprilTagCoordinate(23, 4.588, 7.425, 0.889, -1.0, 0.0, 0.0, 1.41), // 180.0°
+            new AprilTagCoordinate(24, 4.270, 4.638, 1.124, 0.0, 1.0, 0.0, 1.54), // 90.0°
+            new AprilTagCoordinate(25, 4.022, 4.390, 1.124, -1.0, 0.0, 0.0, 1.54), // 180.0°
+            new AprilTagCoordinate(26, 4.022, 4.035, 1.124, -1.0, 0.0, 0.0, 1.54), // 180.0°
+            new AprilTagCoordinate(27, 4.270, 3.431, 1.124, 0.0, -1.0, 0.0, 1.54), // 270.0°
+            new AprilTagCoordinate(28, 4.588, 0.644, 0.889, -1.0, 0.0, 0.0, 1.41), // 180.0°
+            new AprilTagCoordinate(29, 0.008, 0.666, 0.552, 1.0, 0.0, 0.0, 0.93), // 0.0°
+            new AprilTagCoordinate(30, 0.008, 1.098, 0.552, 1.0, 0.0, 0.0, 0.93), // 0.0°
+            new AprilTagCoordinate(31, 0.008, 3.746, 0.552, 1.0, 0.0, 0.0, 0.93), // 0.0°
+            new AprilTagCoordinate(32, 0.008, 4.178, 0.552, 1.0, 0.0, 0.0, 0.93), // 0.0°
 
-                new AprilTagCoordinate(17,  4.649,  0.63,  0.89,  1,  0,  0, 1.41),
-                new AprilTagCoordinate(18,  4.61,  3.42,  1.12,  0, -1,   0, 1.54),
-                new AprilTagCoordinate(19,  5.22,  3.67,  1.12,  1,  0,  0, 1.54),
-                new AprilTagCoordinate(20,  5.22,  4.02,  1.12,  1,  0,  0, 1.54),
-                new AprilTagCoordinate(21,  4.61,  4.62,  1.12, 0,  1,  0, 1.54),
-                new AprilTagCoordinate(22,  4.649,  7.41,  0.89,  1,  0,  0, 1.41),
-                new AprilTagCoordinate(23,  4.57,  7.41,  0.89,  -1,  0,  0,1.41),
-                new AprilTagCoordinate(24,  4.25,  4.62,  1.12,  0,  1,  0, 1.54),
-                new AprilTagCoordinate(25,  4,  4.37,  1.12,  -1,  0,  0,1.54),
-                new AprilTagCoordinate(26,  4,  4.02,  1.12,  -1,  0,  0,1.54),
-                new AprilTagCoordinate(27,  4.25,  3.42,  1.12,  0,  -1,  0,1.54),
-                new AprilTagCoordinate(28,  4.57,  0.63,  0.89,  -1,  0,  0,1.41),
-                new AprilTagCoordinate(29,  0.0127,  0.65,  0.55,  1,  0,  0,0.93),
-                new AprilTagCoordinate(30,  0.0127,  0.758,  0.55,  1,  0,  0,0.93),
-                new AprilTagCoordinate(31,  0.0127,  3.73,  0.55,  1,  0,  0,0.93),
-                new AprilTagCoordinate(32,  0.0127,  4.16,  0.55,  1,  0,  0,0.93)
         };
 
         //排除掉1,3,4,6,17，19，20，22号八个看不到的Tag;排除trench上AP（只有一个）
@@ -289,12 +287,9 @@ public class Constants {
            
         };
         public static final LinearInterpolationTable kShotTimeTable = new LinearInterpolationTable(kShotTimePoints);
-        private static final Translation2d blueHub = new Translation2d(4.611624, 4.021328);
-        private static final Translation2d redHub = new Translation2d(12.868148-1, 4.021328);
+        private static final Translation2d blueHub = new Translation2d(4.022+0.6, 4.021328);    // 0.6是hub的半径
+        private static final Translation2d redHub = new Translation2d(12.519-0.6, 4.021328);
         public static final Translation2d targetHub = (alliance == Alliance.Blue) ? blueHub : redHub;
-        private static final Translation2d blueHubA = new Translation2d(4.611624+1, 4.021328);
-        private static final Translation2d redHubA = new Translation2d(12.868148-1, 4.021328);
-        public static final Translation2d targetHubA = (alliance == Alliance.Blue) ? blueHubA : redHubA;
     }
 
     public static final class FeedingConstants {

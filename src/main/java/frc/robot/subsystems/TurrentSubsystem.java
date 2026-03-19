@@ -81,7 +81,7 @@ public class TurrentSubsystem extends SubsystemBase {
 
     private double m_curMaxSpeed = 0;
 
-    private Translation2d m_shootTarget = Constants.ShooterConstants.targetHubA;
+    private Translation2d m_shootTarget = Constants.ShooterConstants.targetHub;
     private Pose2d m_shooterAimDir = new Pose2d(
         TurrentConst.turrentOffset.getTranslation(),
         TurrentConst.turrentOffset.getRotation()
@@ -325,7 +325,7 @@ public class TurrentSubsystem extends SubsystemBase {
     private Translation2d getPWYShootTargetPosWithShift() {
         int max_iteration = 5;
         double accComp = 0.010;
-        Translation2d virtualTarget = ShooterConstants.targetHubA;
+        Translation2d virtualTarget = ShooterConstants.targetHub;
         // Get drive speed, acc, and translation
         FieldRelativeSpeed driveFieldSpeed = m_drivetrain.getFieldRelativeSpeed();
         FieldRelativeAccel driveFieldAccel = m_drivetrain.getFieldRelativeAccel();
@@ -341,7 +341,7 @@ public class TurrentSubsystem extends SubsystemBase {
             Translation2d targetShiftVector = new Translation2d(
                 -shotTime * (turretSpeed.getX() + driveFieldAccel.ax * accComp), 
                 -shotTime * (turretSpeed.getY() + driveFieldAccel.ay * accComp));
-            virtualTarget = ShooterConstants.targetHubA.plus(targetShiftVector);
+            virtualTarget = ShooterConstants.targetHub.plus(targetShiftVector);
             // Calculate new virtual shot time
             Translation2d toVirtualTargetVector = virtualTarget.minus(turretWorldTranslation);
             double newShotTime = ShooterConstants.kShotTimeTable.getOutput(toVirtualTargetVector.getNorm());
