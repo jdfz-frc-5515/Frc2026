@@ -42,6 +42,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 import frc.robot.utils.MessageSender;
 import frc.robot.LimelightHelpers;
+import frc.robot.Robot;
 import frc.robot.Constants;
 import frc.robot.Library.ImprovedCommandXboxController;
 import frc.robot.Library.team1706.MathUtils;
@@ -872,7 +873,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             // 这样可以消除重置瞬间的视觉跳变
             resetPose(new Pose2d(getState().Pose.getTranslation(), targetRot));
 
-            
+            Robot.inst.m_robotContainer.runRumble(10);
             MessageSender.log("curDeg:" + curDeg);
             MessageSender.logWarning("Gyro reseeded by Vision to: " + newDeg);
         }

@@ -93,6 +93,38 @@ public class RobotContainer {
         }
     }
 
+    // 1秒20帧，要震动几帧
+    int m_driverController1RumbleFrameCount = 0;
+    int m_driverController2RumbleFrameCount = 0;
+    public void runRumbleController1(int frame) {
+        m_driverController1RumbleFrameCount = frame;
+    }
+    public void runRumbleController2(int frame) {
+        m_driverController2RumbleFrameCount = frame;
+    }
+
+    public void runRumble(int frame) {
+        runRumbleController1(frame);
+        runRumbleController2(frame);
+    }
+
+    private void updateRumble() {
+        if (m_driverController1RumbleFrameCount > 0) {
+            m_driverController.runmble(true);
+            m_driverController1RumbleFrameCount--;
+        }
+        else {
+            m_driverController.runmble(false);
+        }
+        if (m_driverController2RumbleFrameCount > 0) {
+            m_driverController2.runmble(true);
+            m_driverController2RumbleFrameCount--;
+        }
+        else {
+            m_driverController2.runmble(false);
+        }
+    }
+
     private void configureBindings() throws Exception {
         CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
@@ -199,6 +231,8 @@ public class RobotContainer {
         m_driverController.start().onTrue(new InstantCommand(()-> {
             drivetrain.reseedGyroByVision();
         }));
+
+
     }
 
     private void configureDriver2Bindings() {
@@ -266,6 +300,7 @@ public class RobotContainer {
     }
 
     public void update() {
+        updateRumble();
         Global.update();
         Pose2d pos = drivetrain.getPose();
 

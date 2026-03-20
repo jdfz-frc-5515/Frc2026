@@ -1,5 +1,7 @@
 package frc.robot.Library;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RuntimeType;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -173,4 +175,16 @@ public class ImprovedCommandXboxController extends CommandXboxController {
   public double getRightY() {
     return MathUtil.applyDeadband(super.getRightY(), axisDeadBand);
   }
+
+  public void runmble(boolean isOn) {
+    if (isOn) {
+        this.setRumble(RumbleType.kLeftRumble, 1);
+        this.setRumble(RumbleType.kRightRumble, 1);
+    }
+    else {
+        this.setRumble(RumbleType.kLeftRumble, 0);
+        this.setRumble(RumbleType.kRightRumble, 0);
+    }
+  }
 }
+
