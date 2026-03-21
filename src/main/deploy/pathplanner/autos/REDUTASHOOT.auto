@@ -5,9 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0
+            "name": "WAIT_LL"
           }
         },
         {
@@ -31,13 +31,31 @@
         {
           "type": "named",
           "data": {
+            "name": "INTAKE_OUT"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "START_SHOOT"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 8.0
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_IN"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         },
         {
@@ -50,6 +68,18 @@
           "type": "path",
           "data": {
             "pathName": "REDBACK2UT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red_reintake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDRINTAKEA"
           }
         },
         {

@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathConstraints;
 // import com.thethriftybot.Conversion;
 
@@ -28,6 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Constants {
+    public static Alliance alliance = Alliance.Red;
+    public static String auto_path = "REDUTASHOOT";
+    public static Pose2d auto_start_pos = 
+        new Pose2d(new Translation2d(12.116, 7.463), 
+            Rotation2d.fromDegrees(alliance == Alliance.Red ? 0 : 180));
+
     public static String LIME_LIGHT_ARPIL_TAG_NAME_RIGHT = "limelight-right";
     public static String LIME_LIGHT_ARPIL_TAG_NAME_LEFT = "limelight-left";
     public static String LIME_LIGHT_ARPIL_TAG_NAME_FRONT = "limelight-front";
@@ -262,6 +269,20 @@ public class Constants {
         //     new Point2D.Double(4, 54.52),
         //     new Point2D.Double(100, 62.71),
         // };
+        // private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
+        //     // HardBall
+        //     // (distance, seconds)
+        //     // TODO: 要测出K值
+        //     new Point2D.Double(-100.0, 0.92),
+        //     new Point2D.Double(1.5, 0.92),
+        //     new Point2D.Double(2, 1.045),
+        //     new Point2D.Double(2.5, 1.16),
+        //     new Point2D.Double(3, 1.18),
+        //     new Point2D.Double(3.5, 1.39),
+        //     new Point2D.Double(4, 1.54),
+        //     new Point2D.Double(100.0, 1.54),
+        // };
+
         // soft ball
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS) for soft balls
@@ -274,8 +295,9 @@ public class Constants {
             new Point2D.Double(4, 97),
             new Point2D.Double(100, 97),    
         };
-        public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
+        
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
+            // SoftBall
             // (distance, seconds)
             // TODO: 要测出K值
             new Point2D.Double(-100.0, 0.92),
@@ -286,9 +308,9 @@ public class Constants {
             new Point2D.Double(3.5, 1.35),
             new Point2D.Double(4, 1.365),
             new Point2D.Double(100.0, 1.365),
-            
-           
         };
+
+        public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         public static final LinearInterpolationTable kShotTimeTable = new LinearInterpolationTable(kShotTimePoints);
         private static final Translation2d blueHub = new Translation2d(4.022+0.55, 4.021328);    // 0.55是hub的半径
         private static final Translation2d redHub = new Translation2d(12.519-0.55, 4.021328);
@@ -353,9 +375,6 @@ public class Constants {
         public static double HeadingTorlerance = Math.toRadians(20.0);
         public static int missingThreshold = 5; 
     }
-
-    public static Alliance alliance = Alliance.Red;
-    
 
     // 转盘电机
     public static final class PathMotor {

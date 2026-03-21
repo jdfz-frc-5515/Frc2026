@@ -167,7 +167,7 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        m_autoPath = new PathPlannerAuto("pp");
+        m_autoPath = new PathPlannerAuto(Constants.auto_path);
     }
 
     
@@ -338,6 +338,7 @@ public class RobotContainer {
     }
 
     public void autoInit() {
+        drivetrain.resetPose(Constants.auto_start_pos);
         LimelightModule.resetIsSeen();
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT, 0);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT, 0);
