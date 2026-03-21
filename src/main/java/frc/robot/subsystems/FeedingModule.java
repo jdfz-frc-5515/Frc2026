@@ -134,7 +134,7 @@ public class FeedingModule {
             if (m_isFeedMotorOn) {
                 // m_feedMotorDutycycle.Velocity = Constants.FeedMotor.speed;
                 // m_feedMotor.setControl(m_feedMotorDutycycle);
-                m_voltageRequest.Output = 10;
+                m_voltageRequest.Output = 3.5;
                 m_feedMotor.setControl(m_voltageRequest);
             }
             else {

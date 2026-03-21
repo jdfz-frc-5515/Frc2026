@@ -873,7 +873,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             // 这样可以消除重置瞬间的视觉跳变
             resetPose(new Pose2d(getState().Pose.getTranslation(), targetRot));
 
-            Robot.inst.m_robotContainer.runRumble(10);
+            Robot.inst.m_robotContainer.runRumble(20);
             MessageSender.log("curDeg:" + curDeg);
             MessageSender.logWarning("Gyro reseeded by Vision to: " + newDeg);
         }

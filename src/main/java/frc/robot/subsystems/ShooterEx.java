@@ -121,6 +121,7 @@ public class ShooterEx {
         }
 
         SmartDashboard.putNumber("%% ShootingSpeed", m_primary.getVelocity().getValueAsDouble());
+        SmartDashboard.putNumber("%% speed_dt", speed_dt);
         SmartDashboard.putNumber("%% targetShootingSpeed", spd);
         SmartDashboard.putBoolean("isShooting", isShooting);
     }

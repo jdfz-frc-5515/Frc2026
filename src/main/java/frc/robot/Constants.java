@@ -250,39 +250,42 @@ public class Constants {
         public static final double KA = 10.0; // velocity setpoint dont use ka
         public static final double kPreventShooterOscilliationRPS = 1.0;
 
+        // // hard ball
         // private static final Point2D[] kRPMPoints = new Point2D.Double[] {
-            // (distance, shooterSpeedRPS) for hard balls
-        //     new Point2D.Double(-1, 36),
-        //     new Point2D.Double(1.47, 36),
-        //     new Point2D.Double(2.05, 40),
-        //     new Point2D.Double(2.56, 45),
-        //     new Point2D.Double(2.73, 47.2),
-        //     new Point2D.Double(2.8, 50),
-        //     new Point2D.Double(3.15, 56),
-        //     new Point2D.Double(100, 75),
+        //     // (distance, shooterSpeedRPS) for hard balls
+        //     new Point2D.Double(-1, 40.97),
+        //     new Point2D.Double(1.5, 40.97),
+        //     new Point2D.Double(2, 44),
+        //     new Point2D.Double(2.5, 49.14),
+        //     new Point2D.Double(3, 50.68),
+        //     new Point2D.Double(3.5, 54.86),
+        //     new Point2D.Double(4, 54.52),
+        //     new Point2D.Double(100, 62.71),
         // };
+        // soft ball
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS) for soft balls
-            new Point2D.Double(-1, 49),
-            new Point2D.Double(1.4, 49),
-            new Point2D.Double(2.471, 59),
-            new Point2D.Double(3.0, 85),
-            new Point2D.Double(3.35, 100),
-            // new Point2D.Double(4.358, 90),
-            new Point2D.Double(100, 100),
+            new Point2D.Double(-1, 40.97),
+            new Point2D.Double(1.5, 40.97),
+            new Point2D.Double(2, 44),
+            new Point2D.Double(2.5, 46),
+            new Point2D.Double(3, 55.75),
+            new Point2D.Double(3.5, 76.68),
+            new Point2D.Double(4, 97),
+            new Point2D.Double(100, 97),    
         };
         public static final LinearInterpolationTable kRPMTable = new LinearInterpolationTable(kRPMPoints);
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {
             // (distance, seconds)
             // TODO: 要测出K值
-            new Point2D.Double(-100.0, 0.7),
-            new Point2D.Double(1.1, 0.7),
-            new Point2D.Double(1.6, 0.9),
-            new Point2D.Double(2.1, 0.97),
-            new Point2D.Double(2.6, 1.1),
-            new Point2D.Double(3.1, 1.3),
-            new Point2D.Double(3.6, 1.96),
-            new Point2D.Double(100.0, 1.96),
+            new Point2D.Double(-100.0, 0.92),
+            new Point2D.Double(1.5, 0.92),
+            new Point2D.Double(2, 0.95),
+            new Point2D.Double(2.5, 1.08),
+            new Point2D.Double(3, 1.17),
+            new Point2D.Double(3.5, 1.35),
+            new Point2D.Double(4, 1.365),
+            new Point2D.Double(100.0, 1.365),
             
            
         };
