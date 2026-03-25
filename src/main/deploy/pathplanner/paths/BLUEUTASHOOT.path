@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.765197594501718,
-        "y": 5.75
+        "y": 5.9
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.94602233676976,
-        "y": 6.051374570446736
+        "y": 6.2013745704467365
       },
       "isLocked": false,
       "linkedName": "BLUEAOUT"
@@ -53,12 +53,6 @@
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
     {
       "name": "INTAKE_IN",
       "waypointRelativePos": 1.0068259385665521,

@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartBLUEUT2A"
+            "pathName": "RedDB2D"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BLUEINTAKEA"
+            "pathName": "REDDINTAKED"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BLUEUTASHOOT"
+            "pathName": "RedDB2TD"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_OUT"
           }
         },
         {
@@ -31,7 +37,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 9.0
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_IN"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
@@ -43,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BLUEBACK2UT"
+            "pathName": "REDBACK2DT"
           }
         }
       ]

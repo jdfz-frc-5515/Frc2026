@@ -1,0 +1,115 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "WAIT_LL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedUT2A"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red_intake_half"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDUTSR_half"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_OUT"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "START_SHOOT"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_IN"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "STOP_SHOOT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDBACK2UT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Red_reintake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "REDRINTAKEA"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " REDUTSR"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "START_SHOOT"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "STOP_SHOOT"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

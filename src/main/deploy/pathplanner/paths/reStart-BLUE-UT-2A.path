@@ -3,34 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 11.845863095238094,
-        "y": 7.393353174603175
+        "x": 4.725,
+        "y": 7.546013745704467
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.784414682539683,
-        "y": 7.436855158730159
+        "x": 5.809948453608246,
+        "y": 7.493273195876287
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.744826974267967,
-        "y": 7.000656610470275
+        "x": 6.8374711623779945,
+        "y": 7.419148181011535
       },
       "prevControl": {
-        "x": 8.728731144631766,
-        "y": 7.4432919254658385
+        "x": 6.5093495688695615,
+        "y": 7.483696691209916
+      },
+      "nextControl": {
+        "x": 7.297067382309266,
+        "y": 7.328735809877514
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.765197594501718,
+        "y": 7.048745704467353
+      },
+      "prevControl": {
+        "x": 7.644647766323024,
+        "y": 7.44053264604811
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RedAIn"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.7027707808564235,
       "rotationDegrees": 0.0
     }
   ],
@@ -39,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "INTAKE_OUT",
-      "waypointRelativePos": 0.5104986876640418,
+      "waypointRelativePos": 2.0,
       "endWaypointRelativePos": null,
       "command": null
     }

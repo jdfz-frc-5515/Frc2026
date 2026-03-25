@@ -286,7 +286,7 @@ public class Constants {
         // soft ball
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS) for soft balls
-            new Point2D.Double(-1, 40.97),
+            new Point2D.Double(-100, 40.97),
             new Point2D.Double(1.5, 40.97),
             new Point2D.Double(2, 44),
             new Point2D.Double(2.5, 46),

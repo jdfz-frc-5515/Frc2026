@@ -3,34 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 11.845863095238094,
-        "y": 7.393353174603175
+        "x": 8.75,
+        "y": 5.9
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.784414682539683,
-        "y": 7.436855158730159
+        "x": 8.685388999802818,
+        "y": 7.064653455585133
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.744826974267967,
-        "y": 7.000656610470275
+        "x": 10.288492063492063,
+        "y": 7.40578231292517
       },
       "prevControl": {
-        "x": 8.728731144631766,
-        "y": 7.4432919254658385
+        "x": 9.679464285714284,
+        "y": 7.384652777777778
+      },
+      "nextControl": {
+        "x": 10.974883359673116,
+        "y": 7.42959588850696
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.42066548358474,
+        "y": 7.40578231292517
+      },
+      "prevControl": {
+        "x": 13.177054372473632,
+        "y": 7.588490646258504
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RedAIn"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 1.15,
       "rotationDegrees": 0.0
     }
   ],
@@ -38,8 +54,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "INTAKE_OUT",
-      "waypointRelativePos": 0.5104986876640418,
+      "name": "INTAKE_IN",
+      "waypointRelativePos": 0.4362745098039216,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -53,14 +69,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": 90.0
+    "velocity": 0,
+    "rotation": -1.3227181194871829
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 1.0,
-    "rotation": 0.0
+    "velocity": 0,
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

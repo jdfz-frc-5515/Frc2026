@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 7.765197594501718,
-        "y": 5.75
+        "y": 5.9
       },
       "prevControl": {
         "x": 7.757663230240551,
-        "y": 6.089046391752579
+        "y": 6.239046391752579
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BLUEAOUT"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
