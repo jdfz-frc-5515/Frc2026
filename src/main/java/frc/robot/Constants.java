@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Constants {
-    public static Alliance alliance = Alliance.Red;
-    public static String auto_path = "REDUTASHOOT";
+    public static Alliance alliance = Alliance.Blue;
+    public static String auto_path = "Blue_UT_A_SHOOT";
     public static Pose2d auto_start_pos = 
-        new Pose2d(new Translation2d(12.116, 7.463), 
+        new Pose2d(new Translation2d(4.435, 7.546), 
             Rotation2d.fromDegrees(alliance == Alliance.Red ? 0 : 180));
 
     public static String LIME_LIGHT_ARPIL_TAG_NAME_RIGHT = "limelight-right";
@@ -388,7 +388,7 @@ public class Constants {
         public static final double KV = 0;
         public static final double KA = 0;
         //TODOS CHECK
-        public static final double speed = 50;
+        public static final double speed = 70;
         public static final double voltage = 10;
     }
     public static final class FeedMotor {
