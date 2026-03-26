@@ -320,7 +320,7 @@ public class RobotContainer {
         if (shootTarget != null) {
             shootTargetPublisher.set(shootTarget);
         }
-        SmartDashboard.putNumber("testrpsdist", pos.getTranslation().getDistance(shootTarget));
+        SmartDashboard.putNumber("%% testrpsdist", pos.getTranslation().getDistance(shootTarget));
         if (shooterAimDir != null) {
             shooterAimDirPrublisher.set(shooterAimDir);
         }
