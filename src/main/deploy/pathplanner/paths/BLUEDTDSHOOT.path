@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.787800687285223,
-        "y": 2.008256013745704
+        "y": 2.15
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.539166666666666,
-        "y": 1.337697594501718
+        "y": 1.479441580756014
       },
       "isLocked": false,
       "linkedName": null
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 2.1144243986232554,
-        "y": 2.1890807560148473
+        "x": 3.119334516415261,
+        "y": 0.7474267968056778
       },
       "prevControl": {
-        "x": 2.0240120274892353,
-        "y": 0.18493986254405748
+        "x": 4.29433007985803,
+        "y": 0.3450310559006209
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLUEDTEND"
     }
   ],
   "rotationTargets": [

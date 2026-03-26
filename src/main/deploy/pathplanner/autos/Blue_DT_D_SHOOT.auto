@@ -25,13 +25,31 @@
         {
           "type": "named",
           "data": {
+            "name": "INTAKE_OUT"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "START_SHOOT"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 10.0
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "INTAKE_IN"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
@@ -44,6 +62,24 @@
           "type": "path",
           "data": {
             "pathName": "BLUEBACK2DT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Re_StartBLUEDT2D"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReBLUEINTAKED"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "re BLUEDTDSHOOT"
           }
         }
       ]
