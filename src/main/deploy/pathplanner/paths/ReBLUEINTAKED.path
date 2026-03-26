@@ -17,22 +17,22 @@
     {
       "anchor": {
         "x": 7.8,
-        "y": 2.15
+        "y": 3.3
       },
       "prevControl": {
         "x": 7.788648084770337,
-        "y": 1.900257864947425
+        "y": 3.050257864947425
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BLUEDOUT"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
+      "minWaypointRelativePos": 0.53,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,

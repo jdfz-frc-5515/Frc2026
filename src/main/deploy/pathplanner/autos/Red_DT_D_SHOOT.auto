@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RedDB2D"
+            "pathName": "Red_DT_re2D"
           }
         },
         {
@@ -37,7 +37,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.5
           }
         },
         {
@@ -62,6 +62,24 @@
           "type": "path",
           "data": {
             "pathName": "REDBACK2DT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RedDB2D"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "re REDDINTAKED"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "re_RedDB2TD"
           }
         }
       ]

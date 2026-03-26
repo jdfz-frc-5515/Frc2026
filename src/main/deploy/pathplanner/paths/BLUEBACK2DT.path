@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.1144243986232554,
-        "y": 2.1890807560148473
+        "x": 3.119334516415261,
+        "y": 0.7474267968056778
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9443389529724924,
-        "y": 0.26455190771960835
+        "x": 3.5458740017746226,
+        "y": 0.5945164152617566
       },
       "isLocked": false,
       "linkedName": "BLUEDTEND"
@@ -20,8 +20,8 @@
         "y": 0.6025643300798571
       },
       "prevControl": {
-        "x": 3.586113575865128,
-        "y": 0.6347559893522622
+        "x": 4.463199278321202,
+        "y": 0.6669210049438001
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 0.0
   },
   "reversed": false,

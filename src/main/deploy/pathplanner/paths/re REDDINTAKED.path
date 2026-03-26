@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.8,
-        "y": 1.0061855670103101
+        "x": 8.739821428571428,
+        "y": 1.037091836734695
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.792465635738831,
-        "y": 1.3904381443298972
+        "x": 8.751968668910862,
+        "y": 1.3079445437969013
       },
       "isLocked": false,
-      "linkedName": "BLUEDIN"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.8,
-        "y": 2.15
+        "x": 8.717448979591838,
+        "y": 3.3
       },
       "prevControl": {
-        "x": 7.788648084770337,
-        "y": 1.900257864947425
+        "x": 8.751039897835232,
+        "y": 3.0522669779549654
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BLUEDOUT"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
+      "minWaypointRelativePos": 0.4371069182389937,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
