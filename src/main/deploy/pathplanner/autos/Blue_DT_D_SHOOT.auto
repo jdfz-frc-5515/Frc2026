@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "WAIT_LL"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "StartBLUEDT2D"

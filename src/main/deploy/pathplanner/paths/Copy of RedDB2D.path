@@ -3,34 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.089513641755637,
-        "y": 7.406
+        "x": 12.117,
+        "y": 0.5945164152617566
       },
       "prevControl": null,
       "nextControl": {
-        "x": 11.028065229057226,
-        "y": 7.449501984126984
+        "x": 10.451081632653061,
+        "y": 0.5703726708074522
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.744826974267967,
-        "y": 7.000656610470275
+        "x": 8.739821428571428,
+        "y": 1.037091836734695
       },
       "prevControl": {
-        "x": 8.728731144631766,
-        "y": 7.4432919254658385
+        "x": 9.171366459627329,
+        "y": 0.6106122448979578
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RedAIn"
+      "linkedName": "DD"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.45,
       "rotationDegrees": 0.0
     }
   ],
@@ -39,7 +39,7 @@
   "eventMarkers": [
     {
       "name": "INTAKE_OUT",
-      "waypointRelativePos": 0.5104986876640418,
+      "waypointRelativePos": 1.0,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -54,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 1.0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,

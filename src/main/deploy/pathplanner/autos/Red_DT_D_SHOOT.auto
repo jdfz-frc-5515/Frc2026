@@ -5,9 +5,15 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "WAIT_LL"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Red_DT_re2D"
+            "pathName": "Copy of RedDB2D"
           }
         },
         {

@@ -32,8 +32,10 @@ public class Constants {
     public static Alliance alliance = Alliance.Blue;
     public static String auto_path = "Blue_UT_A_SHOOT";
     public static Pose2d auto_start_pos = 
-        new Pose2d(new Translation2d(4.435, 7.546), 
-            Rotation2d.fromDegrees(alliance == Alliance.Red ? 0 : 180));
+        new Pose2d(new Translation2d(  4.435 , 7.456), 
+            Rotation2d.fromDegrees(alliance
+            
+             == Alliance.Red ? 0 : 180));                   
 
     public static String LIME_LIGHT_ARPIL_TAG_NAME_RIGHT = "limelight-right";
     public static String LIME_LIGHT_ARPIL_TAG_NAME_LEFT = "limelight-left";
@@ -286,14 +288,22 @@ public class Constants {
         // soft ball
         private static final Point2D[] kRPMPoints = new Point2D.Double[] {
             // (distance, shooterSpeedRPS) for soft balls
-            new Point2D.Double(-100, 40.97),
-            new Point2D.Double(1.5, 40.97),
-            new Point2D.Double(2, 44),
-            new Point2D.Double(2.5, 46),
-            new Point2D.Double(3, 55.75),
-            new Point2D.Double(3.5, 76.68),
-            new Point2D.Double(4, 97),
-            new Point2D.Double(100, 97),    
+            // new Point2D.Double(-100, 40.97),
+            // new Point2D.Double(1.5, 40.97),
+            // new Point2D.Double(2, 44),
+            // new Point2D.Double(2.5, 46),
+            // new Point2D.Double(3, 53.75),
+            // new Point2D.Double(3.5, 53.75),
+            // new Point2D.Double(4, 56.07),
+            // new Point2D.Double(100, 56.07), 
+            new Point2D.Double(-100, 46.97),
+            new Point2D.Double(1.5, 46.97),
+            new Point2D.Double(2, 53),
+            new Point2D.Double(2.5, 55),
+            new Point2D.Double(3, 63.75),
+            new Point2D.Double(3.5, 63.75),
+            new Point2D.Double(4, 70.07),
+            new Point2D.Double(100, 70.07),       
         };
         
         private static final Point2D[] kShotTimePoints = new Point2D.Double[] {

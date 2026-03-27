@@ -391,7 +391,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     double driveSpeedScale = 1;
     public void setShootSpeedScale() {
-        driveSpeedScale = 0.3;
+        driveSpeedScale = 0.5;
     }
 
     public void restoreShootSpeedScale() {
