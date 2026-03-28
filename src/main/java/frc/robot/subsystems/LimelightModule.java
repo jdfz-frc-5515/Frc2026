@@ -26,9 +26,12 @@ public class LimelightModule {
     private static final double MAX_LL_LATENCY = 100; // 100 ms, this is the maximum latency we accept from the
                                                       // limelight
 
-    private static final boolean m_isSmartMode = true;
+    private static boolean m_isSmartMode = true;
     public static long LastSeenAPTime = System.currentTimeMillis();
 
+    public static void setSmartMode(boolean isOn) {
+        m_isSmartMode = isOn;
+    }
     public static boolean getIsSeen() {
         return m_isSeen;
     }

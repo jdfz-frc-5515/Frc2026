@@ -26,13 +26,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import java.util.Map;
 
 public class Constants {
-    public static Alliance alliance = Alliance.Blue;
-    public static String auto_path = "Blue_UT_A_SHOOT";
+    public static Alliance alliance = Alliance.Red;
+    public static String auto_path = "Red_UT_A_SHOOT";
     public static Pose2d auto_start_pos = 
-        new Pose2d(new Translation2d(  4.435 , 7.456), 
+        new Pose2d(new Translation2d(  12.117 , 7.44), 
             Rotation2d.fromDegrees(alliance
             
              == Alliance.Red ? 0 : 180));                   

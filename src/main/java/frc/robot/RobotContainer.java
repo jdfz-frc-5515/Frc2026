@@ -331,6 +331,7 @@ public class RobotContainer {
 
 
     public void telInit() {
+        LimelightModule.setSmartMode(true);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT, 0);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT, 0);
         // // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_OBJECT_DETECTION, 0);
@@ -340,6 +341,7 @@ public class RobotContainer {
     public void autoInit() {
         drivetrain.resetPose(Constants.auto_start_pos);
         LimelightModule.resetIsSeen();
+        LimelightModule.setSmartMode(false);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_LEFT, 0);
         // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_ARPIL_TAG_NAME_RIGHT, 0);
         // // LimelightHelpers.setPipelineIndex(Constants.LIME_LIGHT_OBJECT_DETECTION, 0);
