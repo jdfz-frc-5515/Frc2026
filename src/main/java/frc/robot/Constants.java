@@ -31,9 +31,9 @@ import java.util.Map;
 
 public class Constants {
     public static Alliance alliance = Alliance.Red;
-    public static String auto_path = "Red_UT_A_SHOOT";
+    public static String auto_path = "red_centre";
     public static Pose2d auto_start_pos = 
-        new Pose2d(new Translation2d(  12.117 , 7.44), 
+        new Pose2d(new Translation2d(  13.252, 3.954), 
             Rotation2d.fromDegrees(alliance
             
              == Alliance.Red ? 0 : 180));                   
